@@ -1,2 +1,3 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/Ross/Documents/C#/visual studio/Stonephonia/Content/Sprites/sprite_test.png","C:/Users/Ross/Documents/C#/visual studio/Stonephonia/Content/bin/DesktopGL/Sprites/sprite_test.xnb","TextureProcessor","Texture2DContent",289,4181,0.3738394
+"C:/Users/Ross/Documents/C#/visual studio/Stonephonia/Stonephonia/Content/Sprites/big paddle.png","C:/Users/Ross/Documents/C#/visual studio/Stonephonia/Stonephonia/Content/bin/DesktopGL/Sprites/big paddle.xnb","TextureProcessor","Texture2DContent",192,9301,0.4080891
+"C:/Users/Ross/Documents/C#/visual studio/Stonephonia/Stonephonia/Content/Sprites/sprite_test.png","C:/Users/Ross/Documents/C#/visual studio/Stonephonia/Stonephonia/Content/bin/DesktopGL/Sprites/sprite_test.xnb","TextureProcessor","Texture2DContent",289,4181,0.0114774

@@ -6,15 +6,15 @@ namespace Stonephonia
     class AutoSprite : Sprite
     {
         public AutoSprite(Texture2D texture, Vector2 position,
-          Vector2 speed, Point frameSize, Point currentFrame,
-          Point sheetSize, int collisionOffset, int timePerFrame)
-            : base(texture, position, speed, frameSize, currentFrame, sheetSize, collisionOffset, timePerFrame) { }
+          Point frameSize, Point currentFrame, Point sheetSize,
+          int collisionOffset, int timePerFrame, int speed)
+            : base(texture, position, frameSize, currentFrame, sheetSize, collisionOffset, timePerFrame, speed) { }
 
-        public override Vector2 direction { get { return speed; } } // Inherit speed member of base class to allow movement
+        public override int direction { get { return speed; } } // Inherit speed member of base class to allow movement
 
         public override void Update(GameTime gametime)
         {
-            position += direction;
+            position.X += direction;
 
             base.Update(gametime);
         }
