@@ -11,11 +11,11 @@ namespace Stonephonia
     class ScreenManager : Game
     {
         public static GraphicsDeviceManager graphicsDeviceMgr;
-        public static SpriteBatch sprites;
-        //public static Dictionary<string, Texture2D> Textures2D;
-        //public static Dictionary<string, SpriteFont> Fonts;
+        public static SpriteBatch spriteBatch;
         public static List<GameScreen> screenList;
         public static ContentManager contentMgr;
+
+        public static SpriteFont font;
 
         public static void Main()
         {
@@ -38,8 +38,8 @@ namespace Stonephonia
         {
             GamePort.renderSurface = new RenderTarget2D(GraphicsDevice, 240, 180);
 
-            graphicsDeviceMgr.PreferredBackBufferWidth = 480;
-            graphicsDeviceMgr.PreferredBackBufferHeight = 360;
+            graphicsDeviceMgr.PreferredBackBufferWidth = 1280;
+            graphicsDeviceMgr.PreferredBackBufferHeight = 720;
 
             graphicsDeviceMgr.IsFullScreen = false;
 
@@ -48,18 +48,15 @@ namespace Stonephonia
             Window.ClientSizeChanged += (sender, args) => GamePort.KeepAspectRatio(Window);
             GamePort.KeepAspectRatio(Window);
 
-            //Textures2D = new Dictionary<string, Texture2D>();
-            //Fonts = new Dictionary<string, SpriteFont>();
-
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             contentMgr = Content;
-            sprites = new SpriteBatch(GraphicsDevice);
+            spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: Load global game assests here
+            font = Content.Load<SpriteFont>("Font");
 
             AddScreen(new TestScreen());
         }
@@ -71,24 +68,17 @@ namespace Stonephonia
                 screen.UnloadAssests();
             }
 
-            //Textures2D.Clear();
-            //Fonts.Clear();
             screenList.Clear();
-
             Content.Unload();
         }
 
         protected override void Update(GameTime gameTime)
         {
-            // TODO: Remove temp code & add input manager
-            if (Keyboard.GetState().IsKeyDown(Keys.Back)) { Exit(); }
+            InputManager.Update();
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape)) { Exit(); }
 
             int startIndex = screenList.Count - 1;
-
-            while (screenList[startIndex].isActive)
-            {
-                startIndex--;
-            }
 
             for (int i = startIndex; i < screenList.Count; i++)
             {
@@ -100,17 +90,24 @@ namespace Stonephonia
 
         protected override void Draw(GameTime gameTime)
         {
-            int startIndex = screenList.Count - 1;
+            GraphicsDevice.SetRenderTarget(GamePort.renderSurface);
+            GraphicsDevice.Clear(Color.Black);
 
-            while (screenList[startIndex].isActive)
-            {
-                startIndex--;
-            }
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            int startIndex = screenList.Count - 1;
 
             for (int i = startIndex; i < screenList.Count; i++)
             {
-                screenList[i].Draw(gameTime);
+                screenList[i].Draw(gameTime, spriteBatch);
             }
+            spriteBatch.End();
+
+            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            spriteBatch.Draw(GamePort.renderSurface, GamePort.renderArea, Color.White);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
@@ -130,7 +127,7 @@ namespace Stonephonia
         {
             gameScreen.UnloadAssests();
             screenList.Remove(gameScreen);
-            
+
             if (screenList.Count < 1)
             {
                 AddScreen(new TestScreen());
@@ -141,6 +138,6 @@ namespace Stonephonia
         {
             RemoveScreen(currentScreen);
             AddScreen(nextScreen);
-        } 
+        }
     }
 }

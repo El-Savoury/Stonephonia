@@ -13,7 +13,7 @@ namespace Stonephonia
         private int collisionOffset;
         private int timeSinceLastFrame = 0;
         private int timePerFrame;
-        protected int speed;
+        protected int velocity;
 
         // Allow subclasses to define behaviour based on movement direction
         public abstract int direction { get; }
@@ -32,7 +32,7 @@ namespace Stonephonia
 
         public Sprite(Texture2D texture, Vector2 position,
             Point frameSize, Point currentFrame, Point sheetSize,
-            int collisionOffset, int timePerFrame, int speed)
+            int collisionOffset, int timePerFrame, int velocity)
         {
             this.texture = texture;
             this.position = position;
@@ -41,7 +41,7 @@ namespace Stonephonia
             this.sheetSize = sheetSize;
             this.collisionOffset = collisionOffset;
             this.timePerFrame = timePerFrame;
-            this.speed = speed;
+            this.velocity = velocity;
         }
 
         public virtual void Update(GameTime gameTime)

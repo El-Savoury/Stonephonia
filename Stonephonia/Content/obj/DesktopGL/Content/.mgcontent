@@ -4,10 +4,12 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/Ross/Documents/C#/visual studio/Stonephonia/Stonephonia/Content/Font.spritefont</File>
     <File>C:/Users/Ross/Documents/C#/visual studio/Stonephonia/Stonephonia/Content/Sprites/big paddle.png</File>
     <File>C:/Users/Ross/Documents/C#/visual studio/Stonephonia/Stonephonia/Content/Sprites/sprite_test.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>

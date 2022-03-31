@@ -7,7 +7,7 @@ namespace Stonephonia
     public class SpriteManager : DrawableGameComponent
     {
         SpriteBatch spriteBatch;
-        UserSprite player;
+        Player player;
         List<Sprite> spriteList = new List<Sprite>();
 
         public SpriteManager(Game game) : base(game)
@@ -23,7 +23,7 @@ namespace Stonephonia
         {
             spriteBatch = new SpriteBatch(Game.GraphicsDevice);
 
-            player = new UserSprite(Game.Content.Load<Texture2D>("Sprites/sprite_test"),
+            player = new Player(Game.Content.Load<Texture2D>("Sprites/sprite_test"),
                 new Vector2(0, 100), new Point(32, 32), new Point(0, 32), new Point(0, 0), 10, 16, 3);
 
             spriteList.Add(new Rock(Game.Content.Load<Texture2D>("Sprites/big_paddle"),
