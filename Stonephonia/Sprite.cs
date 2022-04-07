@@ -5,15 +5,15 @@ namespace Stonephonia
 {
     abstract class Sprite
     {
-        private Texture2D texture;
-        protected Vector2 position;
-        protected Point frameSize;
-        private Point currentFrame;
-        private Point sheetSize;
-        private int collisionOffset;
-        private int timeSinceLastFrame = 0;
-        private int timePerFrame;
-        protected int velocity;
+        private Texture2D mTexture;
+        protected Vector2 mPosition;
+        protected Point mFrameSize;
+        private Point mCurrentFrame;
+        private Point mSheetSize;
+        private int mCollisionOffset;
+        private int mTimeSinceLastFrame = 0;
+        private int mTimePerFrame;
+        protected int mVelocity;
 
         // Allow subclasses to define behaviour based on movement direction
         public abstract int direction { get; }
@@ -23,10 +23,10 @@ namespace Stonephonia
             get
             {
                 return new Rectangle(
-                  (int)position.X + collisionOffset,
-                  (int)position.Y + collisionOffset,
-                  frameSize.X - (collisionOffset * 2),
-                  frameSize.Y - (collisionOffset * 2));
+                  (int)mPosition.X + mCollisionOffset,
+                  (int)mPosition.Y + mCollisionOffset,
+                  mFrameSize.X - (mCollisionOffset * 2),
+                  mFrameSize.Y - (mCollisionOffset * 2));
             }
         }
 
@@ -34,38 +34,38 @@ namespace Stonephonia
             Point frameSize, Point currentFrame, Point sheetSize,
             int collisionOffset, int timePerFrame, int velocity)
         {
-            this.texture = texture;
-            this.position = position;
-            this.frameSize = frameSize;
-            this.currentFrame = currentFrame;
-            this.sheetSize = sheetSize;
-            this.collisionOffset = collisionOffset;
-            this.timePerFrame = timePerFrame;
-            this.velocity = velocity;
+            mTexture = texture;
+            mPosition = position;
+            mFrameSize = frameSize;
+            mCurrentFrame = currentFrame;
+            mSheetSize = sheetSize;
+            mCollisionOffset = collisionOffset;
+            mTimePerFrame = timePerFrame;
+            mVelocity = velocity;
         }
 
         public virtual void Update(GameTime gameTime)
         {
             // Animate sprite
-            timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
-            if (timeSinceLastFrame > timePerFrame)
+            mTimeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
+            if (mTimeSinceLastFrame > mTimePerFrame)
             {
-                timeSinceLastFrame = 0;
-                ++currentFrame.X;
+                mTimeSinceLastFrame = 0;
+                ++mCurrentFrame.X;
 
-                if (currentFrame.X >= sheetSize.X)
+                if (mCurrentFrame.X >= mSheetSize.X)
                 {
-                    currentFrame.X = 0;
-                    ++currentFrame.Y;
+                    mCurrentFrame.X = 0;
+                    ++mCurrentFrame.Y;
 
-                    if (currentFrame.Y >= sheetSize.Y) { currentFrame.Y = 0; }
+                    if (mCurrentFrame.Y >= mSheetSize.Y) { mCurrentFrame.Y = 0; }
                 }
             }
         }
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y),
+            spriteBatch.Draw(mTexture, mPosition, new Rectangle(mCurrentFrame.X * mFrameSize.X, mCurrentFrame.Y * mFrameSize.Y, mFrameSize.X, mFrameSize.Y),
                 Color.White, rotation: 0, origin: Vector2.Zero, scale: 1f, SpriteEffects.None, layerDepth: 0);
         }
     }

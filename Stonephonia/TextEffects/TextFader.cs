@@ -7,12 +7,16 @@ namespace Stonephonia.TextEffects
     class TextFader
     {
         List<LetterFader> mLetters;
-        float mTotalTime;
+        SpriteFont mFont;
+        float mTextXPos;
         float mTimeInterval;
+        float mTotalTime = 0.0f;
 
-        public TextFader(string text, float totalTime, float timeInterval,
-            float fadeSpeed, float textOpacity)
+        public TextFader(SpriteFont font, string text, float timeInterval, float fadeSpeed, float textOpacity)
         {
+            mFont = font;
+            mTimeInterval = timeInterval;
+
             char[] letters = text.ToCharArray();
             mLetters = new List<LetterFader> { };
 
@@ -21,8 +25,8 @@ namespace Stonephonia.TextEffects
                 mLetters.Add(new LetterFader(false, letters[i], fadeSpeed, textOpacity));
             }
 
-            mTotalTime = totalTime;
-            mTimeInterval = timeInterval;
+            // Get length of original string and set position of first letter to center text on screen 
+            mTextXPos = GamePort.renderSurface.Bounds.Width / 2 - font.MeasureString(text).X / 2;
         }
 
         public void Update(float elapsedTime)
@@ -49,11 +53,16 @@ namespace Stonephonia.TextEffects
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch, SpriteFont font, Vector2 position, int spacing, Color colour)
+        public void Draw(SpriteBatch spriteBatch, Vector2 position, int spacing, bool centered, Color colour)
         {
+            if (centered)
+            {
+                position.X = mTextXPos;
+            }
+
             foreach (LetterFader letter in mLetters)
             {
-                letter.Draw(spriteBatch, font, position, colour);
+                letter.Draw(spriteBatch, mFont, position, colour);
                 position.X += spacing;
             }
         }

@@ -10,7 +10,7 @@ namespace Stonephonia.TextEffects
         char mLetter;
         float mFadeSpeed;
         float mTextOpacity;
-        
+                
         public LetterFader(bool enabled, char letter, float fadeSpeed, float textOpacity)
         {
             mEnabled = enabled;
