@@ -27,26 +27,13 @@ namespace Stonephonia
             mTexture = texture;
         }
 
-        public virtual void Update(GameTime gameTime, Entity entity)
+        public virtual void Update(GameTime gameTime, Rock[] rock)
         {
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(mTexture, mPosition, mColour);
-        }
-
-        // AABB Collision
-        protected bool CollideWithLeft(Entity entity)
-        {
-            return mCollisionRect.Right + mVelocity > entity.mCollisionRect.Left &&
-                   mCollisionRect.Left < entity.mCollisionRect.Left;
-        }
-
-        protected bool CollideWithRight(Entity entity)
-        {
-            return mCollisionRect.Left + mVelocity < entity.mCollisionRect.Right &&
-                   mCollisionRect.Right > entity.mCollisionRect.Right;
         }
     }
 }

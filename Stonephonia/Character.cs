@@ -7,17 +7,25 @@ namespace Stonephonia
 {
     class Character : Entity
     {
+        public Rock mCurrentRock;
+
         public Character(Texture2D texture)
         : base(texture)
         {
         }
 
-        public override void Update(GameTime gameTime, Entity entity)
+        public override void Update(GameTime gameTime, Rock[] rock)
         {
-            Move(entity);
+            CalculateMovement();
+
+            PushRock(rock);
+
+            mPosition.X += mVelocity;
+
+            ClampToScreen();
         }
 
-        private void Move(Entity entity)
+        private void CalculateMovement()
         {
             int inputDir = 0;
 
@@ -30,33 +38,74 @@ namespace Stonephonia
                 inputDir -= 1;
             }
             mVelocity = inputDir * mMoveSpeed;
-
-            Collide(entity);
-
-            mPosition.X += mVelocity;
-
-            ClampToScreen();
         }
 
-        // TODO: PASS IN ROCKS
-        private void Collide(Entity entity)
+        // AABB Collision
+        private bool Collision(int amountToMove, Rock rock)
         {
-            if (mVelocity > 0 && CollideWithLeft(entity))
+            return (mCollisionRect.Right + amountToMove > rock.mCollisionRect.Left &&
+                   mCollisionRect.Left < rock.mCollisionRect.Left) ||
+                   (mCollisionRect.Left + amountToMove < rock.mCollisionRect.Right &&
+                   mCollisionRect.Right > rock.mCollisionRect.Right);
+        }
+
+        private void TargetClosestRock(Rock[] rock)
+        {
+            if (!Collision(0, rock[0]) && Collision(mVelocity, rock[0]))
             {
-                while (mCollisionRect.Right < entity.mCollisionRect.Left)
+                mCurrentRock = rock[0];
+            }
+            else if (!Collision(0, rock[1]) && Collision(mVelocity, rock[1]))
+            {
+                mCurrentRock = rock[1];
+            }
+            else if (!Collision(0, rock[2]) && Collision(mVelocity, rock[2]))
+            {
+                mCurrentRock = rock[2];
+            }
+            else if (!Collision(0, rock[3]) && Collision(mVelocity, rock[3]))
+            {
+                mCurrentRock = rock[3];
+            }
+        }
+
+        private void ReleaseRock()
+        {
+            mCurrentRock = null;
+        }
+
+        private void PushRock(Rock[] rock)
+        {
+            if (mVelocity != 0 && InputManager.KeyHeld(Keys.Space))
+            {
+                // If player has a target rock but is not colliding with it, clear current target.
+                if (mCurrentRock != null && !Collision(Math.Sign(mVelocity), mCurrentRock))
                 {
-                    mPosition.X += Math.Sign(mVelocity);
+                    ReleaseRock();
                 }
-                mVelocity = 0;
+
+                // If no current rock, target closest rock that isn't already colliding with player
+                if (mCurrentRock == null)
+                {
+                    TargetClosestRock(rock);
+                }
+
+                // Push targeted rock
+                if (mCurrentRock != null)
+                {
+                    while (!Collision(Math.Sign(mVelocity), mCurrentRock))
+                    {
+                        mPosition.X += Math.Sign(mVelocity);
+                    }
+                    mVelocity = Math.Sign(mVelocity) * mCurrentRock.mMoveSpeed;
+
+                    mCurrentRock.mPosition.X += mVelocity;
+                }
             }
 
-            if (mVelocity < 0 && CollideWithRight(entity))
+            if (InputManager.KeyReleased(Keys.Space))
             {
-                while (mCollisionRect.Left > entity.mCollisionRect.Right)
-                {
-                    mPosition.X += Math.Sign(mVelocity);
-                }
-                mVelocity = 0;
+                ReleaseRock();
             }
         }
 

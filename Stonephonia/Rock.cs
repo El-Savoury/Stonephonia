@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Stonephonia
 {
-    class Rock : Entity
+    public class Rock : Entity
     {
         public Rock(Texture2D texture)
             : base(texture)

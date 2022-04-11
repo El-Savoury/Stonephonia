@@ -36,7 +36,7 @@ namespace Stonephonia
 
         protected override void Initialize()
         {
-            GamePort.renderSurface = new RenderTarget2D(GraphicsDevice, 240, 180);
+            GamePort.renderSurface = new RenderTarget2D(GraphicsDevice, 480, 360/*240, 180*/);
 
             graphicsDeviceMgr.PreferredBackBufferWidth = 1280;
             graphicsDeviceMgr.PreferredBackBufferHeight = 720;
