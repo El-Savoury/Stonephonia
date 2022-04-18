@@ -70,13 +70,14 @@ namespace Stonephonia.Screens
         {
             //player.Update(gameTime);
             //textFader.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds);
+            character.Update(gameTime, rock);
 
             foreach (Rock rock in rock)
             {
                 rock.Update(gameTime);
             }
 
-            character.Update(gameTime, rock);
+            
 
             base.Update(gameTime);
         }
