@@ -57,7 +57,7 @@ namespace Stonephonia.Screens
                 mPosition = new Vector2(400, 50),
                 mMaxSpeed = 1,
                 mSpeedModifier = 0.005f,
-                mColour = Color.Blue,
+                mColour = Color.LightBlue,
             };
 
             base.LoadAssets();
@@ -70,14 +70,13 @@ namespace Stonephonia.Screens
         {
             //player.Update(gameTime);
             //textFader.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds);
-            character.Update(gameTime, rock);
+
+            character.Update(rock);
 
             foreach (Rock rock in rock)
             {
-                rock.Update(gameTime);
+                rock.Update();
             }
-
-            
 
             base.Update(gameTime);
         }

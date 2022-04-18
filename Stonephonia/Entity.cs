@@ -28,11 +28,7 @@ namespace Stonephonia
             mTexture = texture;
         }
 
-        public virtual void Update(GameTime gameTime)
-        {
-        }
-
-        public virtual void Update(GameTime gameTime, Rock[] rock)
+        public virtual void Update()
         {
         }
 

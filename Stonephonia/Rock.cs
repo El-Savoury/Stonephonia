@@ -10,7 +10,7 @@ namespace Stonephonia
         {
         }
 
-        public override void Update(GameTime gametime)
+        public override void Update()
         {
             mPosition.X += mVelocity;
         }

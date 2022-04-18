@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -8,13 +9,13 @@ namespace Stonephonia
     class Character : Entity
     {
         public Rock mCurrentRock;
-        
+
         public Character(Texture2D texture)
         : base(texture)
         {
         }
 
-        public override void Update(GameTime gameTime, Rock[] rock)
+        public void Update(Rock[] rock)
         {
             Move(rock);
         }
@@ -86,9 +87,12 @@ namespace Stonephonia
         private void ReleaseRock()
         {
             mCurrentRock.mVelocity = 0.0f;
+            pushVelocity = 0.0f;
             mCurrentRock = null;
+            Debug.WriteLine("RELEASE ROCK");
         }
 
+        float pushVelocity = 0.0f;
         private void PushRock(Rock[] rock)
         {
             if (InputManager.KeyHeld(Keys.Space))
@@ -96,7 +100,7 @@ namespace Stonephonia
                 // If player has a target rock but is not colliding with it, clear current target.
                 if (mCurrentRock != null && !Collision(Math.Sign(mVelocity), mCurrentRock))
                 {
-                        ReleaseRock();
+                    ReleaseRock();
                 }
 
                 // If no current rock, target closest rock that isn't already colliding with player
@@ -106,20 +110,28 @@ namespace Stonephonia
                 }
 
                 // Push targeted rock
-                if (mCurrentRock != null) 
+                if (mCurrentRock != null)
                 {
                     while (!Collision(Math.Sign(mVelocity), mCurrentRock))
                     {
                         mPosition.X += Math.Sign(mVelocity);
                     }
-                    mCurrentRock.mVelocity += (Math.Sign(mVelocity) * mCurrentRock.mMaxSpeed) * mCurrentRock.mSpeedModifier;
-                    mCurrentRock.mVelocity = Math.Clamp(mCurrentRock.mVelocity, -mCurrentRock.mMaxSpeed, mCurrentRock.mMaxSpeed);
-                    mVelocity = mCurrentRock.mVelocity;
+
+                    pushVelocity += (Math.Sign(mVelocity) * mCurrentRock.mMaxSpeed) * mCurrentRock.mSpeedModifier;
+                    pushVelocity = Math.Clamp(pushVelocity, -mCurrentRock.mMaxSpeed, mCurrentRock.mMaxSpeed);
+
+                    mVelocity = pushVelocity;
+                    mCurrentRock.mVelocity = pushVelocity;
+
+                    //mCurrentRock.mVelocity += (Math.Sign(mVelocity) * mCurrentRock.mMaxSpeed) * mCurrentRock.mSpeedModifier;
+                    //mCurrentRock.mVelocity = Math.Clamp(mCurrentRock.mVelocity, -mCurrentRock.mMaxSpeed, mCurrentRock.mMaxSpeed);
+                    //mVelocity = mCurrentRock.mVelocity;
                 }
             }
 
             if (mCurrentRock != null && InputManager.KeyReleased(Keys.Space))
             {
+                Debug.WriteLine("RELEASE SPACEBAR");
                 ReleaseRock();
             }
         }
