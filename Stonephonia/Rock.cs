@@ -10,11 +10,9 @@ namespace Stonephonia
         {
         }
 
-        //public override int mVelocity { get { return mMoveSpeed; } } // Inherit speed member of base class to allow movement
-
-        //public override void Update(GameTime gametime)
-        //{
-        //    mPosition.X += mDirection;
-        //}
+        public override void Update(GameTime gametime)
+        {
+            mPosition.X += mVelocity;
+        }
     }
 }

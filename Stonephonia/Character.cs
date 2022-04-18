@@ -8,7 +8,7 @@ namespace Stonephonia
     class Character : Entity
     {
         public Rock mCurrentRock;
-
+        
         public Character(Texture2D texture)
         : base(texture)
         {
@@ -16,10 +16,21 @@ namespace Stonephonia
 
         public override void Update(GameTime gameTime, Rock[] rock)
         {
+            Move(rock);
+        }
+
+        private void Move(Rock[] rock)
+        {
             CalculateMovement();
 
             PushRock(rock);
 
+            if (!InputManager.KeyHeld(Keys.Right) && !InputManager.KeyHeld(Keys.Left))
+            {
+                mVelocity = 0.0f;
+            }
+
+            mVelocity = Math.Clamp(mVelocity, -mMaxSpeed, mMaxSpeed);
             mPosition.X += mVelocity;
 
             ClampToScreen();
@@ -29,19 +40,22 @@ namespace Stonephonia
         {
             int inputDir = 0;
 
-            if (InputManager.KeyHeld(Keys.Right) || InputManager.KeyHeld(Keys.D))
+            if (InputManager.KeyHeld(Keys.Right))
             {
                 inputDir += 1;
             }
-            if (InputManager.KeyHeld(Keys.Left) || InputManager.KeyHeld(Keys.A))
+
+            if (InputManager.KeyHeld(Keys.Left))
             {
                 inputDir -= 1;
             }
-            mVelocity = inputDir * mMoveSpeed;
+
+            mVelocity = inputDir * mMaxSpeed;
         }
 
+
         // AABB Collision
-        private bool Collision(int amountToMove, Rock rock)
+        private bool Collision(float amountToMove, Rock rock)
         {
             return (mCollisionRect.Right + amountToMove > rock.mCollisionRect.Left &&
                    mCollisionRect.Left < rock.mCollisionRect.Left) ||
@@ -71,17 +85,18 @@ namespace Stonephonia
 
         private void ReleaseRock()
         {
+            mCurrentRock.mVelocity = 0.0f;
             mCurrentRock = null;
         }
 
         private void PushRock(Rock[] rock)
         {
-            if (mVelocity != 0 && InputManager.KeyHeld(Keys.Space))
+            if (InputManager.KeyHeld(Keys.Space))
             {
                 // If player has a target rock but is not colliding with it, clear current target.
                 if (mCurrentRock != null && !Collision(Math.Sign(mVelocity), mCurrentRock))
                 {
-                    ReleaseRock();
+                        ReleaseRock();
                 }
 
                 // If no current rock, target closest rock that isn't already colliding with player
@@ -91,19 +106,19 @@ namespace Stonephonia
                 }
 
                 // Push targeted rock
-                if (mCurrentRock != null)
+                if (mCurrentRock != null) 
                 {
                     while (!Collision(Math.Sign(mVelocity), mCurrentRock))
                     {
                         mPosition.X += Math.Sign(mVelocity);
                     }
-                    mVelocity = Math.Sign(mVelocity) * mCurrentRock.mMoveSpeed;
-
-                    mCurrentRock.mPosition.X += mVelocity;
+                    mCurrentRock.mVelocity += (Math.Sign(mVelocity) * mCurrentRock.mMaxSpeed) * mCurrentRock.mSpeedModifier;
+                    mCurrentRock.mVelocity = Math.Clamp(mCurrentRock.mVelocity, -mCurrentRock.mMaxSpeed, mCurrentRock.mMaxSpeed);
+                    mVelocity = mCurrentRock.mVelocity;
                 }
             }
 
-            if (InputManager.KeyReleased(Keys.Space))
+            if (mCurrentRock != null && InputManager.KeyReleased(Keys.Space))
             {
                 ReleaseRock();
             }

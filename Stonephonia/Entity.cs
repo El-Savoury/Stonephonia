@@ -8,8 +8,9 @@ namespace Stonephonia
         protected Texture2D mTexture;
         public Vector2 mPosition;
         public Color mColour = Color.White;
-        public int mVelocity;
-        public int mMoveSpeed = 0;
+        public float mVelocity;
+        public float mSpeedModifier;
+        public int mMaxSpeed = 0;
         public int mCollisionOffset = 0;
 
         public Rectangle mCollisionRect
@@ -25,6 +26,10 @@ namespace Stonephonia
         public Entity(Texture2D texture)
         {
             mTexture = texture;
+        }
+
+        public virtual void Update(GameTime gameTime)
+        {
         }
 
         public virtual void Update(GameTime gameTime, Rock[] rock)
