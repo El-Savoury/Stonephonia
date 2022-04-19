@@ -89,13 +89,13 @@ namespace Stonephonia.Screens
             foreach (Rock rock in rock)
             {
                 rock.Draw(spriteBatch);
+                spriteBatch.DrawString(ScreenManager.font, $"mCurrentRock.X: {rock.mPosition.X}", new Vector2(0, 30), Color.Yellow);
             }
 
             character.Draw(spriteBatch);
 
-            spriteBatch.DrawString(ScreenManager.font, $"currentRock: {Array.IndexOf(rock, character.mCurrentRock)}", Vector2.Zero, Color.White);
-            spriteBatch.DrawString(ScreenManager.font, $"mVelocity: {character.mVelocity}", new Vector2(0, 15), Color.White);
-
+            spriteBatch.DrawString(ScreenManager.font, $"mVelocity: {character.mVelocity}", new Vector2(0, 0), Color.White);
+            spriteBatch.DrawString(ScreenManager.font, $"mPosition.X: {character.mPosition.X}", new Vector2(0, 15), Color.Red);
         }
 
     }

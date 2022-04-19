@@ -54,7 +54,6 @@ namespace Stonephonia
             mVelocity = inputDir * mMaxSpeed;
         }
 
-
         // AABB Collision
         private bool Collision(float amountToMove, Rock rock)
         {
@@ -88,7 +87,9 @@ namespace Stonephonia
         {
             mCurrentRock.mVelocity = 0.0f;
             pushVelocity = 0.0f;
+            mCurrentRock.mPosition.X = (int)mCurrentRock.mPosition.X;
             mCurrentRock = null;
+            mPosition.X = (int)mPosition.X;
             Debug.WriteLine("RELEASE ROCK");
         }
 
