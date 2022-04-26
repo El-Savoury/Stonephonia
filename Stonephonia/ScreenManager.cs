@@ -14,8 +14,12 @@ namespace Stonephonia
         public static SpriteBatch spriteBatch;
         public static List<GameScreen> screenList;
         public static ContentManager contentMgr;
-
         public static SpriteFont font;
+
+        private readonly int windowWidth = 1280;
+        private readonly int windowHeight = 720;
+        private readonly int nativeResWidth = 480;
+        private readonly int nativeResHeight = 360;
 
         public static void Main()
         {
@@ -28,7 +32,7 @@ namespace Stonephonia
             graphicsDeviceMgr = new GraphicsDeviceManager(this);
 
             this.TargetElapsedTime = new TimeSpan(333333);
-            Window.AllowUserResizing = true;
+            Window.AllowUserResizing = false;
             IsMouseVisible = true;
 
             Content.RootDirectory = "Content";
@@ -36,13 +40,11 @@ namespace Stonephonia
 
         protected override void Initialize()
         {
-            GamePort.renderSurface = new RenderTarget2D(GraphicsDevice, 480, 360/*240, 180*/);
+            GamePort.renderSurface = new RenderTarget2D(GraphicsDevice, nativeResWidth, nativeResHeight);
 
-            graphicsDeviceMgr.PreferredBackBufferWidth = 1280;
-            graphicsDeviceMgr.PreferredBackBufferHeight = 720;
-
+            graphicsDeviceMgr.PreferredBackBufferWidth = windowWidth;
+            graphicsDeviceMgr.PreferredBackBufferHeight = windowHeight;
             graphicsDeviceMgr.IsFullScreen = false;
-
             graphicsDeviceMgr.ApplyChanges();
 
             Window.ClientSizeChanged += (sender, args) => GamePort.KeepAspectRatio(Window);
@@ -67,7 +69,6 @@ namespace Stonephonia
             {
                 screen.UnloadAssests();
             }
-
             screenList.Clear();
             Content.Unload();
         }
@@ -75,11 +76,10 @@ namespace Stonephonia
         protected override void Update(GameTime gameTime)
         {
             InputManager.Update();
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape)) { Exit(); }
+            UserToggleFullScreen();
+            UserCloseWindow();
 
             int startIndex = screenList.Count - 1;
-
             for (int i = startIndex; i < screenList.Count; i++)
             {
                 screenList[i].Update(gameTime);
@@ -95,7 +95,6 @@ namespace Stonephonia
 
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             int startIndex = screenList.Count - 1;
-
             for (int i = startIndex; i < screenList.Count; i++)
             {
                 screenList[i].Draw(gameTime, spriteBatch);
@@ -118,7 +117,6 @@ namespace Stonephonia
             {
                 screenList = new List<GameScreen>();
             }
-
             screenList.Add(gameScreen);
             gameScreen.LoadAssets();
         }
@@ -139,5 +137,33 @@ namespace Stonephonia
             RemoveScreen(currentScreen);
             AddScreen(nextScreen);
         }
+
+        private void UserToggleFullScreen()
+        {
+            if (InputManager.KeyHeld(Keys.LeftAlt) && InputManager.KeyHeld(Keys.Enter))
+            {
+                if (graphicsDeviceMgr.IsFullScreen)
+                {
+                    graphicsDeviceMgr.PreferredBackBufferWidth = windowWidth;
+                    graphicsDeviceMgr.PreferredBackBufferHeight = windowHeight;
+                    graphicsDeviceMgr.IsFullScreen = false;
+                }
+                else
+                {
+                    graphicsDeviceMgr.PreferredBackBufferWidth = Window.ClientBounds.Width;
+                    graphicsDeviceMgr.PreferredBackBufferHeight = Window.ClientBounds.Height;
+                    graphicsDeviceMgr.IsFullScreen = true;
+                }
+                graphicsDeviceMgr.ApplyChanges();
+            }
+        }
+        private void UserCloseWindow()
+        {
+            if (InputManager.KeyPressed(Keys.Escape))
+            {
+                Exit();
+            }
+        }
+
     }
 }

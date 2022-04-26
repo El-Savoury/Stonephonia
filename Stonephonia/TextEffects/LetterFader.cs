@@ -6,11 +6,11 @@ namespace Stonephonia.TextEffects
 {
     public class LetterFader
     {
-        bool mEnabled;
-        char mLetter;
-        float mFadeSpeed;
-        float mTextOpacity;
-                
+        private bool mEnabled;
+        private char mLetter;
+        private float mFadeSpeed;
+        private float mTextOpacity;
+
         public LetterFader(bool enabled, char letter, float fadeSpeed, float textOpacity)
         {
             mEnabled = enabled;
@@ -41,7 +41,6 @@ namespace Stonephonia.TextEffects
             {
                 mTextOpacity -= elapsedTime / 1000.0f * mFadeSpeed;
             }
-
             mTextOpacity = Math.Clamp(mTextOpacity, 0.0f, 1.0f);
         }
 

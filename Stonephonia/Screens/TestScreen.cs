@@ -17,7 +17,7 @@ namespace Stonephonia.Screens
             //player = new Player(ScreenManager.contentMgr.Load<Texture2D>("Sprites/sprite_test"),
             //    new Vector2(0, 100), new Point(32, 32), new Point(0, 0), new Point(32, 32), 10, 16, 3);
 
-            //textFader = new TextFader(ScreenManager.font, "Here is some text on screen", 100f, 0.5f, 0f);
+            textFader = new TextFader(ScreenManager.font, "Here is some text on screen", 100f, 0.5f, 0f);
 
             character = new Character(ScreenManager.contentMgr.Load<Texture2D>("Sprites/sprite_test"))
             {
@@ -32,7 +32,7 @@ namespace Stonephonia.Screens
             {
                 mPosition = new Vector2(100, 50),
                 mMaxSpeed = 4,
-                mSpeedModifier = 0.08f,
+                mAcceleration = 0.08f,
                 mColour = Color.Yellow,
             };
 
@@ -40,7 +40,7 @@ namespace Stonephonia.Screens
             {
                 mPosition = new Vector2(200, 50),
                 mMaxSpeed = 3,
-                mSpeedModifier = 0.02f,
+                mAcceleration = 0.02f,
                 mColour = Color.Pink,
             };
 
@@ -48,7 +48,7 @@ namespace Stonephonia.Screens
             {
                 mPosition = new Vector2(300, 50),
                 mMaxSpeed = 2,
-                mSpeedModifier = 0.008f,
+                mAcceleration = 0.008f,
                 mColour = Color.Orange,
             };
 
@@ -56,7 +56,7 @@ namespace Stonephonia.Screens
             {
                 mPosition = new Vector2(400, 50),
                 mMaxSpeed = 1,
-                mSpeedModifier = 0.005f,
+                mAcceleration = 0.005f,
                 mColour = Color.LightBlue,
             };
 
@@ -69,14 +69,15 @@ namespace Stonephonia.Screens
         public override void Update(GameTime gameTime)
         {
             //player.Update(gameTime);
-            //textFader.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds);
+            
+            textFader.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds);
 
             character.Update(rock);
 
-            foreach (Rock rock in rock)
-            {
-                rock.Update();
-            }
+            //foreach (Rock rock in rock)
+            //{
+            //    rock.Update();
+            //}
 
             base.Update(gameTime);
         }
@@ -84,18 +85,18 @@ namespace Stonephonia.Screens
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             //player.Draw(gameTime, spriteBatch);
-            //textFader.Draw(spriteBatch, new Vector2(10, 65), 6, true, Color.White);
+            
+            textFader.Draw(spriteBatch, new Vector2(10, 65), 6, true, Color.White);
 
             foreach (Rock rock in rock)
             {
                 rock.Draw(spriteBatch);
-                spriteBatch.DrawString(ScreenManager.font, $"mCurrentRock.X: {rock.mPosition.X}", new Vector2(0, 30), Color.Yellow);
             }
 
             character.Draw(spriteBatch);
 
             spriteBatch.DrawString(ScreenManager.font, $"mVelocity: {character.mVelocity}", new Vector2(0, 0), Color.White);
-            spriteBatch.DrawString(ScreenManager.font, $"mPosition.X: {character.mPosition.X}", new Vector2(0, 15), Color.Red);
+            spriteBatch.DrawString(ScreenManager.font, $"mPushVelocity: {character.mPushVelocity}", new Vector2(0, 15), Color.Red);
         }
 
     }

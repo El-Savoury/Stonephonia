@@ -9,8 +9,8 @@ namespace Stonephonia
         public Vector2 mPosition;
         public Color mColour = Color.White;
         public float mVelocity;
-        public float mSpeedModifier;
-        public float mMaxSpeed = 0;
+        public float mAcceleration;
+        public int mMaxSpeed = 0;
         public int mCollisionOffset = 0;
 
         public Rectangle mCollisionRect

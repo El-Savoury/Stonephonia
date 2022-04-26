@@ -12,7 +12,7 @@ namespace Stonephonia
 
         public override void Update()
         {
-            mPosition.X += mVelocity;
+            //mPosition.X += mVelocity;
         }
     }
 }

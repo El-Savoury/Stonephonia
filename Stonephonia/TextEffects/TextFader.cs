@@ -4,13 +4,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Stonephonia.TextEffects
 {
-    class TextFader
+    public class TextFader
     {
-        List<LetterFader> mLetters;
-        SpriteFont mFont;
-        float mTextXPos;
-        float mTimeInterval;
-        float mTotalTime = 0.0f;
+        private List<LetterFader> mLetters;
+        private SpriteFont mFont;
+        private float mTextXPos;
+        private float mTimeInterval;
+        private float mTotalTime = 0.0f;
 
         public TextFader(SpriteFont font, string text, float timeInterval, float fadeSpeed, float textOpacity)
         {
@@ -34,7 +34,6 @@ namespace Stonephonia.TextEffects
             mTotalTime += elapsedTime;
 
             int enabledIndex = (int)(mTotalTime / mTimeInterval);
-
             for (int i = 0; i < mLetters.Count; i++)
             {
                 if (i < enabledIndex)
