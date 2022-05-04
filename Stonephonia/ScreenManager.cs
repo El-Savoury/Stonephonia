@@ -76,8 +76,7 @@ namespace Stonephonia
         protected override void Update(GameTime gameTime)
         {
             InputManager.Update();
-            UserToggleFullScreen();
-            UserCloseWindow();
+            UserControlWindow();
 
             int startIndex = screenList.Count - 1;
             for (int i = startIndex; i < screenList.Count; i++)
@@ -138,32 +137,30 @@ namespace Stonephonia
             AddScreen(nextScreen);
         }
 
-        private void UserToggleFullScreen()
+        private void UserControlWindow()
         {
-            if (InputManager.KeyHeld(Keys.LeftAlt) && InputManager.KeyHeld(Keys.Enter))
-            {
-                if (graphicsDeviceMgr.IsFullScreen)
-                {
-                    graphicsDeviceMgr.PreferredBackBufferWidth = windowWidth;
-                    graphicsDeviceMgr.PreferredBackBufferHeight = windowHeight;
-                    graphicsDeviceMgr.IsFullScreen = false;
-                }
-                else
-                {
-                    graphicsDeviceMgr.PreferredBackBufferWidth = Window.ClientBounds.Width;
-                    graphicsDeviceMgr.PreferredBackBufferHeight = Window.ClientBounds.Height;
-                    graphicsDeviceMgr.IsFullScreen = true;
-                }
-                graphicsDeviceMgr.ApplyChanges();
-            }
-        }
-        private void UserCloseWindow()
-        {
+            ToggleFullScreen();
+
             if (InputManager.KeyPressed(Keys.Escape))
             {
                 Exit();
             }
         }
 
+        private void ToggleFullScreen()
+        {
+            if (InputManager.KeyHeld(Keys.LeftAlt) && InputManager.KeyHeld(Keys.Enter))
+            {
+                if (graphicsDeviceMgr.IsFullScreen)
+                {
+                    graphicsDeviceMgr.IsFullScreen = false;
+                }
+                else
+                {
+                    graphicsDeviceMgr.IsFullScreen = true;
+                }
+                graphicsDeviceMgr.ApplyChanges();
+            }
+        }
     }
 }

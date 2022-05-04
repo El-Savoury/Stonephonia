@@ -5,9 +5,8 @@ namespace Stonephonia
 {
     public class Entity
     {
-        protected Texture2D mTexture;
+        public Sprite mSprite;
         public Vector2 mPosition;
-        public Color mColour = Color.White;
         public float mVelocity;
         public float mAcceleration;
         public int mMaxSpeed = 0;
@@ -19,22 +18,23 @@ namespace Stonephonia
             {
                 return new Rectangle(
                     (int)mPosition.X + mCollisionOffset, (int)mPosition.Y,
-                    mTexture.Width - mCollisionOffset, mTexture.Height);
+                    mSprite.mFrameSize.X - mCollisionOffset, mSprite.mFrameSize.Y);
             }
         }
 
-        public Entity(Texture2D texture)
+        public Entity(float xPos, float yPos)
         {
-            mTexture = texture;
+            mPosition = new Vector2(xPos, yPos);
         }
 
-        public virtual void Update()
+        public virtual void Update(GameTime gameTime)
         {
+            mSprite.Update(gameTime);
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(mTexture, mPosition, mColour);
+            mSprite.Draw(spriteBatch, mPosition);
         }
     }
 }

@@ -5,14 +5,9 @@ namespace Stonephonia
 {
     public class Rock : Entity
     {
-        public Rock(Texture2D texture)
-            : base(texture)
+        public Rock(float xPos, float yPos)
+            : base(xPos, yPos)
         {
-        }
-
-        public override void Update()
-        {
-            //mPosition.X += mVelocity;
         }
     }
 }
