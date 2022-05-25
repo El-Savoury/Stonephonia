@@ -5,11 +5,13 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/Ross/Documents/C#/visual studio/Stonephonia/Stonephonia/Content/Font.spritefont</File>
-    <File>C:/Users/Ross/Documents/C#/visual studio/Stonephonia/Stonephonia/Content/Sprites/big paddle.png</File>
-    <File>C:/Users/Ross/Documents/C#/visual studio/Stonephonia/Stonephonia/Content/Sprites/sprite_sheet_test.png</File>
+    <File>C:/Users/Ross/Documents/C#/visual studio/Stonephonia/Stonephonia/Content/Sprites/idle_test_sheet.png</File>
     <File>C:/Users/Ross/Documents/C#/visual studio/Stonephonia/Stonephonia/Content/Sprites/sprite_test.png</File>
+    <File>C:/Users/Ross/Documents/C#/visual studio/Stonephonia/Stonephonia/Content/Sprites/temp_sprite.png</File>
+    <File>C:/Users/Ross/Documents/C#/visual studio/Stonephonia/Stonephonia/Content/Sprites/temp_sprite_fade.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Stonephonia.TextEffects;
+using Stonephonia.Effects;
 
 namespace Stonephonia.Screens
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Stonephonia.TextEffects;
+using Stonephonia.Effects;
 
 namespace Stonephonia.Screens
 {
@@ -17,8 +17,8 @@ namespace Stonephonia.Screens
 
             player = new Player(10, 50)
             {
-                mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/sprite_sheet_test"),
-                new Point(32, 32), new Point(0, 0), new Point(4, 1), 100, Color.White),
+                mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/idle_test_sheet"),
+                new Point(32, 32), new Point(0, 0), new Point(4, 1), 200, Color.White),
 
                 mMaxSpeed = 4,
             };
@@ -60,9 +60,8 @@ namespace Stonephonia.Screens
                 mMaxSpeed = 1,
                 mAcceleration = 0.005f,
             };
-
-            base.LoadAssets();
         }
+
         public override void UnloadAssests()
         {
         }

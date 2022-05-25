@@ -18,8 +18,8 @@ namespace Stonephonia
 
         private readonly int windowWidth = 1280;
         private readonly int windowHeight = 720;
-        private readonly int nativeResWidth = 480;
-        private readonly int nativeResHeight = 360;
+        private readonly int nativeResWidth = 320;
+        private readonly int nativeResHeight = 240;
 
         public static void Main()
         {
@@ -60,7 +60,8 @@ namespace Stonephonia
 
             font = Content.Load<SpriteFont>("Font");
 
-            AddScreen(new TestScreen());
+            //AddScreen(new TestScreen());
+            AddScreen(new IntroCutscene());
         }
 
         protected override void UnloadContent()

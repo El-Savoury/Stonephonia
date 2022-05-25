@@ -7,16 +7,15 @@ namespace Stonephonia
     {
         public Texture2D mTexture;
         public Color mColour = Color.White;
-        public Point mFrameSize;
-        private Point mCurrentFrame;
-        private Point mSheetSize;
+        public Point mFrameSize; // Size of frame containing sprite to be shown.
+        private Point mCurrentFrame; // Top left coordinate of desired frame to begin animating from.
+        private Point mSheetSize; // Number of rows and collumns on spritesheet.
         private int mTimeSinceLastFrame = 0;
         private int mTimePerFrame;
-
-        public int direction { get; } // Allow subclasses to define behaviour based on movement direction.
+        private float mAlpha;
 
         public Sprite(Texture2D texture, Point frameSize, Point currentFrame,
-            Point sheetSize, int timePerFrame, Color colour)
+            Point sheetSize, int timePerFrame, Color colour, float alpha = 1.0f)
         {
             mTexture = texture;
             mFrameSize = frameSize;
@@ -24,9 +23,15 @@ namespace Stonephonia
             mSheetSize = sheetSize;
             mTimePerFrame = timePerFrame;
             mColour = colour;
+            mAlpha = alpha;
         }
 
-        public void Update(GameTime gameTime) // Animate sprite.
+        public void SetVisible(bool visible)
+        {
+            mAlpha = visible ? 1.0f : 0.0f;
+        }
+
+        private void Animate(GameTime gameTime)
         {
             mTimeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
             if (mTimeSinceLastFrame > mTimePerFrame)
@@ -44,10 +49,15 @@ namespace Stonephonia
             }
         }
 
+        public void Update(GameTime gameTime) // Animate sprite.
+        {
+            Animate(gameTime);
+        }
+
         public void Draw(SpriteBatch spriteBatch, Vector2 position)
         {
             spriteBatch.Draw(mTexture, position, new Rectangle(mCurrentFrame.X * mFrameSize.X, mCurrentFrame.Y * mFrameSize.Y, mFrameSize.X, mFrameSize.Y),
-                mColour, rotation: 0, origin: Vector2.Zero, scale: 1f, SpriteEffects.None, layerDepth: 0);
+                mColour * mAlpha);
         }
     }
 }
