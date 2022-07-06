@@ -14,12 +14,14 @@ namespace Stonephonia
         public static SpriteBatch spriteBatch;
         public static List<GameScreen> screenList;
         public static ContentManager contentMgr;
+        public static ParticleManager particleManager;
         public static SpriteFont font;
+        public static Texture2D singlePixelTexture;
 
         private readonly int windowWidth = 1280;
         private readonly int windowHeight = 720;
-        private readonly int nativeResWidth = 320;
-        private readonly int nativeResHeight = 240;
+        private readonly int nativeResWidth = 200;
+        private readonly int nativeResHeight = 180;
 
         public static void Main()
         {
@@ -30,16 +32,16 @@ namespace Stonephonia
         public ScreenManager()
         {
             graphicsDeviceMgr = new GraphicsDeviceManager(this);
-
             this.TargetElapsedTime = new TimeSpan(333333);
             Window.AllowUserResizing = false;
             IsMouseVisible = true;
-
             Content.RootDirectory = "Content";
         }
 
         protected override void Initialize()
         {
+            particleManager = new ParticleManager();
+
             GamePort.renderSurface = new RenderTarget2D(GraphicsDevice, nativeResWidth, nativeResHeight);
 
             graphicsDeviceMgr.PreferredBackBufferWidth = windowWidth;
@@ -59,6 +61,10 @@ namespace Stonephonia
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             font = Content.Load<SpriteFont>("Font");
+
+            // Create 1x1 white pixel texture
+            singlePixelTexture = new Texture2D(GraphicsDevice, 1, 1);
+            singlePixelTexture.SetData(new Color[] { Color.Red });
 
             //AddScreen(new TestScreen());
             AddScreen(new IntroCutscene());
@@ -85,13 +91,15 @@ namespace Stonephonia
                 screenList[i].Update(gameTime);
             }
 
+            particleManager.Update(gameTime);
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.SetRenderTarget(GamePort.renderSurface);
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             int startIndex = screenList.Count - 1;
@@ -99,10 +107,11 @@ namespace Stonephonia
             {
                 screenList[i].Draw(gameTime, spriteBatch);
             }
+            particleManager.Draw(spriteBatch, singlePixelTexture);
             spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             spriteBatch.Draw(GamePort.renderSurface, GamePort.renderArea, Color.White);

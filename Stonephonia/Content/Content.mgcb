@@ -32,6 +32,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/idle_test_sheet.png
 
+#begin Sprites/player_sprite.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/player_sprite.png
+
 #begin Sprites/sprite_test.png
 /importer:TextureImporter
 /processor:TextureProcessor

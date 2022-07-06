@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "e0WXabcCmMcIvfG5Fd5Tir4+z9kv6VoJ8iqbrSfR3Qzsod6atuiAy9YV2EUe6QM8tjIXHpSrk/NMERadDxIdwQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Ross\\Documents\\C#\\visual studio\\Stonephonia\\Stonephonia\\Stonephonia.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Ross\\.nuget\\packages\\monogame.content.builder.task\\3.8.0.1641\\monogame.content.builder.task.3.8.0.1641.nupkg.sha512",
+    "C:\\Users\\Ross\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.0.1641\\monogame.framework.desktopgl.3.8.0.1641.nupkg.sha512"
+  ],
+  "logs": []
+}
