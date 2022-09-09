@@ -9,63 +9,81 @@ namespace Stonephonia
     {
         private Timer mParticleTimer;
         private Random mRandom;
-        private List<Particle> mSmallParticles;
-        private List<Rectangle> mLargeParticles;
+        private List<Particle> mParticleList;
+        private Texture2D mSmallTexture, mLargeTexture;
 
         public ParticleManager()
         {
             mParticleTimer = new Timer();
             mRandom = new Random();
-            mSmallParticles = new List<Particle>();
-            mLargeParticles = new List<Rectangle>();
+            mParticleList = new List<Particle>();
         }
 
-        private void SpawnSmallParticles()
+        public void LoadAssets()
         {
-            int spawnTime = mRandom.Next(1,3);
-            Point smallParticlePos = new Point(mRandom.Next(-30, 200), 0);
-            Point smallParticleSize = new Point(1, 1);
-            Point smallParticleVel = new Point(1, 2);
+            mSmallTexture = ScreenManager.contentMgr.Load<Texture2D>("Sprites/small_particle");
+            mLargeTexture = ScreenManager.contentMgr.Load<Texture2D>("Sprites/large_particle");
+        }
+
+        private void SpawnParticles()
+        {
+            int spawnTime = mRandom.Next(0, 15);
+            int spawnChance = mRandom.Next(1, 10);
+
+            // Randomise position along top of screen
+            Vector2 particleSpawnPos = new Vector2(mRandom.Next(-200, 800), 0);
 
             if (mParticleTimer.mCurrentTime > spawnTime)
             {
-                mSmallParticles.Add(new Particle(smallParticlePos, smallParticleSize));
+                if (spawnChance == 9)
+                {
+                    mParticleList.Add(new Particle(particleSpawnPos, new Vector2(1, 2), mLargeTexture));
+                }
+                else
+                {
+                    mParticleList.Add(new Particle(particleSpawnPos, new Vector2(1, 1), mSmallTexture));
+                }
                 mParticleTimer.Reset();
             }
-
-            if (mSmallParticles != null)
-            {
-                for (int i = 0; i < mSmallParticles.Count; i++)
-                {
-                    mSmallParticles[i].mBounds.X += smallParticleVel.X;
-                    mSmallParticles[i].mBounds.Y += smallParticleVel.Y;
-
-                    // Unload if particle leaves screen
-                    if (mSmallParticles[i].mBounds.X > 200 ||
-                        mSmallParticles[i].mBounds.Y > 180)
-                    {
-                        mSmallParticles[i] = null;
-                        mSmallParticles.Remove(mSmallParticles[i]);
-                    }
-                }
-            }
-
         }
 
+        private void MoveParticles()
+        {
+            SpawnParticles();
+
+            if (mParticleList != null)
+            {
+                for (int i = 0; i < mParticleList.Count; i++)
+                {
+                    mParticleList[i].Update();
+                    UnloadParticle(i); // Unload if particle leaves screen
+                }
+            }
+        }
+
+        private void UnloadParticle(int i)
+        {
+            if (mParticleList[i].mPosition.X > GamePort.renderSurface.Width ||
+                mParticleList[i].mPosition.Y > GamePort.renderSurface.Height)
+            {
+                mParticleList[i] = null;
+                mParticleList.Remove(mParticleList[i]);
+            }
+        }
 
         public void Update(GameTime gameTime)
         {
             mParticleTimer.Update(gameTime);
-            SpawnSmallParticles();
+            MoveParticles();
         }
 
-        public void Draw(SpriteBatch spriteBatch, Texture2D texture)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            if (mSmallParticles != null)
+            if (mParticleList != null)
             {
-                foreach (Particle particle in mSmallParticles)
+                foreach (Particle particle in mParticleList)
                 {
-                    particle.Draw(spriteBatch, texture);
+                    particle.Draw(spriteBatch);
                 }
             }
         }

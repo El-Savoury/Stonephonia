@@ -16,12 +16,11 @@ namespace Stonephonia
         public static ContentManager contentMgr;
         public static ParticleManager particleManager;
         public static SpriteFont font;
-        public static Texture2D singlePixelTexture;
-
+        
         private readonly int windowWidth = 1280;
         private readonly int windowHeight = 720;
-        private readonly int nativeResWidth = 200;
-        private readonly int nativeResHeight = 180;
+        private readonly int nativeResWidth = 400;
+        private readonly int nativeResHeight = 360;
 
         public static void Main()
         {
@@ -62,12 +61,10 @@ namespace Stonephonia
 
             font = Content.Load<SpriteFont>("Font");
 
-            // Create 1x1 white pixel texture
-            singlePixelTexture = new Texture2D(GraphicsDevice, 1, 1);
-            singlePixelTexture.SetData(new Color[] { Color.Red });
+            particleManager.LoadAssets();
 
-            //AddScreen(new TestScreen());
-            AddScreen(new IntroCutscene());
+            AddScreen(new TestScreen());
+            //AddScreen(new IntroCutscene());
         }
 
         protected override void UnloadContent()
@@ -107,7 +104,7 @@ namespace Stonephonia
             {
                 screenList[i].Draw(gameTime, spriteBatch);
             }
-            particleManager.Draw(spriteBatch, singlePixelTexture);
+            particleManager.Draw(spriteBatch);
             spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);

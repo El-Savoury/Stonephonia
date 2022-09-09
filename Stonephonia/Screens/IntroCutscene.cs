@@ -58,9 +58,9 @@ namespace Stonephonia.Screens
 
         public override void Draw(GameTime gametime, SpriteBatch spriteBatch)
         {
-            textFader.Draw(spriteBatch, new Vector2(0, 150), 5, true, Color.White);
-            playerSprite.Draw(spriteBatch, playerPosition);
-            playerFader.Draw(spriteBatch);
+            //textFader.Draw(spriteBatch, new Vector2(0, 150), 5, true, Color.White);
+            //playerSprite.Draw(spriteBatch, playerPosition);
+            //playerFader.Draw(spriteBatch);
             spriteBatch.DrawString(ScreenManager.font, $"mCurrentTime = {roomTimer.mCurrentTime}", Vector2.Zero, Color.White);
         }
     }

@@ -9,6 +9,15 @@ namespace Stonephonia
         public Rock mCurrentRock;
         public float mPushVelocity = 0.0f;
 
+        public enum State
+        {
+            idle,
+            walk,
+            push
+        }
+
+        State mCurrentState = State.idle;
+
         public Player(float xPos, float yPos)
         : base(xPos, yPos)
         {
@@ -28,7 +37,7 @@ namespace Stonephonia
             mVelocity = Math.Clamp(mVelocity, -mMaxSpeed, mMaxSpeed);
             mPosition.X += mVelocity;
             MoveSelectedRock();
-            KeepPlayerOnScreen();
+            KeepEntityOnScreen();
         }
 
         private void CalculateMovement()
@@ -65,7 +74,7 @@ namespace Stonephonia
             if (InputManager.KeyHeld(Keys.Space))
             {
                 // If player has a target rock but is not colliding with it, clear current target.
-                if (mCurrentRock != null && !Collision(Math.Sign(mVelocity), mCurrentRock))
+                if (mCurrentRock != null && !Collision(mVelocity, mCurrentRock))
                 {
                     ReleaseRock();
                 }
@@ -75,7 +84,7 @@ namespace Stonephonia
                     TargetClosestRock(rock);
                 }
                 // Grab targeted rock
-                if (mCurrentRock != null)
+                if (mCurrentRock != null && Collision(Math.Sign(mVelocity), mCurrentRock))
                 {
                     GrabSelectedRock();
                 }
@@ -110,7 +119,7 @@ namespace Stonephonia
         {
             if (mCurrentRock != null)
             {
-                if (mVelocity > 0)
+                if (mVelocity > 0 && mCurrentState == State.push)
                 {
                     mCurrentRock.mPosition.X = mPosition.X + mCollisionRect.Width;
                 }
@@ -123,14 +132,12 @@ namespace Stonephonia
 
         private void GrabSelectedRock()
         {
-            //while (!Collision(Math.Sign(mVelocity), mCurrentRock))
-            //{
-            //    mPosition.X += Math.Sign(mVelocity);
-            //}
-
             mPushVelocity += Math.Sign(mVelocity) * mCurrentRock.mAcceleration;
             mPushVelocity = Math.Clamp(mPushVelocity, -mCurrentRock.mMaxSpeed, mCurrentRock.mMaxSpeed);
             mVelocity = mPushVelocity;
+
+            mCurrentState = State.push;
+
         }
 
         private void ReleaseRock()
@@ -139,9 +146,11 @@ namespace Stonephonia
             mCurrentRock.mVelocity = 0.0f;
             mPushVelocity = 0.0f;
             mCurrentRock = null;
+
+            mCurrentState = State.walk;
         }
 
-        private void KeepPlayerOnScreen()
+        private void KeepEntityOnScreen()
         {
             if (mCollisionRect.X < GamePort.renderSurface.Bounds.X)
             {
