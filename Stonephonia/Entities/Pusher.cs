@@ -7,7 +7,7 @@ namespace Stonephonia
 {
     class Pusher : Entity
     {
-        private Rock mCurrentRock;
+        public Rock mCurrentRock;
         private float mPushVelocity = 0.0f;
 
         public Pusher(float xPos, float yPos)
@@ -49,74 +49,99 @@ namespace Stonephonia
             }
         }
 
-        private void Move(Rock rock)
+        private void Move()
         {
-            CalculateMovement();
-            CollideWithRock(rock);
-            GetRockSpeed(rock);
-
             mVelocity = Math.Clamp(mVelocity, -mMaxSpeed, mMaxSpeed);
             mPosition.X += mVelocity;
 
-            PushRock(rock);
             KeepEntityOnScreen();
         }
 
-        private void CollideWithRock(Rock rock)
+
+        private void TargetClosestRock(Rock[] rock)
         {
-            if (!Collision(0, rock) && Collision(mVelocity, rock) && InputManager.KeyHeld(Keys.Space))
+            if (mCurrentState != State.push)
             {
-                if (CollisionRight(mVelocity, rock))
+                if (!Collision(0, rock[0]) && Collision(mVelocity, rock[0]))
                 {
-                    while (mCollisionRect.Right < rock.mCollisionRect.Left)
+                    mCurrentRock = rock[0];
+                }
+                else if (!Collision(0, rock[1]) && Collision(mVelocity, rock[1]))
+                {
+                    mCurrentRock = rock[1];
+                }
+                else if (!Collision(0, rock[2]) && Collision(mVelocity, rock[2]))
+                {
+                    mCurrentRock = rock[2];
+                }
+                else if (!Collision(0, rock[3]) && Collision(mVelocity, rock[3]))
+                {
+                    mCurrentRock = rock[3];
+                }
+            }
+        }
+
+        private void CollideWithRock()
+        {
+            if (mCurrentRock != null && !Collision(0, mCurrentRock) && Collision(mVelocity, mCurrentRock) && InputManager.KeyHeld(Keys.Space))
+            {
+                if (CollisionRight(mVelocity, mCurrentRock))
+                {
+                    while (mCollisionRect.Right < mCurrentRock.mCollisionRect.Left)
                     {
                         mPosition.X++;
                     }
                 }
-                else if (CollisionLeft(mVelocity, rock))
+                else if (CollisionLeft(mVelocity, mCurrentRock))
                 {
-                    while (mCollisionRect.Left > rock.mCollisionRect.Right)
+                    while (mCollisionRect.Left > mCurrentRock.mCollisionRect.Right)
                     {
                         mPosition.X--;
                     }
                 }
-
                 ChangeState(State.push);
             }
-        }
-
-        private void GetRockSpeed(Rock rock)
-        {
-            if (mVelocity != 0 && mCurrentState == State.push && InputManager.KeyHeld(Keys.Space))
-            {
-                mPushVelocity += Math.Sign(mVelocity) * rock.mAcceleration;
-                mPushVelocity = Math.Clamp(mPushVelocity, -rock.mMaxSpeed, rock.mMaxSpeed);
-                mVelocity = mPushVelocity;
-            }
-            else
+            // If player has a target rock but is not colliding with it, clear current target.
+            else if (mCurrentRock != null && !Collision(mVelocity, mCurrentRock) && InputManager.KeyHeld(Keys.Space))
             {
                 ReleaseRock();
             }
         }
 
-        private void PushRock(Rock rock)
+        private void GetRockSpeed()
+        {
+            if (mCurrentState == State.push && mVelocity != 0 && InputManager.KeyHeld(Keys.Space))
+            {
+                mPushVelocity += Math.Sign(mVelocity) * mCurrentRock.mAcceleration;
+                mPushVelocity = Math.Clamp(mPushVelocity, -mCurrentRock.mMaxSpeed, mCurrentRock.mMaxSpeed);
+                mVelocity = mPushVelocity;
+            }
+            else if (mCurrentState == State.push && !InputManager.KeyHeld(Keys.Space))
+            {
+                ReleaseRock();
+            }
+        }
+
+        private void PushRock()
         {
             if (mCurrentState == State.push && InputManager.KeyHeld(Keys.Space))
             {
                 if (mVelocity > 0)
                 {
-                    rock.mPosition.X = mPosition.X + mCollisionRect.Width;
+                    mCurrentRock.mPosition.X = mPosition.X + mCollisionRect.Width;
                 }
                 else if (mVelocity < 0)
                 {
-                    rock.mPosition.X = mPosition.X - mCollisionRect.Width;
+                    mCurrentRock.mPosition.X = mPosition.X - mCollisionRect.Width;
                 }
             }
         }
 
         private void ReleaseRock()
         {
+            //AllignRocktoGrid();
             ChangeState(State.walk);
+            mCurrentRock = null;
             mPushVelocity = 0.0f;
         }
 
@@ -151,35 +176,41 @@ namespace Stonephonia
                 mPosition.X = GamePort.renderSurface.Bounds.Right - mCollisionRect.Width;
             }
         }
-
-        private void PositionToIntGrid(Rock rock)
+        private void AllignRocktoGrid()
         {
             // Round X position values to ints to realign player and rock to pixel grid
-            if (rock.mPosition.X > mPosition.X)
-            {
-                mPosition.X = (int)(mPosition.X + 0.5f);
-                rock.mPosition.X = (int)(rock.mPosition.X + 0.5f);
-            }
-            else
-            {
-                mPosition.X = (int)(mPosition.X - 0.5f);
-                rock.mPosition.X = (int)(rock.mPosition.X - 0.5f);
-            }
+            //if (mCurrentRock.mPosition.X > mPosition.X)
+            //{
+            //mPosition.X = (int)(mPosition.X + 0.5f);
+            mCurrentRock.mPosition.X = (int)(mCurrentRock.mPosition.X + 0.5f);
+            //}
+            //else
+            //{
+            //    mPosition.X = (int)(mPosition.X - 0.5f);
+            //    mCurrentRock.mPosition.X = (int)(mCurrentRock.mPosition.X - 0.5f);
+            //}
         }
 
-        public void Update(GameTime gameTime, Rock rock)
+        public void Update(GameTime gameTime, Rock[] rock)
         {
-            Move(rock);
+            CalculateMovement();
+            TargetClosestRock(rock);
+            CollideWithRock();
+            GetRockSpeed();
+            Move();
+            PushRock();
+            
             base.Update(gameTime);
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            //spriteBatch.Draw(ScreenManager.contentMgr.Load<Texture2D>("Sprites/sprite_test"), mCollisionRect, Color.Red * 0.3f);
+            spriteBatch.Draw(ScreenManager.pixel, mCollisionRect, Color.Red * 0.3f);
 
-            spriteBatch.DrawString(ScreenManager.font, $"pusherVel: {mVelocity}", new Vector2(0, 0), Color.White);
-            spriteBatch.DrawString(ScreenManager.font, $"currentState: {mCurrentState}", new Vector2(0, 15), Color.White);
-            spriteBatch.DrawString(ScreenManager.font, $"mPushVelocity: {mPushVelocity}", new Vector2(0, 30), Color.Red);
+            spriteBatch.DrawString(ScreenManager.font, $"mPosition: {mPosition.X}", new Vector2(300, 0), Color.White);
+            spriteBatch.DrawString(ScreenManager.font, $"playerVel: {mVelocity}", new Vector2(0, 0), Color.White);
+            spriteBatch.DrawString(ScreenManager.font, $"mPushVelocity: {mPushVelocity}", new Vector2(100, 0), Color.White);
+            spriteBatch.DrawString(ScreenManager.font, $"currentState: {mCurrentState}", new Vector2(0, 15), Color.Red);
         }
     }
 }
