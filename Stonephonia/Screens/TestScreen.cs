@@ -16,14 +16,13 @@ namespace Stonephonia.Screens
         {
             textFader = new TextFader(ScreenManager.font, "Here is some text on screen", 100f, 0.5f, 0f);
 
-            pusher = new Pusher(10, 50)
+            pusher = new Pusher(300, 50)
             {
                 mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_sprite_scaled"),
-                new Point(48, 48), new Point(0, 0), new Point(1, 1), 200, Color.White * 0.3f),
+                new Point(96, 96), new Point(0, 0), new Point(1, 1), 200, Color.White * 0.3f),
                 mCollisionOffset = 0,
                 mMaxSpeed = 4
             };
-
 
             //player = new Player(10, 50)
             //{
@@ -35,38 +34,30 @@ namespace Stonephonia.Screens
 
             rock = new Rock[4];
 
-            rock[0] = new Rock(40, 50)
+            rock[0] = new Rock(150, 50)
             {
-                mSprite = new Sprite(ScreenManager.pixel,
-                new Point(48, 48), new Point(0, 0), new Point(1, 1), 15, Color.Yellow),
-
+                mSprite = new Sprite(ScreenManager.pixel, new Point(32, 96), new Point(0, 0), new Point(1, 1), 15, Color.Yellow),
                 mMaxSpeed = 4,
                 mAcceleration = 0.08f,
             };
 
-            rock[1] = new Rock(80, 50)
+            rock[1] = new Rock(300, 50)
             {
-                mSprite = new Sprite(ScreenManager.pixel,
-                new Point(48, 48), new Point(0, 0), new Point(1, 1), 15, Color.Pink),
-
+                mSprite = new Sprite(ScreenManager.pixel, new Point(48, 96), new Point(0, 0), new Point(1, 1), 15, Color.Pink),
                 mMaxSpeed = 3,
                 mAcceleration = 0.02f,
             };
 
-            rock[2] = new Rock(100, 50)
+            rock[2] = new Rock(400, 50)
             {
-                mSprite = new Sprite(ScreenManager.pixel,
-                new Point(48, 48), new Point(0, 0), new Point(1, 1), 15, Color.Orange),
-
+                mSprite = new Sprite(ScreenManager.pixel, new Point(64, 96), new Point(0, 0), new Point(1, 1), 15, Color.Orange),
                 mMaxSpeed = 2,
                 mAcceleration = 0.008f,
             };
 
-            rock[3] = new Rock(150, 50)
+            rock[3] = new Rock(500, 50)
             {
-                mSprite = new Sprite(ScreenManager.pixel,
-                new Point(48, 48), new Point(0, 0), new Point(1, 1), 15, Color.LightBlue),
-
+                mSprite = new Sprite(ScreenManager.pixel, new Point(96, 96), new Point(0, 0), new Point(1, 1), 15, Color.LightBlue),
                 mMaxSpeed = 1,
                 mAcceleration = 0.005f,
             };
@@ -100,7 +91,7 @@ namespace Stonephonia.Screens
             pusher.Draw(spriteBatch);
             //player.Draw(spriteBatch);
 
-            spriteBatch.DrawString(ScreenManager.font, $"mcurrentRock: {Array.IndexOf(rock, pusher.mCurrentRock)}", new Vector2(100, 15), Color.Red);
+            spriteBatch.DrawString(ScreenManager.font, $"mCurrentRock: {Array.IndexOf(rock, pusher.mCurrentRock)}", new Vector2(600, 0), Color.Red);
             //spriteBatch.DrawString(ScreenManager.font, $"mVelocity: {player.mVelocity}", new Vector2(0, 15), Color.White);
             //spriteBatch.DrawString(ScreenManager.font, $"mPushVelocity: {player.mPushVelocity}", new Vector2(0, 30), Color.Red);
         }

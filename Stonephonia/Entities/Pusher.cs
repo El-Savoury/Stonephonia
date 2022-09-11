@@ -9,6 +9,7 @@ namespace Stonephonia
     {
         public Rock mCurrentRock;
         private float mPushVelocity = 0.0f;
+        private float mSpeedLimit;
 
         public Pusher(float xPos, float yPos)
             : base(xPos, yPos)
@@ -54,9 +55,17 @@ namespace Stonephonia
             mVelocity = Math.Clamp(mVelocity, -mMaxSpeed, mMaxSpeed);
             mPosition.X += mVelocity;
 
+            if (mVelocity != 0 && mCurrentState != State.push)
+            {
+                ChangeState(State.walk);
+            }
+            else if (mVelocity == 0 && mCurrentState != State.push)
+            {
+                ChangeState(State.idle);
+            }
+
             KeepEntityOnScreen();
         }
-
 
         private void TargetClosestRock(Rock[] rock)
         {
@@ -132,14 +141,13 @@ namespace Stonephonia
                 }
                 else if (mVelocity < 0)
                 {
-                    mCurrentRock.mPosition.X = mPosition.X - mCollisionRect.Width;
+                    mCurrentRock.mPosition.X = mPosition.X - mCurrentRock.mCollisionRect.Width;
                 }
             }
         }
 
         private void ReleaseRock()
         {
-            //AllignRocktoGrid();
             ChangeState(State.walk);
             mCurrentRock = null;
             mPushVelocity = 0.0f;
@@ -176,19 +184,37 @@ namespace Stonephonia
                 mPosition.X = GamePort.renderSurface.Bounds.Right - mCollisionRect.Width;
             }
         }
-        private void AllignRocktoGrid()
+
+        private float CalcStopSpeed(float rockSide, int stopPoint, int startPoint)
         {
-            // Round X position values to ints to realign player and rock to pixel grid
-            //if (mCurrentRock.mPosition.X > mPosition.X)
-            //{
-            //mPosition.X = (int)(mPosition.X + 0.5f);
-            mCurrentRock.mPosition.X = (int)(mCurrentRock.mPosition.X + 0.5f);
-            //}
-            //else
-            //{
-            //    mPosition.X = (int)(mPosition.X - 0.5f);
-            //    mCurrentRock.mPosition.X = (int)(mCurrentRock.mPosition.X - 0.5f);
-            //}
+            float v = mVelocity;
+            float x = rockSide;
+            int d1 = stopPoint; // stop point
+            int d2 = startPoint; // start point
+
+            float sum1 = v / (d2 - d1) * x;
+            float sum2 = v * (d1 / (d2 - d1));
+
+            return sum1 - sum2;
+        }
+
+        private void StopRock()
+        {
+            int leftStop = 100;
+            int leftMarker = 200;
+            int rightStop = 700;
+            int rightmarker = 600;
+
+            if (mCurrentState == State.push && mVelocity < 0 && mCurrentRock.mPosition.X < leftMarker)
+            {
+                mVelocity = Math.Clamp(CalcStopSpeed(mCurrentRock.mPosition.X, leftStop, leftMarker), -mMaxSpeed, 0);
+                mSpeedLimit = mVelocity;
+            }
+            else if (mCurrentState == State.push && mVelocity > 0 && mCurrentRock.mPosition.X + mCurrentRock.mCollisionRect.Width  > rightmarker)
+            {
+                mVelocity = Math.Clamp(CalcStopSpeed(mCurrentRock.mCollisionRect.Right, rightStop, rightmarker), 0, mMaxSpeed);
+                mSpeedLimit = mVelocity;
+            }
         }
 
         public void Update(GameTime gameTime, Rock[] rock)
@@ -197,9 +223,10 @@ namespace Stonephonia
             TargetClosestRock(rock);
             CollideWithRock();
             GetRockSpeed();
+            StopRock();
             Move();
             PushRock();
-            
+
             base.Update(gameTime);
         }
 
@@ -207,10 +234,11 @@ namespace Stonephonia
         {
             spriteBatch.Draw(ScreenManager.pixel, mCollisionRect, Color.Red * 0.3f);
 
-            spriteBatch.DrawString(ScreenManager.font, $"mPosition: {mPosition.X}", new Vector2(300, 0), Color.White);
-            spriteBatch.DrawString(ScreenManager.font, $"playerVel: {mVelocity}", new Vector2(0, 0), Color.White);
-            spriteBatch.DrawString(ScreenManager.font, $"mPushVelocity: {mPushVelocity}", new Vector2(100, 0), Color.White);
-            spriteBatch.DrawString(ScreenManager.font, $"currentState: {mCurrentState}", new Vector2(0, 15), Color.Red);
+            spriteBatch.DrawString(ScreenManager.font, $"mPosition: {mPosition.X}", new Vector2(0, 0), Color.White);
+            spriteBatch.DrawString(ScreenManager.font, $"currentState: {mCurrentState}", new Vector2(150, 0), Color.White);
+            spriteBatch.DrawString(ScreenManager.font, $"mVelocity: {mVelocity}", new Vector2(0, 20), Color.Red);
+            spriteBatch.DrawString(ScreenManager.font, $"mPushVelocity: {mPushVelocity}", new Vector2(150, 20), Color.Red);
+            spriteBatch.DrawString(ScreenManager.font, $"mSpeedLimit: {mSpeedLimit}", new Vector2(400, 20), Color.Green);
         }
     }
 }
