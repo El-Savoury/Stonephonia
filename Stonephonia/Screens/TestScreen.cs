@@ -7,7 +7,6 @@ namespace Stonephonia.Screens
 {
     public class TestScreen : GameScreen
     {
-        Player player;
         Pusher pusher;
         Rock[] rock;
         TextFader textFader;
@@ -18,19 +17,11 @@ namespace Stonephonia.Screens
 
             pusher = new Pusher(300, 50)
             {
-                mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_sprite_scaled"),
-                new Point(96, 96), new Point(0, 0), new Point(1, 1), 200, Color.White * 0.3f),
-                mCollisionOffset = 0,
+                mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_sprite_sheet"),
+                new Point(96, 96), new Point(0, 0), new Point(4, 1), 200, Color.White * 0.3f),
+                mCollisionOffset = 20,
                 mMaxSpeed = 4
             };
-
-            //player = new Player(10, 50)
-            //{
-            //    mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/sprite_test"),
-            //    new Point(32, 32), new Point(0, 0), new Point(1, 1), 200, Color.White),
-            //    mCollisionOffset = 0,
-            //    mMaxSpeed = 4,
-            //};
 
             rock = new Rock[4];
 
@@ -70,8 +61,6 @@ namespace Stonephonia.Screens
         public override void Update(GameTime gameTime)
         {
             //textFader.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds);
-            //player.Update(gameTime, rock);
-
             pusher.Update(gameTime, rock);
 
             base.Update(gameTime);
@@ -84,12 +73,11 @@ namespace Stonephonia.Screens
             foreach (Rock rock in rock)
             {
                 rock.Draw(spriteBatch);
-                spriteBatch.Draw(ScreenManager.pixel, rock.mCollisionRect, Color.Blue * 0.5f);
+                //spriteBatch.Draw(ScreenManager.pixel, rock.mCollisionRect, Color.Blue * 0.5f);
             }
 
             pusher.Draw(gameTime, spriteBatch);
             pusher.Draw(spriteBatch);
-            //player.Draw(spriteBatch);
 
             spriteBatch.DrawString(ScreenManager.font, $"mCurrentRock: {Array.IndexOf(rock, pusher.mCurrentRock)}", new Vector2(600, 0), Color.Red);
             //spriteBatch.DrawString(ScreenManager.font, $"mVelocity: {player.mVelocity}", new Vector2(0, 15), Color.White);

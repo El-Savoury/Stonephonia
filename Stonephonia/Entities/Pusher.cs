@@ -10,6 +10,7 @@ namespace Stonephonia
         public Rock mCurrentRock;
         private float mPushVelocity = 0.0f;
         private float mSpeedLimit;
+        private bool mDirection;
 
         public Pusher(float xPos, float yPos)
             : base(xPos, yPos)
@@ -24,10 +25,39 @@ namespace Stonephonia
         }
 
         private State mCurrentState = State.idle;
+        private State mPreviousState = State.idle;
 
         private void ChangeState(State state)
         {
             mCurrentState = state;
+        }
+
+        private void SetAnimation()
+        {
+            switch (mCurrentState)
+            {
+                case State.idle:
+                    if (mPreviousState != State.idle)
+                    {
+                        mSprite.ChangeSprite(new Point( mDirection ? 1 : 4, 0), new Point(4, 1));
+                    }
+                    mSprite.mColour = Color.Blue;
+                    break;
+
+                case State.walk:
+                    if (mPreviousState != State.walk)
+                    {
+                        mSprite.ChangeSprite(new Point(mDirection ? 1 : 4, 1), new Point(4, 1));
+                    }
+                    mSprite.mColour = Color.Green;
+                    break;
+
+                case State.push:
+                    mSprite.mColour = Color.Red;
+                    break;
+            }
+
+            mPreviousState = mCurrentState;
         }
 
         private void CalculateMovement()
@@ -36,10 +66,12 @@ namespace Stonephonia
             if (InputManager.KeyHeld(Keys.Right))
             {
                 inputDir += 1;
+                mDirection = true;
             }
             if (InputManager.KeyHeld(Keys.Left))
             {
                 inputDir -= 1;
+                mDirection = false;
             }
             mVelocity = inputDir * mMaxSpeed;
 
@@ -137,11 +169,11 @@ namespace Stonephonia
             {
                 if (mVelocity > 0)
                 {
-                    mCurrentRock.mPosition.X = mPosition.X + mCollisionRect.Width;
+                    mCurrentRock.mPosition.X = /*mPosition.X*/ mCollisionRect.Left + mCollisionRect.Width;
                 }
                 else if (mVelocity < 0)
                 {
-                    mCurrentRock.mPosition.X = mPosition.X - mCurrentRock.mCollisionRect.Width;
+                    mCurrentRock.mPosition.X = mCollisionRect.Left - mCurrentRock.mCollisionRect.Width;
                 }
             }
         }
@@ -178,10 +210,12 @@ namespace Stonephonia
             if (mCollisionRect.X < GamePort.renderSurface.Bounds.X)
             {
                 mPosition.X = GamePort.renderSurface.Bounds.X - mCollisionOffset;
+                mCurrentState = State.idle;
             }
             if (mCollisionRect.Right > GamePort.renderSurface.Bounds.Right)
             {
-                mPosition.X = GamePort.renderSurface.Bounds.Right - mCollisionRect.Width;
+                mPosition.X = GamePort.renderSurface.Bounds.Right - mCollisionRect.Width - mCollisionOffset;
+                mCurrentState = State.idle;
             }
         }
 
@@ -226,6 +260,8 @@ namespace Stonephonia
             StopRock();
             Move();
             PushRock();
+
+            SetAnimation();
 
             base.Update(gameTime);
         }

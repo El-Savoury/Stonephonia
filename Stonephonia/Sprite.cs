@@ -8,8 +8,8 @@ namespace Stonephonia
         public Texture2D mTexture;
         public Color mColour = Color.White;
         public Point mFrameSize; // Size of frame containing sprite to be shown.
-        private Point mCurrentFrame; // Top left coordinate of desired frame to begin animating from.
-        private Point mSheetSize; // Number of rows and collumns on spritesheet.
+        private Point mCurrentFrame; // The row and column numbers of the desired frame to animate from on the spritesheet. 
+        private Point mSheetSize; // Number of rows and collumns needed to be shown from spritesheet.
         private int mTimeSinceLastFrame = 0;
         private int mTimePerFrame;
         private float mAlpha;
@@ -31,6 +31,12 @@ namespace Stonephonia
             mAlpha = visible ? 1.0f : 0.0f;
         }
 
+        public void ChangeSprite(Point currentFrame, Point SheetSize)
+        {
+            mCurrentFrame = currentFrame;
+            mSheetSize = SheetSize;
+        }
+
         private void Animate(GameTime gameTime)
         {
             mTimeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
@@ -41,13 +47,14 @@ namespace Stonephonia
 
                 if (mCurrentFrame.X >= mSheetSize.X)
                 {
-                    mCurrentFrame.X = 0;
-                    ++mCurrentFrame.Y;
+                    mCurrentFrame.X -= mSheetSize.X - 1;
+                    //++mCurrentFrame.Y;
 
-                    if (mCurrentFrame.Y >= mSheetSize.Y) { mCurrentFrame.Y = 0; }
+                    //if (mCurrentFrame.Y >= mSheetSize.Y) { mCurrentFrame.Y /= mSheetSize.X; }
                 }
             }
         }
+
 
         public void Update(GameTime gameTime) // Animate sprite.
         {

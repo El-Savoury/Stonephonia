@@ -17,10 +17,8 @@ namespace Stonephonia
             get
             {
                 return new Rectangle(
-                    (int)(mPosition.X + 0.5f) + mCollisionOffset,
-                    (int)mPosition.Y,
-                    mSprite.mFrameSize.X - mCollisionOffset,
-                    mSprite.mFrameSize.Y);
+                    (int)(mPosition.X + 0.5f) + mCollisionOffset, (int)mPosition.Y,
+                    mSprite.mFrameSize.X - (mCollisionOffset * 2), mSprite.mFrameSize.Y);
             }
         }
 

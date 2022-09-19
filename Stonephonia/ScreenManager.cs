@@ -40,8 +40,6 @@ namespace Stonephonia
 
         protected override void Initialize()
         {
-            particleManager = new ParticleManager();
-
             GamePort.renderSurface = new RenderTarget2D(GraphicsDevice, nativeResWidth, nativeResHeight);
 
             graphicsDeviceMgr.PreferredBackBufferWidth = windowWidth;
@@ -51,6 +49,8 @@ namespace Stonephonia
 
             Window.ClientSizeChanged += (sender, args) => GamePort.KeepAspectRatio(Window);
             GamePort.KeepAspectRatio(Window);
+
+            particleManager = new ParticleManager();
 
             base.Initialize();
         }

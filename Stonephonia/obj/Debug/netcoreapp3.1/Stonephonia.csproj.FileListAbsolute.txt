@@ -56,3 +56,4 @@ C:\Users\Ross\Documents\C#\visual studio\Stonephonia\Stonephonia\bin\Debug\netco
 C:\Users\Ross\Documents\C#\visual studio\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\large_particle.xnb
 C:\Users\Ross\Documents\C#\visual studio\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\small_particle.xnb
 C:\Users\Ross\Documents\C#\visual studio\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\player_sprite_scaled.xnb
+C:\Users\Ross\Documents\C#\visual studio\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\player_sprite_sheet.xnb
