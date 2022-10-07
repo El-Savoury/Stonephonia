@@ -9,8 +9,8 @@ namespace Stonephonia
         public Vector2 mPosition;
         public float mVelocity;
         public float mAcceleration;
-        public int mMaxSpeed = 0;
-        public int mCollisionOffset = 0;
+        public int mMaxSpeed;
+        public int mCollisionOffset;
 
         public Rectangle mCollisionRect
         {
@@ -22,9 +22,12 @@ namespace Stonephonia
             }
         }
 
-        public Entity(float xPos, float yPos)
+        public Entity(Vector2 position, int collisionOffset, int maxSpeed, float acceleration = 0)
         {
-            mPosition = new Vector2(xPos, yPos);
+            mPosition = position;
+            mMaxSpeed = maxSpeed;
+            mCollisionOffset = collisionOffset;
+            mAcceleration = acceleration;
         }
 
         public virtual void Update(GameTime gameTime)

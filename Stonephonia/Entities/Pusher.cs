@@ -9,11 +9,11 @@ namespace Stonephonia
     {
         public Rock mCurrentRock;
         private float mPushVelocity = 0.0f;
-        private float mSpeedLimit;
-        private bool mDirection;
+        private bool mDirection = true;
+        private float mstopSpeed;
 
-        public Pusher(float xPos, float yPos)
-            : base(xPos, yPos)
+        public Pusher(Vector2 position, int collisionOffset, int maxSpeed)
+            : base(position, collisionOffset, maxSpeed)
         {
         }
 
@@ -25,7 +25,6 @@ namespace Stonephonia
         }
 
         private State mCurrentState = State.idle;
-        private State mPreviousState = State.idle;
 
         private void ChangeState(State state)
         {
@@ -37,66 +36,65 @@ namespace Stonephonia
             switch (mCurrentState)
             {
                 case State.idle:
-                    if (mPreviousState != State.idle)
-                    {
-                        mSprite.ChangeSprite(new Point( mDirection ? 1 : 4, 0), new Point(4, 1));
-                    }
-                    mSprite.mColour = Color.Blue;
+                    if (mDirection) { mSprite.mCurrentFrame.Y = 0; }
+                    else { mSprite.mCurrentFrame.Y = 1; }
                     break;
 
                 case State.walk:
-                    if (mPreviousState != State.walk)
-                    {
-                        mSprite.ChangeSprite(new Point(mDirection ? 1 : 4, 1), new Point(4, 1));
-                    }
-                    mSprite.mColour = Color.Green;
+                    if (mDirection) { mSprite.mCurrentFrame.Y = 2; }
+                    else { mSprite.mCurrentFrame.Y = 3; }
                     break;
 
                 case State.push:
-                    mSprite.mColour = Color.Red;
+                    if (mDirection) { mSprite.mCurrentFrame.Y = 4; }
+                    else { mSprite.mCurrentFrame.Y = 5; }
                     break;
             }
-
-            mPreviousState = mCurrentState;
         }
 
         private void CalculateMovement()
         {
+            //if (InputManager.KeyPressed(Keys.Right)) { mDirection = true; }
+            //else if (InputManager.KeyPressed(Keys.Left) && !InputManager.KeyPressed(Keys.Right)) { mDirection = false; }
+
             int inputDir = 0;
             if (InputManager.KeyHeld(Keys.Right))
             {
                 inputDir += 1;
-                mDirection = true;
             }
             if (InputManager.KeyHeld(Keys.Left))
             {
                 inputDir -= 1;
-                mDirection = false;
             }
             mVelocity = inputDir * mMaxSpeed;
 
-            // Prevent player from moving when no keys are pressed
-            if (!InputManager.KeyHeld(Keys.Right) && !InputManager.KeyHeld(Keys.Left))
+            if (mVelocity > 0) { mDirection = true; }
+            else if (mVelocity < 0) { mDirection = false; }
+
+            // Prevent player from moving when no keys are pressed or both are held
+            if (InputManager.KeyReleased(Keys.Right) && InputManager.KeyReleased(Keys.Left) ||
+                InputManager.KeyHeld(Keys.Right) && InputManager.KeyHeld(Keys.Left))
             {
                 mVelocity = 0.0f;
             }
+
+            mVelocity = Math.Clamp(mVelocity, -mMaxSpeed, mMaxSpeed);
         }
 
         private void Move()
         {
-            mVelocity = Math.Clamp(mVelocity, -mMaxSpeed, mMaxSpeed);
             mPosition.X += mVelocity;
 
-            if (mVelocity != 0 && mCurrentState != State.push)
-            {
-                ChangeState(State.walk);
-            }
-            else if (mVelocity == 0 && mCurrentState != State.push)
+            if (mVelocity == 0 && mCurrentState != State.push)
             {
                 ChangeState(State.idle);
             }
+            else if (mVelocity != 0 && mCurrentState != State.push)
+            {
+                ChangeState(State.walk);
+            }
 
-            KeepEntityOnScreen();
+            //KeepEntityOnScreen();
         }
 
         private void TargetClosestRock(Rock[] rock)
@@ -169,11 +167,11 @@ namespace Stonephonia
             {
                 if (mVelocity > 0)
                 {
-                    mCurrentRock.mPosition.X = /*mPosition.X*/ mCollisionRect.Left + mCollisionRect.Width;
+                    mCurrentRock.mPosition.X = /*mPosition.X*/ (mCollisionRect.Left + mCollisionRect.Width) - mCurrentRock.mCollisionOffset;
                 }
                 else if (mVelocity < 0)
                 {
-                    mCurrentRock.mPosition.X = mCollisionRect.Left - mCurrentRock.mCollisionRect.Width;
+                    mCurrentRock.mPosition.X = (mCollisionRect.Left - mCurrentRock.mCollisionRect.Width) - mCurrentRock.mCollisionOffset;
                 }
             }
         }
@@ -232,23 +230,17 @@ namespace Stonephonia
             return sum1 - sum2;
         }
 
-        private void StopRock()
+        private void StopRock(int leftStop, int leftStart, int rightStop, int rightStart)
         {
-            int leftStop = 100;
-            int leftMarker = 200;
-            int rightStop = 700;
-            int rightmarker = 600;
-
-            if (mCurrentState == State.push && mVelocity < 0 && mCurrentRock.mPosition.X < leftMarker)
+            if (mCurrentState == State.push && mVelocity < 0 && mPosition.X < leftStart)
             {
-                mVelocity = Math.Clamp(CalcStopSpeed(mCurrentRock.mPosition.X, leftStop, leftMarker), -mMaxSpeed, 0);
-                mSpeedLimit = mVelocity;
+                mstopSpeed = CalcStopSpeed(mPosition.X/*mCurrentRock.mPosition.X*/, leftStop, leftStart);
+                mVelocity = Math.Clamp(mVelocity, mstopSpeed, 0);
             }
-            else if (mCurrentState == State.push && mVelocity > 0 && mCurrentRock.mPosition.X + mCurrentRock.mCollisionRect.Width  > rightmarker)
-            {
-                mVelocity = Math.Clamp(CalcStopSpeed(mCurrentRock.mCollisionRect.Right, rightStop, rightmarker), 0, mMaxSpeed);
-                mSpeedLimit = mVelocity;
-            }
+            //else if (mCurrentState == State.push && mVelocity > 0 && mCurrentRock.mPosition.X + mCurrentRock.mCollisionRect.Width > rightmarker)
+            //{
+            //    mVelocity = Math.Clamp(CalcStopSpeed(mPosition.X + mSprite.mFrameSize.X/*mCurrentRock.mCollisionRect.Right*/, rightStop, rightmarker), 0, mMaxSpeed);
+            //}
         }
 
         public void Update(GameTime gameTime, Rock[] rock)
@@ -257,10 +249,9 @@ namespace Stonephonia
             TargetClosestRock(rock);
             CollideWithRock();
             GetRockSpeed();
-            StopRock();
+            StopRock(90, 200, 700, 600);
             Move();
             PushRock();
-
             SetAnimation();
 
             base.Update(gameTime);
@@ -268,13 +259,13 @@ namespace Stonephonia
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(ScreenManager.pixel, mCollisionRect, Color.Red * 0.3f);
+            //spriteBatch.Draw(ScreenManager.pixel, new Rectangle((int)mPosition.X, (int)mPosition.Y, mCollisionRect.Width, mCollisionRect.Height), Color.Red * 0.3f);
 
             spriteBatch.DrawString(ScreenManager.font, $"mPosition: {mPosition.X}", new Vector2(0, 0), Color.White);
-            spriteBatch.DrawString(ScreenManager.font, $"currentState: {mCurrentState}", new Vector2(150, 0), Color.White);
-            spriteBatch.DrawString(ScreenManager.font, $"mVelocity: {mVelocity}", new Vector2(0, 20), Color.Red);
-            spriteBatch.DrawString(ScreenManager.font, $"mPushVelocity: {mPushVelocity}", new Vector2(150, 20), Color.Red);
-            spriteBatch.DrawString(ScreenManager.font, $"mSpeedLimit: {mSpeedLimit}", new Vector2(400, 20), Color.Green);
+            spriteBatch.DrawString(ScreenManager.font, $"currentState: {mCurrentState}", new Vector2(300, 0), Color.White);
+            spriteBatch.DrawString(ScreenManager.font, $"mVelocity: {mVelocity}", new Vector2(0, 20), Color.White);
+            spriteBatch.DrawString(ScreenManager.font, $"mPushVelocity: {mPushVelocity}", new Vector2(300, 20), Color.White);
+            spriteBatch.DrawString(ScreenManager.font, $"stopspeed: {mstopSpeed}", new Vector2(600, 20), Color.White);
         }
     }
 }

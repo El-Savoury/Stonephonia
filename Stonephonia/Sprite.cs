@@ -8,11 +8,12 @@ namespace Stonephonia
         public Texture2D mTexture;
         public Color mColour = Color.White;
         public Point mFrameSize; // Size of frame containing sprite to be shown.
-        private Point mCurrentFrame; // The row and column numbers of the desired frame to animate from on the spritesheet. 
+        public Point mCurrentFrame; // The row and column numbers of the desired frame to animate from on the spritesheet. 
         private Point mSheetSize; // Number of rows and collumns needed to be shown from spritesheet.
         private int mTimeSinceLastFrame = 0;
         private int mTimePerFrame;
         private float mAlpha;
+
 
         public Sprite(Texture2D texture, Point frameSize, Point currentFrame,
             Point sheetSize, int timePerFrame, Color colour, float alpha = 1.0f)
@@ -31,12 +32,6 @@ namespace Stonephonia
             mAlpha = visible ? 1.0f : 0.0f;
         }
 
-        public void ChangeSprite(Point currentFrame, Point SheetSize)
-        {
-            mCurrentFrame = currentFrame;
-            mSheetSize = SheetSize;
-        }
-
         private void Animate(GameTime gameTime)
         {
             mTimeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
@@ -47,7 +42,7 @@ namespace Stonephonia
 
                 if (mCurrentFrame.X >= mSheetSize.X)
                 {
-                    mCurrentFrame.X -= mSheetSize.X - 1;
+                    mCurrentFrame.X = 0;
                     //++mCurrentFrame.Y;
 
                     //if (mCurrentFrame.Y >= mSheetSize.Y) { mCurrentFrame.Y /= mSheetSize.X; }
@@ -65,6 +60,9 @@ namespace Stonephonia
         {
             spriteBatch.Draw(mTexture, position, new Rectangle(mCurrentFrame.X * mFrameSize.X, mCurrentFrame.Y * mFrameSize.Y, mFrameSize.X, mFrameSize.Y),
                 mColour * mAlpha);
+
+            //spriteBatch.Draw(mTexture, position, new Rectangle(mCurrentFrame.X * mFrameSize.X, mCurrentFrame.Y * mFrameSize.Y, mFrameSize.X, mFrameSize.Y),
+            //mColour * mAlpha, 0.0f, Vector2.Zero, Vector2.One, mSpriteDirection, 0.0f);
         }
     }
 }

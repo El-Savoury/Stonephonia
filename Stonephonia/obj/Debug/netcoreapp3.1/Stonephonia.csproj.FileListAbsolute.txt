@@ -56,4 +56,47 @@ C:\Users\Ross\Documents\C#\visual studio\Stonephonia\Stonephonia\bin\Debug\netco
 C:\Users\Ross\Documents\C#\visual studio\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\large_particle.xnb
 C:\Users\Ross\Documents\C#\visual studio\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\small_particle.xnb
 C:\Users\Ross\Documents\C#\visual studio\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\player_sprite_scaled.xnb
-C:\Users\Ross\Documents\C#\visual studio\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\player_sprite_sheet.xnb
+C:\Users\Ross\Documents\C#\visual studio\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\player_sheet_large.xnb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\idle_test_sheet.xnb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\player_sprite.xnb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\player_sprite_scaled.xnb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\sprite_test.xnb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\temp_sprite.xnb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\temp_sprite_fade.xnb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Font.xnb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\large_particle.xnb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\player_sheet_large.xnb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\small_particle.xnb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Stonephonia.exe
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Stonephonia.deps.json
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Stonephonia.runtimeconfig.json
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Stonephonia.runtimeconfig.dev.json
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Stonephonia.dll
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Stonephonia.pdb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\MonoGame.Framework.dll
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\runtimes\linux-x64\native\libSDL2-2.0.so.0
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\runtimes\linux-x64\native\libopenal.so.1
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\runtimes\osx\native\libSDL2-2.0.0.dylib
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\runtimes\osx\native\libopenal.1.dylib
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\SDL2.dll
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\soft_oal.dll
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\SDL2.dll
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\soft_oal.dll
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\obj\Debug\netcoreapp3.1\Stonephonia.csproj.AssemblyReference.cache
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\obj\Debug\netcoreapp3.1\Stonephonia.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\obj\Debug\netcoreapp3.1\Stonephonia.AssemblyInfoInputs.cache
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\obj\Debug\netcoreapp3.1\Stonephonia.AssemblyInfo.cs
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\obj\Debug\netcoreapp3.1\Stonephonia.csproj.CoreCompileInputs.cache
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\obj\Debug\netcoreapp3.1\Stonephonia.csproj.CopyComplete
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\obj\Debug\netcoreapp3.1\Stonephonia.dll
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\obj\Debug\netcoreapp3.1\Stonephonia.pdb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\obj\Debug\netcoreapp3.1\Stonephonia.genruntimeconfig.cache
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\rock_small.xnb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\rock_01_large.xnb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\particle_large.xnb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\particle_small.xnb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\player_stage_one_sheet.xnb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\player_stage_two_sheet.xnb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\rock_zero.xnb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\player_stage_three_sheet.xnb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\player_stage_four_sheet.xnb
