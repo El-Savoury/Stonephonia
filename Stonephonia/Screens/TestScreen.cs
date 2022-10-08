@@ -8,13 +8,12 @@ namespace Stonephonia.Screens
 {
     public class TestScreen : GameScreen
     {
-        //Pusher pusher;
-        //Rock[] rock;
         //TextFader textFader;
+        Timer gameTimer;
 
         public override void LoadAssets()
         {
-            
+            gameTimer = new Timer();
         }
 
         public override void UnloadAssests()
@@ -24,12 +23,14 @@ namespace Stonephonia.Screens
         public override void Update(GameTime gameTime)
         {
             //textFader.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds);
-            //pusher.Update(gameTime, rock);
-            ScreenManager.pusher.Update(gameTime, ScreenManager.rock);
 
-            if (InputManager.KeyPressed(Keys.Back))
+            gameTimer.Update(gameTime);
+            ScreenManager.pusher.Update(gameTime, gameTimer, ScreenManager.rock);
+
+            foreach (Rock rock in ScreenManager.rock)
             {
-                ScreenManager.ChangeScreen(new TestScreen(), new ScreenStage01());
+                rock.Update(ScreenManager.pusher);
+                
             }
 
             base.Update(gameTime);
@@ -46,9 +47,11 @@ namespace Stonephonia.Screens
             }
 
             ScreenManager.pusher.Draw(spriteBatch);
-            ScreenManager.pusher.Draw(gameTime, spriteBatch); // debug stats
+            //ScreenManager.pusher.Draw(gameTime, spriteBatch); // debug stats
 
-            spriteBatch.DrawString(ScreenManager.font, $"mCurrentRock: {Array.IndexOf(ScreenManager.rock, ScreenManager.pusher.mCurrentRock)}", new Vector2(600, 0), Color.Red);
+            spriteBatch.DrawString(ScreenManager.font, $"Timer: {gameTimer.mCurrentTime}", new Vector2(600, 0), Color.Red);
+
+            //spriteBatch.DrawString(ScreenManager.font, $"mCurrentRock: {Array.IndexOf(ScreenManager.rock, ScreenManager.pusher.mCurrentRock)}", new Vector2(600, 0), Color.Red);
             //spriteBatch.DrawString(ScreenManager.font, $"mVelocity: {player.mVelocity}", new Vector2(0, 15), Color.White);
             //spriteBatch.DrawString(ScreenManager.font, $"mPushVelocity: {player.mPushVelocity}", new Vector2(0, 30), Color.Red);
         }

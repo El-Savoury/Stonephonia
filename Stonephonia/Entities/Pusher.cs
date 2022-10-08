@@ -5,26 +5,33 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Stonephonia
 {
-    class Pusher : Entity
+    public class Pusher : Entity
     {
         public Rock mCurrentRock;
         private float mPushVelocity = 0.0f;
         private bool mDirection = true;
-        private float mstopSpeed;
+        private float mStopSpeed;
+
+        private Texture2D[] playerTextures = new Texture2D[3]
+            {
+                ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_stage_two_sheet"),
+                ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_stage_three_sheet"),
+                ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_stage_four_sheet")
+            };
 
         public Pusher(Vector2 position, int collisionOffset, int maxSpeed)
-            : base(position, collisionOffset, maxSpeed)
+                : base(position, collisionOffset, maxSpeed)
         {
         }
 
-        private enum State
+        public enum State
         {
             idle,
             walk,
             push
         }
 
-        private State mCurrentState = State.idle;
+        public State mCurrentState = State.idle;
 
         private void ChangeState(State state)
         {
@@ -54,9 +61,6 @@ namespace Stonephonia
 
         private void CalculateMovement()
         {
-            //if (InputManager.KeyPressed(Keys.Right)) { mDirection = true; }
-            //else if (InputManager.KeyPressed(Keys.Left) && !InputManager.KeyPressed(Keys.Right)) { mDirection = false; }
-
             int inputDir = 0;
             if (InputManager.KeyHeld(Keys.Right))
             {
@@ -101,21 +105,12 @@ namespace Stonephonia
         {
             if (mCurrentState != State.push)
             {
-                if (!Collision(0, rock[0]) && Collision(mVelocity, rock[0]))
+                for (int i = 0; i < rock.Length; i++)
                 {
-                    mCurrentRock = rock[0];
-                }
-                else if (!Collision(0, rock[1]) && Collision(mVelocity, rock[1]))
-                {
-                    mCurrentRock = rock[1];
-                }
-                else if (!Collision(0, rock[2]) && Collision(mVelocity, rock[2]))
-                {
-                    mCurrentRock = rock[2];
-                }
-                else if (!Collision(0, rock[3]) && Collision(mVelocity, rock[3]))
-                {
-                    mCurrentRock = rock[3];
+                    if (!Collision(0, rock[i]) && Collision(mVelocity, rock[i]))
+                    {
+                        mCurrentRock = rock[i];
+                    }
                 }
             }
         }
@@ -219,10 +214,10 @@ namespace Stonephonia
 
         private float CalcStopSpeed(float rockSide, int stopPoint, int startPoint)
         {
-            float v = mVelocity;
+            float v = mCurrentRock.mMaxSpeed;
             float x = rockSide;
-            int d1 = stopPoint; // stop point
-            int d2 = startPoint; // start point
+            int d1 = stopPoint;
+            int d2 = startPoint;
 
             float sum1 = v / (d2 - d1) * x;
             float sum2 = v * (d1 / (d2 - d1));
@@ -232,26 +227,38 @@ namespace Stonephonia
 
         private void StopRock(int leftStop, int leftStart, int rightStop, int rightStart)
         {
-            if (mCurrentState == State.push && mVelocity < 0 && mPosition.X < leftStart)
+            if (mCurrentState == State.push && mVelocity < 0 && mCurrentRock.mPosition.X < leftStart)
             {
-                mstopSpeed = CalcStopSpeed(mPosition.X/*mCurrentRock.mPosition.X*/, leftStop, leftStart);
-                mVelocity = Math.Clamp(mVelocity, mstopSpeed, 0);
+                mStopSpeed = -CalcStopSpeed(mCurrentRock.mPosition.X, leftStop, leftStart);
+                mVelocity = Math.Clamp(mVelocity, mStopSpeed, 0);
             }
-            //else if (mCurrentState == State.push && mVelocity > 0 && mCurrentRock.mPosition.X + mCurrentRock.mCollisionRect.Width > rightmarker)
-            //{
-            //    mVelocity = Math.Clamp(CalcStopSpeed(mPosition.X + mSprite.mFrameSize.X/*mCurrentRock.mCollisionRect.Right*/, rightStop, rightmarker), 0, mMaxSpeed);
-            //}
+            else if (mCurrentState == State.push && mVelocity > 0 && mCurrentRock.mPosition.X + mCurrentRock.mSprite.mFrameSize.X > rightStart)
+            {
+                mStopSpeed = CalcStopSpeed(mCurrentRock.mPosition.X, rightStop, rightStart);
+                mVelocity = mStopSpeed;/*Math.Clamp(CalcStopSpeed(mPosition.X + mCurrentRock.mSprite.mFrameSize.X, rightStop, rightStart), 0, mMaxSpeed);*/
+            }
         }
 
-        public void Update(GameTime gameTime, Rock[] rock)
+        private void AgePlayer(Texture2D[] playerTextures, Timer gameTimer, int timeInterval)
+        {
+            if (gameTimer.mCurrentTime > timeInterval && Array.IndexOf(playerTextures, ScreenManager.pusher.mSprite.mTexture) < playerTextures.Length - 1)
+            {
+                ScreenManager.pusher.mSprite.mTexture = playerTextures[Array.IndexOf(playerTextures, ScreenManager.pusher.mSprite.mTexture) + 1];
+                ScreenManager.pusher.mMaxSpeed--;
+                gameTimer.Reset();
+            }
+        }
+
+        public void Update(GameTime gameTime, Timer gameTimer, Rock[] rock)
         {
             CalculateMovement();
             TargetClosestRock(rock);
             CollideWithRock();
             GetRockSpeed();
-            StopRock(90, 200, 700, 600);
+            StopRock(50, 200, 700, 600);
             Move();
             PushRock();
+            AgePlayer(playerTextures, gameTimer, 5);
             SetAnimation();
 
             base.Update(gameTime);
@@ -265,7 +272,7 @@ namespace Stonephonia
             spriteBatch.DrawString(ScreenManager.font, $"currentState: {mCurrentState}", new Vector2(300, 0), Color.White);
             spriteBatch.DrawString(ScreenManager.font, $"mVelocity: {mVelocity}", new Vector2(0, 20), Color.White);
             spriteBatch.DrawString(ScreenManager.font, $"mPushVelocity: {mPushVelocity}", new Vector2(300, 20), Color.White);
-            spriteBatch.DrawString(ScreenManager.font, $"stopspeed: {mstopSpeed}", new Vector2(600, 20), Color.White);
+            spriteBatch.DrawString(ScreenManager.font, $"stopspeed: {mStopSpeed}", new Vector2(600, 20), Color.White);
         }
     }
 }
