@@ -12,7 +12,7 @@ namespace Stonephonia
     {
         public static GraphicsDeviceManager graphicsDeviceMgr;
         public static SpriteBatch spriteBatch;
-        public static List<GameScreen> screenList;
+        public static List<Screen> screenList;
         public static ContentManager contentMgr;
         public static ParticleManager particleManager;
         public static SpriteFont font;
@@ -69,37 +69,38 @@ namespace Stonephonia
             pixel = new Texture2D(GraphicsDevice, 1, 1);
             pixel.SetData(new Color[] { Color.White });
 
-            pusher = new Pusher(new Vector2(300, 50), 0, 4)
+            pusher = new Pusher(new Vector2(300, 450), 0, 4)
             {
                 mSprite = new Sprite(contentMgr.Load<Texture2D>("Sprites/player_stage_one_sheet"),
                 new Point(60, 84), new Point(0, 0), new Point(2, 1), 200, Color.White),
             };
 
             rock = new Rock[4];
-            rock[0] = new Rock(new Vector2(150, 58), 15, 3, 0.03f)
+            rock[0] = new Rock(new Vector2(150, 450), 16, 3, 0.03f)
             {
-                mSprite = new Sprite(contentMgr.Load<Texture2D>("Sprites/rock_zero"),
-                new Point(76, 76), new Point(0, 0), new Point(1, 1), 0, Color.White),
+                mSprite = new Sprite(contentMgr.Load<Texture2D>("Sprites/rock_zero_sheet"),
+                new Point(92, 84), new Point(0, 0), new Point(2, 1), 200, Color.White),
+                mSoundInterval = 5
             };
 
-            rock[1] = new Rock(new Vector2(300, 50), 15, 3, 0.02f)
+            rock[1] = new Rock(new Vector2(300, 450), 15, 3, 0.02f)
             {
                 mSprite = new Sprite(pixel, new Point(48, 84), new Point(0, 0), new Point(1, 1), 15, Color.Pink),
             };
 
-            rock[2] = new Rock(new Vector2(400, 50), 0, 2, 0.008f)
+            rock[2] = new Rock(new Vector2(400, 450), 0, 2, 0.008f)
             {
                 mSprite = new Sprite(pixel, new Point(64, 84), new Point(0, 0), new Point(1, 1), 15, Color.Orange),
             };
 
-            rock[3] = new Rock(new Vector2(500, 50), 0, 1, 0.005f)
+            rock[3] = new Rock(new Vector2(500, 450), 0, 1, 0.005f)
             {
                 mSprite = new Sprite(pixel, new Point(96, 84), new Point(0, 0), new Point(1, 1), 15, Color.LightBlue),
             };
 
             particleManager.LoadAssets();
 
-            AddScreen(new TestScreen());
+            AddScreen(new GampelayScreen());
             //AddScreen(new IntroCutscene());
         }
 
@@ -115,7 +116,7 @@ namespace Stonephonia
 
         protected override void Update(GameTime gameTime)
         {
-            InputManager.Update();
+            InputManager.Update(gameTime);
             UserControlWindow();
 
             int startIndex = screenList.Count - 1;
@@ -153,28 +154,28 @@ namespace Stonephonia
             base.Draw(gameTime);
         }
 
-        public static void AddScreen(GameScreen gameScreen)
+        public static void AddScreen(Screen gameScreen)
         {
             if (screenList == null)
             {
-                screenList = new List<GameScreen>();
+                screenList = new List<Screen>();
             }
             screenList.Add(gameScreen);
             gameScreen.LoadAssets();
         }
 
-        public static void RemoveScreen(GameScreen gameScreen)
+        public static void RemoveScreen(Screen gameScreen)
         {
             gameScreen.UnloadAssests();
             screenList.Remove(gameScreen);
 
             if (screenList.Count < 1)
             {
-                AddScreen(new TestScreen());
+                AddScreen(new GampelayScreen());
             }
         }
 
-        public static void ChangeScreen(GameScreen currentScreen, GameScreen nextScreen)
+        public static void ChangeScreen(Screen currentScreen, Screen nextScreen)
         {
             RemoveScreen(currentScreen);
             AddScreen(nextScreen);

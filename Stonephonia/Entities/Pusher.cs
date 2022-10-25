@@ -258,13 +258,13 @@ namespace Stonephonia
             StopRock(50, 200, 700, 600);
             Move();
             PushRock();
-            AgePlayer(playerTextures, gameTimer, 5);
+            AgePlayer(playerTextures, gameTimer, 30);
             SetAnimation();
 
             base.Update(gameTime);
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public void DrawDebug(GameTime gameTime, SpriteBatch spriteBatch)
         {
             //spriteBatch.Draw(ScreenManager.pixel, new Rectangle((int)mPosition.X, (int)mPosition.Y, mCollisionRect.Width, mCollisionRect.Height), Color.Red * 0.3f);
 

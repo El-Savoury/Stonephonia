@@ -100,3 +100,5 @@ C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\De
 C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\rock_zero.xnb
 C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\player_stage_three_sheet.xnb
 C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\player_stage_four_sheet.xnb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\rock_zero_sheet.xnb
+C:\Users\Ross\Documents\C#\Visual Studio Projects\Stonephonia\Stonephonia\bin\Debug\netcoreapp3.1\Content\Sprites\rock_zero_glow.xnb

@@ -4,13 +4,13 @@ using Stonephonia.Effects;
 
 namespace Stonephonia.Screens
 {
-    class SplashScreen : GameScreen
+    class SplashScreen : Screen
     {
-        TextFader textFader;
+        AnimatedTextFader textFader;
 
         public override void LoadAssets()
         {
-            textFader = new TextFader(ScreenManager.font, "Please turn sound on", 1.0f, 0.3f, 0.0f);
+            textFader = new AnimatedTextFader(ScreenManager.font, "Please turn sound on", 1.0f, 0.3f, 0.0f);
 
             base.LoadAssets();
         }

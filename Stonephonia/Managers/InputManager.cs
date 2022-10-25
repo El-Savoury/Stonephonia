@@ -1,22 +1,38 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace Stonephonia
 {
     public static class InputManager
     {
-        private static KeyboardState currentKeyState, prevKeyState;
+        private static KeyboardState mCurrentKeyState, mPrevKeyState;
+        private static Timer mInputTimer = new Timer();
 
-        public static void Update()
+        private static bool InputDetected()
         {
-            prevKeyState = currentKeyState;
-            currentKeyState = Keyboard.GetState();
+            if (Keyboard.GetState().GetPressedKeyCount() > 0)
+            {
+                return true;
+            }
+            else { return false; }
+        }
+
+        public static void NoInputTimeOut(int timeLimit)
+        {
+            InputDetected();
+
+            if (!InputDetected() && mInputTimer.mCurrentTime < timeLimit)
+            {
+               // Game1.self.Exit();
+            }
+            else { mInputTimer.Reset(); }
         }
 
         public static bool KeyPressed(params Keys[] keys)
         {
             foreach (Keys key in keys)
             {
-                if (currentKeyState.IsKeyDown(key) && prevKeyState.IsKeyUp(key))
+                if (mCurrentKeyState.IsKeyDown(key) && mPrevKeyState.IsKeyUp(key))
                     return true;
             }
             return false;
@@ -26,7 +42,7 @@ namespace Stonephonia
         {
             foreach (Keys key in keys)
             {
-                if (currentKeyState.IsKeyUp(key) && prevKeyState.IsKeyDown(key))
+                if (mCurrentKeyState.IsKeyUp(key) && mPrevKeyState.IsKeyDown(key))
                     return true;
             }
             return false;
@@ -36,10 +52,19 @@ namespace Stonephonia
         {
             foreach (Keys key in keys)
             {
-                if (currentKeyState.IsKeyDown(key))
+                if (mCurrentKeyState.IsKeyDown(key))
                     return true;
             }
             return false;
+        }
+
+        public static void Update(GameTime gameTime)
+        {
+            mInputTimer.Update(gameTime);
+            NoInputTimeOut(15);
+            mPrevKeyState = mCurrentKeyState;
+            mCurrentKeyState = Keyboard.GetState();
+
         }
     }
 }

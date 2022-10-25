@@ -8,12 +8,15 @@ namespace Stonephonia
     public class Game1 : Game
     {
         private GraphicsDeviceManager graphics;
-        
+
+        public static Game1 self;
+
         public Game1()
         {
+            self = this;
             graphics = new GraphicsDeviceManager(this);
         }
-
+        
         protected override void Initialize()
         {
             base.Initialize();

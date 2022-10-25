@@ -9,9 +9,9 @@ namespace Stonephonia
         public Color mColour = Color.White;
         public Point mFrameSize; // Size of frame containing sprite to be shown.
         public Point mCurrentFrame; // The row and column numbers of the desired frame to animate from on the spritesheet. 
-        private Point mSheetSize; // Number of rows and collumns needed to be shown from spritesheet.
+        public Point mSheetSize; // Number of rows and collumns needed to be shown from spritesheet.
         private int mTimeSinceLastFrame = 0;
-        private int mTimePerFrame;
+        public int mTimePerFrame;
         private float mAlpha;
 
 

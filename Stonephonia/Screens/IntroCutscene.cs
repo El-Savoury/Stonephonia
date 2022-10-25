@@ -4,12 +4,12 @@ using Stonephonia.Effects;
 
 namespace Stonephonia.Screens
 {
-    public class IntroCutscene : GameScreen
+    public class IntroCutscene : Screen
     {
         Timer roomTimer;
         Sprite playerSprite, fairySprite;
-        ImageFader playerFader, fairyFader;
-        TextFader textFader;
+        Fader playerFader, fairyFader;
+        AnimatedTextFader textFader;
 
         Vector2 playerPosition = new Vector2(30, 100);
         Vector2 fairyPosition = new Vector2(300, 30);
@@ -24,9 +24,9 @@ namespace Stonephonia.Screens
             fairySprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/sprite_test"),
                 new Point(32, 32), new Point(0, 0), new Point(1, 1), 0, Color.White, 0.0f);
 
-            playerFader = new ImageFader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/temp_sprite_fade"), playerPosition);
-            fairyFader = new ImageFader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/sprite_test"), fairyPosition);
-            textFader = new TextFader(ScreenManager.font, "You must document the passing of time", 100f, 0.5f, 0f);
+            playerFader = new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/temp_sprite_fade"), playerPosition);
+            fairyFader = new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/sprite_test"), fairyPosition);
+            textFader = new AnimatedTextFader(ScreenManager.font, "You must document the passing of time", 100f, 0.5f, 0f);
         }
 
         public override void UnloadAssests()
