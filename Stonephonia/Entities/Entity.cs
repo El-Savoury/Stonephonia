@@ -31,8 +31,7 @@ namespace Stonephonia
         }
 
         public virtual void Update(GameTime gameTime)
-        {
-            mSprite.Update(gameTime);
+        {            
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)

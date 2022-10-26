@@ -21,17 +21,20 @@ namespace Stonephonia
         {
         }
 
-        private void PerformCurrentStateAction()
+        private void PerformCurrentStateAction(GameTime gameTime)
         {
             switch (mCurrentState)
             {
                 case State.active:
                     mSprite.mColour = Color.PowderBlue;
-                    Sing();
+                    mSprite.mCurrentFrame.Y = 1;
+                    mSoundTimer.Update(gameTime);
+                    Sing(gameTime);
                     break;
 
                 case State.inactive:
                     mSprite.mCurrentFrame.Y = 0;
+                    mSoundTimer.Reset();
                     mSprite.mColour = Color.White;
                     break;
 
@@ -65,27 +68,23 @@ namespace Stonephonia
             }
         }
 
-        private void Sing()
+        private void Sing(GameTime gameTime)
         {
-            if (mSoundTimer.mCurrentTime > mSoundInterval)
+            if (mSoundTimer.mCurrentTime < mSoundInterval)
             {
-                if (mSprite.mCurrentFrame.X > mSprite.mSheetSize.X)
-                {
-                    mSoundTimer.Reset();
-                }
+                mSprite.AnimateOnce(gameTime);
             }
             else
             {
-                mSprite.mCurrentFrame.Y = 0;
+                mSprite.ResetAnimation(new Point(0, 0));
+                mSoundTimer.Reset();
             }
-
         }
 
         public void Update(GameTime gameTime, Pusher pusher)
         {
-            mSoundTimer.Update(gameTime);
             ActivateNearPlayer(pusher);
-            PerformCurrentStateAction();
+            PerformCurrentStateAction(gameTime);
 
             base.Update(gameTime);
         }

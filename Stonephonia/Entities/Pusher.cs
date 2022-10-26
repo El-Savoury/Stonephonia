@@ -38,7 +38,7 @@ namespace Stonephonia
             mCurrentState = state;
         }
 
-        private void SetAnimation()
+        private void SetAnimation(GameTime gameTime)
         {
             switch (mCurrentState)
             {
@@ -57,6 +57,7 @@ namespace Stonephonia
                     else { mSprite.mCurrentFrame.Y = 5; }
                     break;
             }
+            mSprite.AnimateLoop(gameTime);
         }
 
         private void CalculateMovement()
@@ -81,7 +82,6 @@ namespace Stonephonia
             {
                 mVelocity = 0.0f;
             }
-
             mVelocity = Math.Clamp(mVelocity, -mMaxSpeed, mMaxSpeed);
         }
 
@@ -259,7 +259,7 @@ namespace Stonephonia
             Move();
             PushRock();
             AgePlayer(playerTextures, gameTimer, 30);
-            SetAnimation();
+            SetAnimation(gameTime);
 
             base.Update(gameTime);
         }
