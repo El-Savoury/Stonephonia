@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace Stonephonia
 {
@@ -11,7 +12,7 @@ namespace Stonephonia
         {
             active,
             inactive,
-            moving
+            pushed
         }
 
         private State mCurrentState = State.inactive;
@@ -26,43 +27,52 @@ namespace Stonephonia
             switch (mCurrentState)
             {
                 case State.active:
-                    mSprite.mColour = Color.PowderBlue;
-                    mSprite.mCurrentFrame.Y = 1;
-                    mSoundTimer.Update(gameTime);
                     Sing(gameTime);
+                    mSprite.mColour = Color.Red;
                     break;
 
                 case State.inactive:
-                    mSprite.mCurrentFrame.Y = 0;
-                    mSoundTimer.Reset();
+                    ResetDefaultSprite();
                     mSprite.mColour = Color.White;
                     break;
 
-                case State.moving:
-                    mSprite.mCurrentFrame.Y = 0;
+                case State.pushed:
                     mSprite.mColour = Color.Green;
                     break;
             }
         }
 
-        private void ActivateNearPlayer(Pusher pusher)
+        private bool CollideWithPlayer(Pusher pusher)
         {
             float rockLeft = mCollisionRect.Left;
             float rockRight = mCollisionRect.Right;
             float pusherLeft = pusher.mPosition.X;
             float pusherRight = pusher.mPosition.X + pusher.mSprite.mFrameSize.X;
 
-            if (pusher.mCurrentState == Pusher.State.push && mSprite.mTexture == pusher.mCurrentRock.mSprite.mTexture)
-            {
-                mCurrentState = State.moving;
-            }
-            else if (pusherLeft < rockRight && pusherRight > rockRight ||
+            if (pusherLeft < rockRight && pusherRight > rockRight ||
                 pusherRight > rockLeft && pusherLeft < rockLeft ||
                 pusherLeft >= rockLeft && pusherRight <= rockRight)
             {
-                mCurrentState = State.active;
+                return true;
             }
             else
+            {
+                return false;
+            }
+        }
+
+        private void ActivateNearPlayer(GameTime gameTime, Pusher pusher)
+        {
+            if (pusher.mCurrentState == Pusher.State.push && mSprite.mTexture == pusher.mCurrentRock.mSprite.mTexture && mSprite.mAnimationComplete)
+            {
+                mCurrentState = State.pushed;
+            }
+            else if (CollideWithPlayer(pusher))
+            {
+                //Sing(gameTime);
+                mCurrentState = State.active;
+            }
+            else if (!CollideWithPlayer(pusher) && mSprite.mAnimationComplete)
             {
                 mCurrentState = State.inactive;
             }
@@ -70,20 +80,32 @@ namespace Stonephonia
 
         private void Sing(GameTime gameTime)
         {
-            if (mSoundTimer.mCurrentTime < mSoundInterval)
+            mSoundTimer.Update(gameTime);
+
+            if (mSoundTimer.mCurrentTime < mSoundInterval && !mSprite.mAnimationComplete)
             {
+                mSprite.mCurrentFrame.Y = 1;
                 mSprite.AnimateOnce(gameTime);
+            }
+            else if (mSoundTimer.mCurrentTime < mSoundInterval && mSprite.mAnimationComplete)
+            {
+                mSprite.mCurrentFrame.Y = 0;
             }
             else
             {
-                mSprite.ResetAnimation(new Point(0, 0));
-                mSoundTimer.Reset();
+                ResetDefaultSprite();
             }
+        }
+
+        private void ResetDefaultSprite()
+        {
+            mSprite.ResetAnimation(new Point(0, 0));
+            mSoundTimer.Reset();
         }
 
         public void Update(GameTime gameTime, Pusher pusher)
         {
-            ActivateNearPlayer(pusher);
+            ActivateNearPlayer(gameTime, pusher);
             PerformCurrentStateAction(gameTime);
 
             base.Update(gameTime);

@@ -80,7 +80,7 @@ namespace Stonephonia
             {
                 mSprite = new Sprite(contentMgr.Load<Texture2D>("Sprites/rock_zero_sheet"),
                 new Point(92, 84), new Point(0, 0), new Point(2, 1), 200, Color.White),
-                mSoundInterval = 5
+                mSoundInterval = 4
             };
 
             rock[1] = new Rock(new Vector2(300, 450), 15, 3, 0.02f)
