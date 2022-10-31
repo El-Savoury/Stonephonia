@@ -5,6 +5,8 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Font.spritefont</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/background_bushes.png</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/background_trees.png</File>
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/particle_large.png</File>
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/particle_small.png</File>
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/player_stage_four_sheet.png</File>
@@ -15,6 +17,8 @@
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/rock_zero_sheet.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

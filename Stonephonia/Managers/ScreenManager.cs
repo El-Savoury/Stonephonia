@@ -17,7 +17,7 @@ namespace Stonephonia
         public static ParticleManager particleManager;
         public static SpriteFont font;
         public static Texture2D pixel;
-
+        
         public static Pusher pusher;
         public static Rock[] rock;
 
@@ -25,6 +25,7 @@ namespace Stonephonia
         private readonly int windowHeight = 720;
         private readonly int nativeResWidth = 800;
         private readonly int nativeResHeight = 720;
+        private Color backBufferColour = new Color(177, 255, 242);
 
         public static void Main()
         {
@@ -69,33 +70,36 @@ namespace Stonephonia
             pixel = new Texture2D(GraphicsDevice, 1, 1);
             pixel.SetData(new Color[] { Color.White });
 
-            pusher = new Pusher(new Vector2(300, 450), 0, 4)
+            pusher = new Pusher(new Vector2(300, 452), 0, 4)
             {
                 mSprite = new Sprite(contentMgr.Load<Texture2D>("Sprites/player_stage_one_sheet"),
                 new Point(60, 84), new Point(0, 0), new Point(2, 1), 200, Color.White),
             };
 
             rock = new Rock[4];
-            rock[0] = new Rock(new Vector2(150, 450), 16, 3, 0.03f)
+            rock[0] = new Rock(new Vector2(150, 452), 16, 3, 0.03f)
             {
                 mSprite = new Sprite(contentMgr.Load<Texture2D>("Sprites/rock_zero_sheet"),
                 new Point(92, 84), new Point(0, 0), new Point(2, 1), 200, Color.White),
                 mSoundInterval = 4
             };
 
-            rock[1] = new Rock(new Vector2(300, 450), 15, 3, 0.02f)
+            rock[1] = new Rock(new Vector2(300, 452), 15, 3, 0.02f)
             {
                 mSprite = new Sprite(pixel, new Point(48, 84), new Point(0, 0), new Point(1, 1), 15, Color.Pink),
+                mSoundInterval = 2
             };
 
-            rock[2] = new Rock(new Vector2(400, 450), 0, 2, 0.008f)
+            rock[2] = new Rock(new Vector2(400, 452), 0, 2, 0.008f)
             {
                 mSprite = new Sprite(pixel, new Point(64, 84), new Point(0, 0), new Point(1, 1), 15, Color.Orange),
+                mSoundInterval = 2
             };
 
-            rock[3] = new Rock(new Vector2(500, 450), 0, 1, 0.005f)
+            rock[3] = new Rock(new Vector2(500, 452), 0, 1, 0.005f)
             {
                 mSprite = new Sprite(pixel, new Point(96, 84), new Point(0, 0), new Point(1, 1), 15, Color.LightBlue),
+                mSoundInterval = 2
             };
 
             particleManager.LoadAssets();
@@ -133,15 +137,15 @@ namespace Stonephonia
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.SetRenderTarget(GamePort.renderSurface);
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(backBufferColour);
 
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            particleManager.Draw(spriteBatch);
             int startIndex = screenList.Count - 1;
             for (int i = startIndex; i < screenList.Count; i++)
             {
                 screenList[i].Draw(gameTime, spriteBatch);
             }
-            particleManager.Draw(spriteBatch);
             spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);

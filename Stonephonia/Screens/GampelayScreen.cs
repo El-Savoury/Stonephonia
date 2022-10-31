@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Stonephonia.Effects;
 
@@ -11,9 +9,16 @@ namespace Stonephonia.Screens
         Timer mRoomTimer;
         Fader mFader;
         string[] tutorialText;
+        Texture2D[] backgroundTextures;
 
         public override void LoadAssets()
         {
+            backgroundTextures = new Texture2D[]
+            {
+                ScreenManager.contentMgr.Load<Texture2D>("Sprites/background_trees"),
+                ScreenManager.contentMgr.Load<Texture2D>("Sprites/background_bushes"),
+            };
+
             mRoomTimer = new Timer();
             tutorialText = new string[2] { "Arrow keys to move", "Hold space to push" };
             mFader = new Fader(ScreenManager.font, tutorialText[0], new Vector2(0, 600), 0.0f);
@@ -24,7 +29,7 @@ namespace Stonephonia.Screens
         }
 
         private void TutorialTextPrompt()
-        {   
+        {
             if (mRoomTimer.mCurrentTime > 5.0f)
             {
                 mFader.SmoothFade(true, 0.03f);
@@ -44,23 +49,27 @@ namespace Stonephonia.Screens
             }
 
             ScreenManager.pusher.Update(gameTime, mRoomTimer, ScreenManager.rock);
-           
+
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            mFader.DrawString(spriteBatch, true);
-
+            for (int i = 0; i < backgroundTextures.Length; i++)
+            {
+                spriteBatch.Draw(backgroundTextures[i], new Rectangle(0, 0, 800, 800), Color.White);
+            }
+            
             foreach (Rock rock in ScreenManager.rock)
             {
                 rock.Draw(spriteBatch);
             }
 
             ScreenManager.pusher.Draw(spriteBatch);
-            //ScreenManager.pusher.DrawDebug(gameTime, spriteBatch);
+            mFader.DrawString(spriteBatch, true);
 
             // Debug Stats
+            //ScreenManager.pusher.DrawDebug(gameTime, spriteBatch);
             // spriteBatch.Draw(ScreenManager.pixel, rock.mCollisionRect, Color.Blue * 0.5f);
             // ScreenManager.pusher.Draw(gameTime, spriteBatch); 
             spriteBatch.DrawString(ScreenManager.font, $"Timer: {mRoomTimer.mCurrentTime}", new Vector2(600, 0), Color.Red);

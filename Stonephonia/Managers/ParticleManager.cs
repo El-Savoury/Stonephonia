@@ -31,7 +31,7 @@ namespace Stonephonia
             int spawnChance = mRandom.Next(1, 10);
 
             // Randomise position along top of screen
-            Vector2 particleSpawnPos = new Vector2(mRandom.Next(-400, 800), 0);
+            Vector2 particleSpawnPos = new Vector2(mRandom.Next(-400, 750), 200);
 
             if (mParticleTimer.mCurrentTime > spawnTime)
             {
@@ -41,6 +41,8 @@ namespace Stonephonia
                 }
                 else
                 {
+                    //float speed = (float)mRandom.NextDouble();
+                    //if (speed < 0.5f) { speed = 0.5f; }
                     mParticleList.Add(new Particle(particleSpawnPos, new Vector2(1, 1), mSmallTexture));
                 }
                 mParticleTimer.Reset();

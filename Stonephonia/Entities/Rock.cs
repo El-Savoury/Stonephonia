@@ -28,16 +28,17 @@ namespace Stonephonia
             {
                 case State.active:
                     Sing(gameTime);
-                    mSprite.mColour = Color.Red;
+                    //mSprite.mColour = Color.Red;
                     break;
 
                 case State.inactive:
                     ResetDefaultSprite();
-                    mSprite.mColour = Color.White;
+                    //mSprite.mColour = Color.White;
                     break;
 
                 case State.pushed:
-                    mSprite.mColour = Color.Green;
+                    Sing(gameTime);
+                    //mSprite.mColour = Color.Green;
                     break;
             }
         }
@@ -63,13 +64,14 @@ namespace Stonephonia
 
         private void ActivateNearPlayer(GameTime gameTime, Pusher pusher)
         {
-            if (pusher.mCurrentState == Pusher.State.push && mSprite.mTexture == pusher.mCurrentRock.mSprite.mTexture && mSprite.mAnimationComplete)
+            Rock self = this;
+
+            if (pusher.mCurrentState == Pusher.State.push && self == pusher.mCurrentRock)
             {
                 mCurrentState = State.pushed;
             }
-            else if (CollideWithPlayer(pusher))
+            else if (CollideWithPlayer(pusher) && !mSprite.mAnimationComplete)
             {
-                //Sing(gameTime);
                 mCurrentState = State.active;
             }
             else if (!CollideWithPlayer(pusher) && mSprite.mAnimationComplete)
