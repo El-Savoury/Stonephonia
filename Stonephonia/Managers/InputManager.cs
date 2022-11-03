@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Stonephonia.Screens;
 
 namespace Stonephonia
 {
@@ -8,24 +9,34 @@ namespace Stonephonia
         private static KeyboardState mCurrentKeyState, mPrevKeyState;
         private static Timer mInputTimer = new Timer();
 
-        private static bool InputDetected()
+        private static bool AnyInputDetected()
         {
-            if (Keyboard.GetState().GetPressedKeyCount() > 0)
-            {
-                return true;
-            }
+            if (Keyboard.GetState().GetPressedKeyCount() > 0) { return true; }
             else { return false; }
         }
 
-        public static void NoInputTimeOut(int timeLimit)
+        public static bool SpecificInputDetected(params Keys[] keys)
         {
-            InputDetected();
+            bool inputDetected = false;
 
-            if (!InputDetected() && mInputTimer.mCurrentTime < timeLimit)
+            foreach (Keys key in keys)
             {
-               // Game1.self.Exit();
+                if (KeyPressed(keys)) { inputDetected = true; }
+                else { inputDetected = false; }
             }
-            else { mInputTimer.Reset(); }
+            return inputDetected;
+        }
+
+        public static void NoInputTimeOut(GameTime gameTime, int timeLimit, Screen currentScreen, Screen nextScreen)
+        {
+            mInputTimer.Update(gameTime);
+            bool recentInput = AnyInputDetected();
+
+            if (mInputTimer.mCurrentTime > timeLimit)
+            {
+                if (!recentInput) { ScreenManager.ChangeScreen(currentScreen, nextScreen); }
+            }
+            else if (recentInput) { mInputTimer.Reset(); }
         }
 
         public static bool KeyPressed(params Keys[] keys)
@@ -60,8 +71,6 @@ namespace Stonephonia
 
         public static void Update(GameTime gameTime)
         {
-            mInputTimer.Update(gameTime);
-            NoInputTimeOut(15);
             mPrevKeyState = mCurrentKeyState;
             mCurrentKeyState = Keyboard.GetState();
 

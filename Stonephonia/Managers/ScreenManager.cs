@@ -104,7 +104,7 @@ namespace Stonephonia
 
             particleManager.LoadAssets();
 
-            AddScreen(new GampelayScreen());
+            AddScreen(new GameplayScreen());
             //AddScreen(new IntroCutscene());
         }
 
@@ -175,7 +175,7 @@ namespace Stonephonia
 
             if (screenList.Count < 1)
             {
-                AddScreen(new GampelayScreen());
+                AddScreen(new GameplayScreen());
             }
         }
 
@@ -197,7 +197,7 @@ namespace Stonephonia
 
         private void ToggleFullScreen()
         {
-            if (InputManager.KeyHeld(Keys.LeftAlt) && InputManager.KeyHeld(Keys.Enter))
+            if (InputManager.KeyReleased (Keys.LeftAlt) && InputManager.KeyReleased(Keys.Enter))
             {
                 if (graphicsDeviceMgr.IsFullScreen)
                 {
