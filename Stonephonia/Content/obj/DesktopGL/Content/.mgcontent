@@ -14,10 +14,14 @@
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/player_stage_one_sheet.png</File>
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/player_stage_three_sheet.png</File>
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/player_stage_two_sheet.png</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/river_rock.png</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/river_rock_shadow.png</File>
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/rock_zero.png</File>
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/rock_zero_sheet.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

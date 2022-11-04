@@ -98,7 +98,7 @@ namespace Stonephonia
                 ChangeState(State.walk);
             }
 
-            //KeepEntityOnScreen();
+            KeepEntityOnScreen();
         }
 
         private void TargetClosestRock(Rock[] rock)
@@ -258,7 +258,7 @@ namespace Stonephonia
             StopRock(50, 200, 700, 600);
             Move();
             PushRock();
-            AgePlayer(playerTextures, gameTimer, 30);
+            AgePlayer(playerTextures, gameTimer, 45);
             SetAnimation(gameTime);
 
             base.Update(gameTime);
