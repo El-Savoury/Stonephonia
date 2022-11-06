@@ -71,7 +71,7 @@ namespace Stonephonia
             pixel = new Texture2D(GraphicsDevice, 1, 1);
             pixel.SetData(new Color[] { Color.White });
 
-            pusher = new Pusher(new Vector2(300, 452), 0, 4)
+            pusher = new Pusher(new Vector2(20, 452), 0, 4)
             {
                 mSprite = new Sprite(contentMgr.Load<Texture2D>("Sprites/player_stage_one_sheet"),
                 new Point(60, 84), new Point(0, 0), new Point(2, 1), 200, Color.White),

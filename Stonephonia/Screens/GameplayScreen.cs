@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Stonephonia.Managers;
 
 namespace Stonephonia.Screens
@@ -11,8 +10,8 @@ namespace Stonephonia.Screens
         LeafManager mLeafManager;
         Texture2D[] mBackgroundTextures;
         Reflection[] mReflections;
-        TimedTextPrompt[] mTextPrompts;
-        TextPromptManager mPromptManager;
+        TimedText[] mTextPrompts;
+        TextManager mTextPromptManager;
 
         public override void LoadAssets()
         {
@@ -31,13 +30,13 @@ namespace Stonephonia.Screens
                 new Point(124,124), new Point(0,0), new Point(4,1), 100, Color.White), new Vector2(100,100))
             };
 
-            mTextPrompts = new TimedTextPrompt[]
+            mTextPrompts = new TimedText[]
             {
-                new TimedTextPrompt(new Vector2(0, 600), 5,  "Arrow keys to move"),
-                new TimedTextPrompt(new Vector2(0, 600), 5, "Hold space to push")
+                new TimedText(new Vector2(0, 600), 3, "Arrow keys to move", ScreenManager.darkBlue),
+                new TimedText(new Vector2(0, 600), 2, "Hold space to push", ScreenManager.darkBlue)
             };
 
-            mPromptManager = new TextPromptManager(mTextPrompts, ScreenManager.pusher);
+            mTextPromptManager = new TextManager(mTextPrompts);
         }
 
         public override void UnloadAssests()
@@ -62,7 +61,7 @@ namespace Stonephonia.Screens
 
             ScreenManager.pusher.Update(gameTime, mRoomTimer, ScreenManager.rock);
             mLeafManager.Update(gameTime, ScreenManager.pusher);
-            mPromptManager.Update(gameTime);
+            mTextPromptManager.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -76,17 +75,19 @@ namespace Stonephonia.Screens
 
             foreach (Reflection reflection in mReflections)
             {
-                reflection.Draw(spriteBatch);
+                //reflection.Draw(spriteBatch);
             }
 
-            foreach (Rock rock in ScreenManager.rock)
-            {
-                rock.Draw(spriteBatch);
-            }
+            //foreach (Rock rock in ScreenManager.rock)
+            //{
+            //    rock.Draw(spriteBatch);
+            //}
+
+            ScreenManager.rock[0].Draw(spriteBatch);
 
             ScreenManager.pusher.Draw(spriteBatch);
             mLeafManager.Draw(spriteBatch);
-            mPromptManager.Draw(spriteBatch);
+            mTextPromptManager.Draw(spriteBatch);
 
             // Debug Stats
             //ScreenManager.pusher.DrawDebug(gameTime, spriteBatch);
