@@ -24,8 +24,8 @@ namespace Stonephonia.Screens
             fairySprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/sprite_test"),
                 new Point(32, 32), new Point(0, 0), new Point(1, 1), 0, Color.White, 0.0f);
 
-            playerFader = new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/temp_sprite_fade"), playerPosition);
-            fairyFader = new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/sprite_test"), fairyPosition);
+            playerFader = new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/temp_sprite_fade"), playerPosition, ScreenManager.lightBlue);
+            fairyFader = new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/sprite_test"), fairyPosition, ScreenManager.lightBlue);
             textFader = new AnimatedTextFader(ScreenManager.font, "You must document the passing of time", 100f, 0.5f, 0f);
         }
 

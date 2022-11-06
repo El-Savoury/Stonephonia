@@ -6,7 +6,6 @@ namespace Stonephonia
 {
     public class Particle
     {
-        //public Rectangle mBounds;
         public Vector2 mPosition;
         private Vector2 mVelocity;
         private Texture2D mTexture;
@@ -26,8 +25,7 @@ namespace Stonephonia
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            //spriteBatch.Draw(mTexture, mPosition, Color.White);
-            spriteBatch.Draw(mTexture, mPosition, new Rectangle(0, 0, mTexture.Width, mTexture.Height), Color.White, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 1.0f);
+            spriteBatch.Draw(mTexture, mPosition, Color.White);
         }
     }
 }

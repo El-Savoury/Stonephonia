@@ -28,14 +28,14 @@ namespace Stonephonia
         private void SpawnParticles()
         {
             int spawnTime = mRandom.Next(0, 15);
-            int spawnChance = mRandom.Next(1, 10);
+            int spawnChance = mRandom.Next(1, 15);
 
             // Randomise position along top of screen
             Vector2 particleSpawnPos = new Vector2(mRandom.Next(-400, 750), 200);
 
             if (mParticleTimer.mCurrentTime > spawnTime)
             {
-                if (spawnChance == 9)
+                if (spawnChance >= 12)
                 {
                     mParticleList.Add(new Particle(particleSpawnPos, new Vector2(1, 2), mLargeTexture));
                 }

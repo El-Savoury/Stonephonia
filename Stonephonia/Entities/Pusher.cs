@@ -241,10 +241,12 @@ namespace Stonephonia
 
         private void AgePlayer(Texture2D[] playerTextures, Timer gameTimer, int timeInterval)
         {
-            if (gameTimer.mCurrentTime > timeInterval && Array.IndexOf(playerTextures, ScreenManager.pusher.mSprite.mTexture) < playerTextures.Length - 1)
+            if (gameTimer.mCurrentTime > timeInterval && Array.IndexOf(playerTextures, mSprite.mTexture) < playerTextures.Length - 1)
             {
-                ScreenManager.pusher.mSprite.mTexture = playerTextures[Array.IndexOf(playerTextures, ScreenManager.pusher.mSprite.mTexture) + 1];
-                ScreenManager.pusher.mMaxSpeed--;
+                mSprite.mTexture = playerTextures[Array.IndexOf(playerTextures, mSprite.mTexture) + 1];
+                mSprite.mTimePerFrame += 25;
+                mMaxSpeed--;
+
                 gameTimer.Reset();
             }
         }
@@ -258,7 +260,7 @@ namespace Stonephonia
             StopRock(50, 200, 700, 600);
             Move();
             PushRock();
-            AgePlayer(playerTextures, gameTimer, 45);
+            AgePlayer(playerTextures, gameTimer, 30);
             SetAnimation(gameTime);
 
             base.Update(gameTime);

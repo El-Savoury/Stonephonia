@@ -31,7 +31,7 @@ namespace Stonephonia.Managers
             mTimer.Update(gameTime);
 
             // Randomly spawn up to two leaves
-            if (mRandom.Next(0, 350) == 5 && mLeafList.Count < 2)
+            if (mRandom.Next(0, 500) == 5 && mLeafList.Count < 2)
             {
                 SpawnLeaf(new Vector2(mRandom.Next(64, 750), -64));
             }

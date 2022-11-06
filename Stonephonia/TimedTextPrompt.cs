@@ -8,58 +8,102 @@ namespace Stonephonia
     public class TimedTextPrompt
     {
         private Fader mFader;
-        private Vector2 mPosition;
-        private Timer mTimer;
+        private Timer mTimer = new Timer();
         private int mTimeLimit;
         private bool mInputReceived;
+        public bool mPromptComplete;
         public string mText;
+        public float mAlpha;
 
-        public TimedTextPrompt(Vector2 position, Timer timer, int timeLimit, string text)
+        public TimedTextPrompt(Vector2 position, int timeLimit, string text)
         {
-            mPosition = position;
-            mTimer = timer;
             mTimeLimit = timeLimit;
             mText = text;
-            mFader = new Fader(ScreenManager.font, mText, position);
+            mFader = new Fader(ScreenManager.font, mText, position, ScreenManager.darkBlue);
         }
 
-        public bool CheckInput(params Keys[] keys)
+        public void CheckInput(params Keys[] keys)
         {
-            bool inputReceived = false;
-
             foreach (Keys key in keys)
             {
                 if (InputManager.SpecificInputDetected(key))
                 {
                     mInputReceived = true;
-                    inputReceived = true;
                 }
-                else { inputReceived = false; }
             }
-            return inputReceived;
         }
 
-        public void TextPromptUserInput(params Keys[] keys)
+        public void PromptMove(params Keys[] keys)
         {
-            CheckInput(keys);
-
-            if (mTimer.mCurrentTime > mTimeLimit && !mInputReceived)
+            if (!mPromptComplete)
             {
-                ShowPrompt(true, 0.03f);
+                CheckInput(keys);
+
+                if (mInputReceived)
+                {
+                    mPromptComplete = true;
+                }
+                else if (mTimer.mCurrentTime > mTimeLimit && mTimer.mCurrentTime < mTimeLimit * 3 && !mInputReceived)
+                {
+                    ShowPrompt();
+                }
+                else if (mTimer.mCurrentTime > mTimeLimit * 3 && !mInputReceived)
+                {
+                    FlashPrompt();
+                }
             }
             else
             {
-                ShowPrompt(false, 0.05f);
+                HidePrompt();
             }
         }
 
-        private void ShowPrompt(bool visible, float fadeInSpeed)
+        public void PromptPush(Pusher pusher)
         {
-            mFader.SmoothFade(visible, fadeInSpeed);
+            if (!mPromptComplete)
+            {
+                if (pusher.mCurrentState == Pusher.State.push)
+                {
+                    mPromptComplete = true;
+                }
+                else if (mTimer.mCurrentTime > mTimeLimit && mTimer.mCurrentTime < mTimeLimit * 3)
+                {
+                    ShowPrompt();
+                }
+                else if (mTimer.mCurrentTime > mTimeLimit * 3 && pusher.mCurrentState != Pusher.State.push)
+                {
+                    FlashPrompt();
+                }
+            }
+            else
+            {
+                HidePrompt();
+            }
+        }
+
+        private void ShowPrompt()
+        {
+            mFader.SmoothFade(true, 0.03f);
+        }
+
+        private void FlashPrompt()
+        {
+            mFader.Flash(0.04f);
+        }
+
+        private void HidePrompt()
+        {
+            mFader.SmoothFade(false, 0.05f);
+            if (mAlpha <= 0.0f)
+            {
+                mTimer.Reset();
+            }
         }
 
         public void Update(GameTime gameTime)
         {
+            mAlpha = mFader.mAlpha;
+            mTimer.Update(gameTime);
             mFader.Update(gameTime);
         }
 

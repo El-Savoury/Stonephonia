@@ -17,7 +17,9 @@ namespace Stonephonia
         public static ParticleManager particleManager;
         public static SpriteFont font;
         public static Texture2D pixel;
-        
+        public static Color lightBlue = new Color(177, 255, 242);
+        public static Color darkBlue = new Color(6, 101, 122);
+
         public static Pusher pusher;
         public static Rock[] rock;
 
@@ -25,8 +27,7 @@ namespace Stonephonia
         private readonly int windowHeight = 720;
         private readonly int nativeResWidth = 800;
         private readonly int nativeResHeight = 720;
-        private Color backBufferColour = new Color(177, 255, 242);
-
+        
         public static void Main()
         {
             using ScreenManager manager = new ScreenManager();
@@ -137,7 +138,7 @@ namespace Stonephonia
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.SetRenderTarget(GamePort.renderSurface);
-            GraphicsDevice.Clear(backBufferColour);
+            GraphicsDevice.Clear(lightBlue);
 
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             particleManager.Draw(spriteBatch);

@@ -43,7 +43,7 @@ namespace Stonephonia
             }
         }
 
-        private bool CollideWithPlayer(Pusher pusher)
+        public bool CollideWithPlayer(Pusher pusher)
         {
             float rockLeft = mCollisionRect.Left;
             float rockRight = mCollisionRect.Right;

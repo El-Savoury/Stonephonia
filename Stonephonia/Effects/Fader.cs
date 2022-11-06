@@ -11,22 +11,32 @@ namespace Stonephonia.Effects
         private SpriteFont mFont;
         private Vector2 mPosition;
         private string mText;
-        private float mAlpha;
-        private Color mColour = Color.White;
+        public float mAlpha;
+        private Color mColour;
+        private bool mVisible;
 
-        public Fader(Texture2D texture, Vector2 position, float alpha = 0.0f)
+        public Fader(Texture2D texture, Vector2 position, Color colour, float alpha = 0.0f)
         {
             mTexture = texture;
             mPosition = position;
             mAlpha = alpha;
+            mColour = colour;
         }
 
-        public Fader(SpriteFont font, String text, Vector2 position, float alpha = 0.0f)
+        public Fader(SpriteFont font, string text, Vector2 position, Color colour, float alpha = 0.0f)
         {
             mFont = font;
             mText = text;
             mPosition = position;
             mAlpha = alpha;
+            mColour = colour;
+        }
+
+        public void Flash(float fadeAmount)
+        {
+            if (mAlpha == 1.0f) { mVisible = true; }
+            else if (mAlpha <= 0.3f) { mVisible = false; }
+            mAlpha = mVisible ? mAlpha -= fadeAmount : mAlpha += fadeAmount;
         }
 
         public void SmoothFade(bool enabled, float fadeAmount)
