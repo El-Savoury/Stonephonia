@@ -87,7 +87,7 @@ namespace Stonephonia
             if (mSoundTimer.mCurrentTime < mSoundInterval && !mSprite.mAnimationComplete)
             {
                 mSprite.mCurrentFrame.Y = 1;
-                mSprite.AnimateOnce(gameTime);
+                mSprite.Update(gameTime, false);
             }
             else if (mSoundTimer.mCurrentTime < mSoundInterval && mSprite.mAnimationComplete)
             {

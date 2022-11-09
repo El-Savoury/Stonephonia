@@ -54,7 +54,7 @@ namespace Stonephonia
 
         public void Update(GameTime gameTime)
         {
-            mSprite.AnimateLoop(gameTime);
+            mSprite.Update(gameTime, true);
 
             if (mCurrentState == State.falling)
             {

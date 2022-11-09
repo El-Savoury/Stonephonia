@@ -10,8 +10,8 @@ namespace Stonephonia.Screens
         LeafManager mLeafManager;
         Texture2D[] mBackgroundTextures;
         Reflection[] mReflections;
-        TimedText[] mTextPrompts;
-        TextManager mTextPromptManager;
+        TextPrompt[] mTextPrompts;
+        TextPromptManager mTextPromptManager;
 
         public override void LoadAssets()
         {
@@ -30,13 +30,13 @@ namespace Stonephonia.Screens
                 new Point(124,124), new Point(0,0), new Point(4,1), 100, Color.White), new Vector2(100,100))
             };
 
-            mTextPrompts = new TimedText[]
+            mTextPrompts = new TextPrompt[]
             {
-                new TimedText(new Vector2(0, 600), 3, "Arrow keys to move", ScreenManager.darkBlue),
-                new TimedText(new Vector2(0, 600), 2, "Hold space to push", ScreenManager.darkBlue)
+                new TextPrompt(new Vector2(0, 600), 3, "Arrow keys to move", ScreenManager.darkBlue),
+                new TextPrompt(new Vector2(0, 600), 3, "Hold space to push", ScreenManager.darkBlue)
             };
 
-            mTextPromptManager = new TextManager(mTextPrompts);
+            mTextPromptManager = new TextPromptManager(mTextPrompts);
         }
 
         public override void UnloadAssests()

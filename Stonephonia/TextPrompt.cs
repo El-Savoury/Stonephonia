@@ -5,7 +5,7 @@ using Stonephonia.Effects;
 
 namespace Stonephonia
 {
-    public class TimedText
+    public class TextPrompt
     {
         private Fader mFader;
         private int mTimeLimit;
@@ -13,7 +13,7 @@ namespace Stonephonia
         public bool mTextComplete;
         public float mAlpha;
 
-        public TimedText(Vector2 position, int timeLimit, string text, Color colour)
+        public TextPrompt(Vector2 position, int timeLimit, string text, Color colour)
         {
             mTimeLimit = timeLimit;
             mFader = new Fader(ScreenManager.font, text, position, colour);
@@ -38,11 +38,11 @@ namespace Stonephonia
             {
                 HideText(timer);
             }
-            else if (timer.mCurrentTime > mTimeLimit && timer.mCurrentTime < mTimeLimit * 2 && !mInputReceived)
+            else if (timer.mCurrentTime > mTimeLimit && timer.mCurrentTime < mTimeLimit * 3 && !mInputReceived)
             {
                 ShowText();
             }
-            else if (timer.mCurrentTime > mTimeLimit * 2 && !mInputReceived)
+            else if (timer.mCurrentTime > mTimeLimit * 3 && !mInputReceived)
             {
                 FlashText();
             }
@@ -66,12 +66,12 @@ namespace Stonephonia
 
         private void ShowText()
         {
-            mFader.SmoothFade(true, 0.03f);
+            mFader.SmoothFade(true, 0.02f);
         }
 
         private void FlashText()
         {
-            mFader.Flash(0.04f);
+            mFader.Flash(1.0f, 0.3f, 0.04f);
         }
 
         private void HideText(Timer timer)

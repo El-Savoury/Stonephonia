@@ -32,10 +32,10 @@ namespace Stonephonia.Effects
             mColour = colour;
         }
 
-        public void Flash(float fadeAmount)
+        public void Flash(float opaque, float transparent, float fadeAmount)
         {
-            if (mAlpha == 1.0f) { mVisible = true; }
-            else if (mAlpha <= 0.3f) { mVisible = false; }
+            if (mAlpha == opaque) { mVisible = true; }
+            else if (mAlpha <= transparent) { mVisible = false; }
             mAlpha = mVisible ? mAlpha -= fadeAmount : mAlpha += fadeAmount;
         }
 

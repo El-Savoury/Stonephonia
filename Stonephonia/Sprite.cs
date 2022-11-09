@@ -38,7 +38,7 @@ namespace Stonephonia
             mAnimationComplete = false;
         }
 
-        public void AnimateOnce(GameTime gameTime)
+        private void AnimateOnce(GameTime gameTime)
         {
             mTimeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
             if (!mAnimationComplete && mTimeSinceLastFrame > mTimePerFrame)
@@ -54,7 +54,7 @@ namespace Stonephonia
             }
         }
 
-        public void AnimateLoop(GameTime gameTime)
+        private void AnimateLoop(GameTime gameTime)
         {
             mTimeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
             if (mTimeSinceLastFrame > mTimePerFrame)
@@ -69,18 +69,22 @@ namespace Stonephonia
             }
         }
 
-        public void Update(GameTime gameTime) // Animate sprite.
+        public void Update(GameTime gameTime, bool loop) // Animate sprite.
         {
-            //Animate(gameTime);
+            if (loop) { AnimateLoop(gameTime); }
+            else { AnimateOnce(gameTime); }
         }
 
         public void Draw(SpriteBatch spriteBatch, Vector2 position)
         {
             spriteBatch.Draw(mTexture, position, new Rectangle(mCurrentFrame.X * mFrameSize.X, mCurrentFrame.Y * mFrameSize.Y, mFrameSize.X, mFrameSize.Y),
                 mColour * mAlpha);
+        }
 
-            //spriteBatch.Draw(mTexture, position, new Rectangle(mCurrentFrame.X * mFrameSize.X, mCurrentFrame.Y * mFrameSize.Y, mFrameSize.X, mFrameSize.Y),
-            //mColour * mAlpha, 0.0f, Vector2.Zero, Vector2.One, mSpriteDirection, 0.0f);
+        public void DrawScaled(SpriteBatch spriteBatch, Vector2 position, float scale)
+        {
+            spriteBatch.Draw(mTexture, position, new Rectangle(mCurrentFrame.X * mFrameSize.X, mCurrentFrame.Y * mFrameSize.Y, mFrameSize.X, mFrameSize.Y),
+            mColour * mAlpha, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
         }
     }
 }

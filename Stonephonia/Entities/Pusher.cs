@@ -57,7 +57,7 @@ namespace Stonephonia
                     else { mSprite.mCurrentFrame.Y = 5; }
                     break;
             }
-            mSprite.AnimateLoop(gameTime);
+            mSprite.Update(gameTime, true);
         }
 
         private void CalculateMovement()

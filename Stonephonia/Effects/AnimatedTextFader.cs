@@ -63,27 +63,28 @@ namespace Stonephonia.Effects
             {
                 letter.Draw(spriteBatch, mFont, position, colour);
                 position.X += spacing;
-                //// Fix kerning issues to monospace letters
-                //Vector2 letterSize = mFont.MeasureString(letter.mLetter.ToString());
 
-                //switch (letterSize.X)
-                //{
-                //    case 2:
-                //        position.X += spacing - 3;
-                //        break;
+                // Fix kerning issues to monospace letters
+                Vector2 letterSize = mFont.MeasureString(letter.mLetter.ToString());
 
-                //    case 4:
-                //        position.X += spacing - 1;
-                //        break;
+                switch (letterSize.X)
+                {
+                    case 8:
+                        position.X += spacing - 12;
+                        break;
 
-                //    case 6:
-                //        position.X += spacing + 1;
-                //        break;
+                    case 16:
+                        position.X += spacing - 4;
+                        break;
 
-                //    default:
-                //        position.X += spacing;
-                //        break;
-                //}
+                    case 24:
+                        position.X += spacing + 4;
+                        break;
+
+                    default:
+                        position.X += spacing;
+                        break;
+                }
             }
         }
 

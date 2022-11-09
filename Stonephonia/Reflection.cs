@@ -16,7 +16,7 @@ namespace Stonephonia
 
         public void Update(GameTime gameTime)
         {
-            mSprite.AnimateLoop(gameTime);
+            mSprite.Update(gameTime, true);
         }
 
         public void Draw(SpriteBatch spriteBatch)
