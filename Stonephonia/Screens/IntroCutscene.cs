@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Stonephonia.Effects;
+using Stonephonia.Managers;
 
 namespace Stonephonia.Screens
 {
@@ -10,6 +11,7 @@ namespace Stonephonia.Screens
         AnimatedTextFader mTextFader;
         Sprite mPlayerSprite, mFairySprite;
         Fader mPlayerFader, mFairyFader, mBlackSquareFader;
+        FaderManager mFaderManager;
         Texture2D[] mBackgroundTextures;
 
         Vector2 mFairyPosition = new Vector2(600, 300);
@@ -25,9 +27,11 @@ namespace Stonephonia.Screens
             mPlayerSprite.SetVisible(false);
             mFairySprite.SetVisible(false);
 
-            mPlayerFader = new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_fader"), ScreenManager.pusher.mPosition, Color.White);
-            mFairyFader = new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_fader"), mFairyPosition, Color.White);
             mBlackSquareFader = new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/black_square"), Vector2.Zero, Color.White, 1.0f);
+            mFairyFader = new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_fader"), mFairyPosition, Color.White);
+            mPlayerFader = new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_fader"), ScreenManager.pusher.mPosition, Color.White);
+             
+            mFaderManager = new FaderManager(new Fader[3] { mBlackSquareFader, mFairyFader, mPlayerFader });
 
             mBackgroundTextures = new Texture2D[]
            {
@@ -43,26 +47,17 @@ namespace Stonephonia.Screens
         public override void Update(GameTime gameTime)
         {
             mRoomTimer.Update(gameTime);
-            mBlackSquareFader.Update(gameTime);
-            mFairySprite.Update(gameTime, true);
-            mPlayerSprite.Update(gameTime, true);
-            mTextFader.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds);
-            mPlayerFader.Update(gameTime);
+            //mFairySprite.Update(gameTime, true);
+            //mPlayerSprite.Update(gameTime, true);
+            //mTextFader.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds);
+
+            mFaderManager.FadeInAndOut(mBlackSquareFader, 1.0f, 0.008f, 0, 30);
+            mFaderManager.FadeInAndOut(mFairyFader, 0.03f, 0.01f, 3, 2);
+            mFaderManager.FadeInAndOut(mPlayerFader, 0.03f, 0.01f, 10, 2);
 
 
-            if (mRoomTimer.mCurrentTime > 10)
-            {
-                //mBlackSquareFader.SmoothFade(false, 0.008f);
-                mPlayerSprite.SetVisible(true);
-                mPlayerFader.SmoothFade(false, 0.06f);
-            }
+            mFaderManager.Update(gameTime);
 
-            if (mRoomTimer.mCurrentTime > 3)
-            {
-                mPlayerFader.SmoothFade(true, 0.03f);
-                //playerFader.GlowFade(true, 0.04f, 0.02f, 0.5f, 0.2f);
-                // playerFader.StagedFade(true, 0.2f, 0.3f);
-            }
 
 
         }
@@ -74,12 +69,12 @@ namespace Stonephonia.Screens
                 spriteBatch.Draw(background, new Rectangle(0, 0, 800, 800), Color.White);
             }
 
-            mBlackSquareFader.DrawSprite(spriteBatch);
+            mFaderManager.Draw(spriteBatch);
+           
 
-            mFairySprite.Draw(spriteBatch, mFairyPosition);
-            mPlayerSprite.Draw(spriteBatch, ScreenManager.pusher.mPosition);
+            //mFairySprite.Draw(spriteBatch, mFairyPosition);
+            //mPlayerSprite.Draw(spriteBatch, ScreenManager.pusher.mPosition);
 
-            mPlayerFader.DrawSprite(spriteBatch);
 
             mTextFader.Draw(spriteBatch, new Vector2(0, 600), 10, true, ScreenManager.lightBlue);
 

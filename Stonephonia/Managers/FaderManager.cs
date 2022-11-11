@@ -8,33 +8,45 @@ namespace Stonephonia.Managers
 {
     public class FaderManager
     {
-        private Fader[] mFaders;
-        private int mCurrentFader = 0;
+        private Timer mTimer;
+        public Fader[] mFaders;
+
 
         public FaderManager(Fader[] faders)
         {
+            mTimer = new Timer();
             mFaders = faders;
         }
 
-        private void FadeInAndOut()
+        public void FadeInAndOut(Fader fader, float speed1, float speed2, int activationTime, int delay)
         {
+            int deactivationTime = activationTime + delay;
 
+            if (mTimer.mCurrentTime > deactivationTime)
+            {
+                fader.SmoothFade(false, speed2);
+            }
+            else if (mTimer.mCurrentTime > activationTime)
+            {
+                fader.SmoothFade(true, speed1);
+            }
         }
 
         public void Update(GameTime gameTime)
         {
-            //mFaders[mCurrentFader].SetActive(true);
-            //mFaders[mCurrentFader].Update(gameTime);
-
-            //if (mFaders[mCurrentFader].mComplete && mCurrentFader < mFaders.Length)
-            //{
-            //    mCurrentFader++;
-            //}
+            mTimer.Update(gameTime);
+            foreach (Fader fader in mFaders)
+            {
+                fader.Update(gameTime);
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            mFaders[mCurrentFader].DrawSprite(spriteBatch);
+            foreach (Fader fader in mFaders)
+            {
+                fader.DrawSprite(spriteBatch);
+            }
         }
 
     }

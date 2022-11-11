@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Stonephonia.Effects;
@@ -40,14 +41,19 @@ namespace Stonephonia.Screens
             }
         }
 
-        private void MoveTitle()
+        private void MoveTitle(int moveSpeed)
         {
-            if (mTitlePosition.Y < mTitlePosition.Y * 3 &&
-                mRoomTimer.mCurrentTime > 0.2f)
-            {
-                mTitlePosition.Y += 4;
-                mRoomTimer.Reset();
-            }
+            //if (mRoomTimer.mCurrentTime > 0.2f)
+            //{
+                if (mTitlePosition.Y >= 412 ||
+                    mTitlePosition.Y <=400 - 12)
+                {
+                    moveSpeed = Math.Sign(moveSpeed);
+                }
+
+                mTitlePosition.Y += moveSpeed;
+                // mRoomTimer.Reset();
+            //}
         }
 
         public override void Update(GameTime gameTime)
@@ -55,6 +61,7 @@ namespace Stonephonia.Screens
             mRoomTimer.Update(gameTime);
             mPressSpaceFader.Flash(1.0f, 0.3f, 0.04f);
 
+           // MoveTitle(10);
             StartGame();
 
             base.Update(gameTime);
@@ -64,7 +71,9 @@ namespace Stonephonia.Screens
         {
             spriteBatch.Draw(ScreenManager.pixel, mBlackRectangle, Color.Black);
             mPressSpaceFader.DrawString(spriteBatch, true);
-            mTitleSprite.DrawScaled(spriteBatch, mTitlePosition /2, 2.0f);
+            mTitleSprite.DrawScaled(spriteBatch, mTitlePosition / 2, 2.0f);
+
+            spriteBatch.DrawString(ScreenManager.font, Convert.ToString(mTitlePosition.Y), Vector2.Zero, Color.White);
 
             //textFader.Draw(spriteBatch, new Vector2(0, 70), 6, true, Color.White);
         }
