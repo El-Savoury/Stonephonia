@@ -32,13 +32,13 @@ namespace Stonephonia.Managers
 
             if (!mtextArray[0].mTextComplete)
             {
-                mtextArray[0].PromptMove(mTimer, Keys.Left, Keys.Right);
+                mtextArray[0].PromptInput(mTimer, Keys.Left, Keys.Right);
             }
             else if (!mtextArray[1].mTextComplete)
             {
                 if (mtextArray[0].mTextComplete)
                 {
-                    mtextArray[1].PromptPush(mTimer, ScreenManager.pusher);
+                    mtextArray[1].PromptAction(mTimer, ScreenManager.pusher);
                 }
             }
         }

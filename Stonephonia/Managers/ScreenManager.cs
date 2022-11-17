@@ -18,16 +18,19 @@ namespace Stonephonia
         public static SpriteFont font;
         public static Texture2D pixel;
         public static Color lightBlue = new Color(177, 255, 242);
+        public static Color greyBlue = new Color(112, 181, 178);
+        public static Color greenBlue = new Color(81, 162, 165);
         public static Color darkBlue = new Color(6, 101, 122);
 
         public static Pusher pusher;
         public static Rock[] rock;
+        public static Texture2D canopy;
 
         private readonly int windowWidth = 1280;
         private readonly int windowHeight = 720;
         private readonly int nativeResWidth = 800;
         private readonly int nativeResHeight = 720;
-        
+
         public static void Main()
         {
             using ScreenManager manager = new ScreenManager();
@@ -66,6 +69,7 @@ namespace Stonephonia
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             font = Content.Load<SpriteFont>("Font");
+            canopy = contentMgr.Load<Texture2D>("Sprites/canopy");
 
             // Create 1x1 white pixel texture
             pixel = new Texture2D(GraphicsDevice, 1, 1);
@@ -74,7 +78,7 @@ namespace Stonephonia
             pusher = new Pusher(new Vector2(20, 452), 0, 4)
             {
                 mSprite = new Sprite(contentMgr.Load<Texture2D>("Sprites/player_stage_one_sheet"),
-                new Point(60, 84), new Point(0, 0), new Point(2, 1), 200, Color.White),
+                new Point(60, 84), new Point(0, 0), new Point(2, 1), 200, Color.White, false),
             };
 
             rock = new Rock[4];
@@ -106,8 +110,8 @@ namespace Stonephonia
             particleManager.LoadAssets();
 
             // AddScreen(new GameplayScreen());
-            AddScreen(new IntroCutscene());
-            // AddScreen(new SplashScreen());
+            // AddScreen(new IntroCutscene());
+             AddScreen(new SplashScreen());
         }
 
         protected override void UnloadContent()
@@ -199,7 +203,7 @@ namespace Stonephonia
 
         private void ToggleFullScreen()
         {
-            if (InputManager.KeyReleased (Keys.LeftAlt) && InputManager.KeyReleased(Keys.Enter))
+            if (InputManager.KeyReleased(Keys.LeftAlt) && InputManager.KeyReleased(Keys.Enter))
             {
                 if (graphicsDeviceMgr.IsFullScreen)
                 {

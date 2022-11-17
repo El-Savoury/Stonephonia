@@ -11,6 +11,7 @@ namespace Stonephonia.Effects
         private float mTextXPos;
         private float mTimeInterval;
         private float mTotalTime = 0.0f;
+        public bool mComplete = false;
 
         public AnimatedTextFader(SpriteFont font, string text, float timeInterval, float fadeSpeed, float textOpacity)
         {
@@ -29,7 +30,24 @@ namespace Stonephonia.Effects
             mTextXPos = GamePort.renderSurface.Bounds.Width / 2 - font.MeasureString(text).X / 2;
         }
 
-        public void Update(float elapsedTime)
+        private void FadeOut()
+        {
+            if (mLetters[mLetters.Count - 1].mAlpha >= 1.0f)
+            {
+                mComplete = true;
+            }
+
+            if (mComplete)
+            {
+                foreach(LetterFader letter in mLetters)
+                {
+                    letter.SetEnabled(false); 
+                }
+            }
+
+        }
+
+        public void Update(GameTime gameTime, float elapsedTime)
         {
             mTotalTime += elapsedTime;
 
@@ -44,11 +62,13 @@ namespace Stonephonia.Effects
                 {
                     mLetters[i].SetEnabled(false);
                 }
+
+                FadeOut();
             }
 
             foreach (LetterFader letter in mLetters)
             {
-                letter.Update(elapsedTime);
+                letter.Update(gameTime, elapsedTime);
             }
         }
 

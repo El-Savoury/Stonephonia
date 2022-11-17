@@ -9,7 +9,7 @@ namespace Stonephonia
     {
         private Fader mFader;
         private int mTimeLimit;
-        private bool mInputReceived = false;
+        public bool mInputReceived = false;
         public bool mTextComplete;
         public float mAlpha;
 
@@ -30,7 +30,7 @@ namespace Stonephonia
             }
         }
 
-        public void PromptMove(Timer timer, params Keys[] keys)
+        public void PromptInput(Timer timer, params Keys[] keys)
         {
             CheckInput(keys);
 
@@ -48,7 +48,7 @@ namespace Stonephonia
             }
         }
 
-        public void PromptPush(Timer timer, Pusher pusher)
+        public void PromptAction(Timer timer, Pusher pusher)
         {
             if (pusher.mCurrentState == Pusher.State.push)
             {

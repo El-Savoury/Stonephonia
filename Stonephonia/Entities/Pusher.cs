@@ -55,6 +55,11 @@ namespace Stonephonia
                 case State.push:
                     if (mDirection) { mSprite.mCurrentFrame.Y = 4; }
                     else { mSprite.mCurrentFrame.Y = 5; }
+
+                    // TODO: MAKE PUSH ANIMATION SPEED PERCENTAGE BASED
+                    if (mVelocity < 1) { mSprite.mTimePerFrame = 400; }
+                    else if (mVelocity < 1.5) { mSprite.mTimePerFrame = 300; }
+                    else if (mVelocity < 2) { mSprite.mTimePerFrame = 200; }
                     break;
             }
             mSprite.Update(gameTime, true);

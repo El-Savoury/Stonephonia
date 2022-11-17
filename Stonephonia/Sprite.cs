@@ -13,10 +13,10 @@ namespace Stonephonia
         public bool mAnimationComplete = false;
         public int mTimePerFrame;
         private int mTimeSinceLastFrame = 0;
-        private float mAlpha;
+        public float mAlpha;
 
         public Sprite(Texture2D texture, Point frameSize, Point currentFrame,
-            Point sheetSize, int timePerFrame, Color colour, float alpha = 1.0f)
+            Point sheetSize, int timePerFrame, Color colour, bool visible = true)
         {
             mTexture = texture;
             mFrameSize = frameSize;
@@ -24,7 +24,7 @@ namespace Stonephonia
             mSheetSize = sheetSize;
             mTimePerFrame = timePerFrame;
             mColour = colour;
-            mAlpha = alpha;
+            SetVisible(visible);
         }
 
         public void SetVisible(bool visible)

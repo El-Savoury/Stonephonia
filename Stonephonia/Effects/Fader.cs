@@ -9,10 +9,10 @@ namespace Stonephonia.Effects
         private Timer mFadeTimer = new Timer();
         private Texture2D mTexture;
         private SpriteFont mFont;
-        private Vector2 mPosition;
+        private Color mColour;
+        public Vector2 mPosition;
         private string mText;
         public float mAlpha;
-        private Color mColour;
         private bool mVisible;
 
         public Fader(Texture2D texture, Vector2 position, Color colour, float alpha = 0.0f)

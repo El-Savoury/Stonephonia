@@ -12,12 +12,12 @@ namespace Stonephonia.Screens
         Reflection[] mReflections;
         TextPrompt[] mTextPrompts;
         TextPromptManager mTextPromptManager;
-
+        
         public override void LoadAssets()
         {
             mRoomTimer = new Timer();
             mLeafManager = new LeafManager();
-
+            
             mBackgroundTextures = new Texture2D[]
             {
                 ScreenManager.contentMgr.Load<Texture2D>("Sprites/background_trees"),
@@ -78,15 +78,14 @@ namespace Stonephonia.Screens
                 //reflection.Draw(spriteBatch);
             }
 
-            //foreach (Rock rock in ScreenManager.rock)
-            //{
-            //    rock.Draw(spriteBatch);
-            //}
-
-            ScreenManager.rock[0].Draw(spriteBatch);
+            foreach (Rock rock in ScreenManager.rock)
+            {
+                rock.Draw(spriteBatch);
+            }
 
             ScreenManager.pusher.Draw(spriteBatch);
             mLeafManager.Draw(spriteBatch);
+            spriteBatch.Draw(ScreenManager.canopy, new Rectangle(0, 0, 800, 800), Color.White);
             mTextPromptManager.Draw(spriteBatch);
 
             // Debug Stats
@@ -95,7 +94,7 @@ namespace Stonephonia.Screens
             // ScreenManager.pusher.Draw(gameTime, spriteBatch); 
             spriteBatch.DrawString(ScreenManager.font, $"Timer: {mRoomTimer.mCurrentTime}", new Vector2(600, 0), Color.Red);
             //spriteBatch.DrawString(ScreenManager.font, $"mCurrentRock: {Array.IndexOf(ScreenManager.rock, ScreenManager.pusher.mCurrentRock)}", new Vector2(600, 0), Color.Red);
-            // spriteBatch.DrawString(ScreenManager.font, $"mVelocity: {player.mVelocity}", new Vector2(0, 15), Color.White);
+             spriteBatch.DrawString(ScreenManager.font, $"mVelocity: {ScreenManager.pusher.mVelocity}", new Vector2(0, 15), Color.White);
             // spriteBatch.DrawString(ScreenManager.font, $"mPushVelocity: {player.mPushVelocity}", new Vector2(0, 30), Color.Red);
         }
 
