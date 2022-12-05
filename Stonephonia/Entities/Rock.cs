@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace Stonephonia
@@ -20,6 +21,33 @@ namespace Stonephonia
         public Rock(Vector2 position, int collisionOffset, int maxSpeed, float acceleration)
             : base(position, collisionOffset, maxSpeed, acceleration)
         {
+        }
+
+        public static Rock[] Load()
+        {
+            Rock[] rock = new Rock[4];
+            rock[0] = new Rock(new Vector2(150, 452), 16, 3, 0.03f)
+            {
+                mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_zero_sheet"),
+                new Point(92, 84), new Point(0, 0), new Point(2, 1), 200, Color.White),
+                mSoundInterval = 4
+            };
+            rock[1] = new Rock(new Vector2(300, 452), 15, 3, 0.02f)
+            {
+                mSprite = new Sprite(ScreenManager.pixel, new Point(48, 84), new Point(0, 0), new Point(1, 1), 15, Color.Pink),
+                mSoundInterval = 2
+            };
+            rock[2] = new Rock(new Vector2(400, 452), 0, 2, 0.008f)
+            {
+                mSprite = new Sprite(ScreenManager.pixel, new Point(64, 84), new Point(0, 0), new Point(1, 1), 15, Color.Orange),
+                mSoundInterval = 2
+            };
+            rock[3] = new Rock(new Vector2(500, 452), 0, 1, 0.005f)
+            {
+                mSprite = new Sprite(ScreenManager.pixel, new Point(96, 84), new Point(0, 0), new Point(1, 1), 15, Color.LightBlue),
+                mSoundInterval = 2
+            };
+            return rock;
         }
 
         private void PerformCurrentStateAction(GameTime gameTime)

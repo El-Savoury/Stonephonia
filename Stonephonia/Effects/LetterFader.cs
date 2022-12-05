@@ -22,7 +22,14 @@ namespace Stonephonia.Effects
             mAlpha = textOpacity;
             mTimer = new Timer();
 
-            mColour = new Color[] {Color.Black, ScreenManager.darkBlue, ScreenManager.greenBlue, ScreenManager.greyBlue, ScreenManager.lightBlue };
+            mColour = new Color[]
+            {
+                Color.Black,
+                Colours.darkBlue,
+                Colours.greenBlue,
+                Colours.greyBlue,
+                Colours.lightBlue 
+            };
         }
 
         public void SetEnabled(bool enabled)
@@ -62,7 +69,7 @@ namespace Stonephonia.Effects
         {
 
             // spriteBatch.DrawString(font, mLetter.ToString(), position, mColour[mColourIndex]);
-             spriteBatch.DrawString(font, mLetter.ToString(), position, colour * mAlpha);
+            spriteBatch.DrawString(font, mLetter.ToString(), position, colour * mAlpha);
             //spriteBatch.DrawString(font, mLetter.ToString(), position, colour * mTextOpacity, 0.0f, Vector2.Zero, 0.5f, SpriteEffects.None, 0.0f);
         }
     }

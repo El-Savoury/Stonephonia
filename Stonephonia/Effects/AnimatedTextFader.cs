@@ -10,13 +10,16 @@ namespace Stonephonia.Effects
         private SpriteFont mFont;
         private float mTextXPos;
         private float mTimeInterval;
-        private float mTotalTime = 0.0f;
+        public float mTotalTime = 0.0f;
+        public Timer mTimer;
         public bool mComplete = false;
 
         public AnimatedTextFader(SpriteFont font, string text, float timeInterval, float fadeSpeed, float textOpacity)
         {
             mFont = font;
             mTimeInterval = timeInterval;
+            mTimer = new Timer();
+
 
             char[] letters = text.ToCharArray();
             mLetters = new List<LetterFader> { };
@@ -30,31 +33,24 @@ namespace Stonephonia.Effects
             mTextXPos = GamePort.renderSurface.Bounds.Width / 2 - font.MeasureString(text).X / 2;
         }
 
-        private void FadeOut()
+        public void FadeOut()
         {
-            if (mLetters[mLetters.Count - 1].mAlpha >= 1.0f)
+            foreach (LetterFader letter in mLetters)
             {
-                mComplete = true;
+                letter.SetEnabled(false);
             }
-
-            if (mComplete)
-            {
-                foreach(LetterFader letter in mLetters)
-                {
-                    letter.SetEnabled(false); 
-                }
-            }
-
         }
 
         public void Update(GameTime gameTime, float elapsedTime)
         {
-            mTotalTime += elapsedTime;
+            //mTotalTime += elapsedTime;
+            mTimer.Update(gameTime);
+            mTotalTime = mTimer.mCurrentTime * 1000;
 
             int enabledIndex = (int)(mTotalTime / mTimeInterval);
             for (int i = 0; i < mLetters.Count; i++)
             {
-                if (i < enabledIndex)
+                if (i < enabledIndex && !mComplete)
                 {
                     mLetters[i].SetEnabled(true);
                 }
@@ -63,7 +59,10 @@ namespace Stonephonia.Effects
                     mLetters[i].SetEnabled(false);
                 }
 
-                FadeOut();
+                if (mLetters[mLetters.Count - 1].mAlpha >= 1.0f)
+                {
+                    mComplete = true;
+                }
             }
 
             foreach (LetterFader letter in mLetters)

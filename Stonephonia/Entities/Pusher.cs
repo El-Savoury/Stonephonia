@@ -56,10 +56,10 @@ namespace Stonephonia
                     if (mDirection) { mSprite.mCurrentFrame.Y = 4; }
                     else { mSprite.mCurrentFrame.Y = 5; }
 
-                    // TODO: MAKE PUSH ANIMATION SPEED PERCENTAGE BASED
-                    if (mVelocity < 1) { mSprite.mTimePerFrame = 400; }
-                    else if (mVelocity < 1.5) { mSprite.mTimePerFrame = 300; }
-                    else if (mVelocity < 2) { mSprite.mTimePerFrame = 200; }
+                    //// TODO: MAKE PUSH ANIMATION SPEED PERCENTAGE BASED
+                    //if (mVelocity < 1) { mSprite.mTimePerFrame = 400; }
+                    //else if (mVelocity < 1.5) { mSprite.mTimePerFrame = 300; }
+                    //else if (mVelocity < 2) { mSprite.mTimePerFrame = 200; }
                     break;
             }
             mSprite.Update(gameTime, true);
@@ -153,6 +153,10 @@ namespace Stonephonia
             {
                 mPushVelocity += Math.Sign(mVelocity) * mCurrentRock.mAcceleration;
                 mPushVelocity = Math.Clamp(mPushVelocity, -mCurrentRock.mMaxSpeed, mCurrentRock.mMaxSpeed);
+                if (mCurrentRock.mMaxSpeed > mMaxSpeed)
+                {
+                    mPushVelocity = Math.Clamp(mPushVelocity, -mMaxSpeed, mMaxSpeed);
+                }
                 mVelocity = mPushVelocity;
             }
             else if (mCurrentState == State.push && !InputManager.KeyHeld(Keys.Space))
@@ -205,12 +209,12 @@ namespace Stonephonia
         }
         private void KeepEntityOnScreen()
         {
-            if (mCollisionRect.X < GamePort.renderSurface.Bounds.X)
+            if (mCollisionRect.X <= GamePort.renderSurface.Bounds.X)
             {
                 mPosition.X = GamePort.renderSurface.Bounds.X - mCollisionOffset;
                 mCurrentState = State.idle;
             }
-            if (mCollisionRect.Right > GamePort.renderSurface.Bounds.Right)
+            if (mCollisionRect.Right >= GamePort.renderSurface.Bounds.Right)
             {
                 mPosition.X = GamePort.renderSurface.Bounds.Right - mCollisionRect.Width - mCollisionOffset;
                 mCurrentState = State.idle;
@@ -240,7 +244,8 @@ namespace Stonephonia
             else if (mCurrentState == State.push && mVelocity > 0 && mCurrentRock.mPosition.X + mCurrentRock.mSprite.mFrameSize.X > rightStart)
             {
                 mStopSpeed = CalcStopSpeed(mCurrentRock.mPosition.X, rightStop, rightStart);
-                mVelocity = mStopSpeed;/*Math.Clamp(CalcStopSpeed(mPosition.X + mCurrentRock.mSprite.mFrameSize.X, rightStop, rightStart), 0, mMaxSpeed);*/
+                //mVelocity = Math.Clamp(mVelocity, mStopSpeed, mMaxSpeed);
+                //mVelocity = mStopSpeed;/*Math.Clamp(CalcStopSpeed(mPosition.X + mCurrentRock.mSprite.mFrameSize.X, rightStop, rightStart), 0, mMaxSpeed);*/
             }
         }
 
@@ -251,7 +256,6 @@ namespace Stonephonia
                 mSprite.mTexture = playerTextures[Array.IndexOf(playerTextures, mSprite.mTexture) + 1];
                 mSprite.mTimePerFrame += 25;
                 mMaxSpeed--;
-
                 gameTimer.Reset();
             }
         }
@@ -262,10 +266,10 @@ namespace Stonephonia
             TargetClosestRock(rock);
             CollideWithRock();
             GetRockSpeed();
-            StopRock(50, 200, 700, 600);
+            StopRock(80, 150, 720, 600);
             Move();
             PushRock();
-            AgePlayer(playerTextures, gameTimer, 30);
+            AgePlayer(playerTextures, gameTimer, 45);
             SetAnimation(gameTime);
 
             base.Update(gameTime);

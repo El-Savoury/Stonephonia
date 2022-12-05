@@ -11,6 +11,7 @@
 		<StartupObject>Stonephonia.ScreenManager</StartupObject>
 	</PropertyGroup>
 	<ItemGroup>
+		<None Remove="Content\Sprites\ground.png" />
 		<None Remove="Icon.ico" />
 		<None Remove="Icon.bmp" />
 	</ItemGroup>

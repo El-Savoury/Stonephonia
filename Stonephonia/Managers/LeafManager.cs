@@ -31,7 +31,7 @@ namespace Stonephonia.Managers
             mTimer.Update(gameTime);
 
             // Randomly spawn up to two leaves
-            if (mRandom.Next(0, 500) == 5 && mLeafList.Count < 2)
+            if (mRandom.Next(0, 700) == 5 && mLeafList.Count < 2)
             {
                 SpawnLeaf(new Vector2(mRandom.Next(64, 750), -64));
             }
@@ -53,14 +53,21 @@ namespace Stonephonia.Managers
             mEmitter = new Rectangle(0, 0, 0, 0);
         }
 
-        private void EmitMultipleLeaves(Pusher pusher)
+        private void EmitterFollowsRock(Pusher pusher)
         {
+            int rockCenter = (int)pusher.mCurrentRock.mPosition.X + pusher.mCurrentRock.mSprite.mFrameSize.X / 2;
+
             if (mEmitter.Width == 0)
             {
-                CreateEmitter(new Point(mRandom.Next((int)pusher.mPosition.X - mEmitter.Width / 2 - 50, (int)pusher.mPosition.X), 0), new Point(300, 10));
+                CreateEmitter(new Point(rockCenter - 150, 100), new Point(300, 0));
             }
 
-            mEmitter.X += (int)(pusher.mVelocity * 2);
+            mEmitter.X += (int)(pusher.mVelocity + (Math.Sign(pusher.mVelocity) * 0.5f));
+        }
+
+        private void EmitMultipleLeaves(Pusher pusher)
+        {
+            EmitterFollowsRock(pusher);
 
             if (mLeafList.Count < 3 && mRandom.Next(0, 30) == 5)
             {

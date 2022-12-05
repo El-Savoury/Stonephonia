@@ -8,35 +8,29 @@ namespace Stonephonia.Screens
     {
         Timer mRoomTimer;
         LeafManager mLeafManager;
-        Texture2D[] mBackgroundTextures;
+        Texture2D[] mBackgroundTextures, mForegroundTextures;
         Reflection[] mReflections;
         TextPrompt[] mTextPrompts;
         TextPromptManager mTextPromptManager;
-        
+        Rock[] mRocks;
+
         public override void LoadAssets()
         {
+            mRocks = Rock.Load();
+            mTextPrompts = TextPrompt.Load();
+            mReflections = Reflection.Load();
             mRoomTimer = new Timer();
             mLeafManager = new LeafManager();
-            
+            mTextPromptManager = new TextPromptManager(mTextPrompts);
+
             mBackgroundTextures = new Texture2D[]
             {
                 ScreenManager.contentMgr.Load<Texture2D>("Sprites/background_trees"),
                 ScreenManager.contentMgr.Load<Texture2D>("Sprites/background_bushes"),
+                ScreenManager.contentMgr.Load<Texture2D>("Sprites/ground"),
             };
 
-            mReflections = new Reflection[]
-            {
-                new Reflection(new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/river_rock_shadow"),
-                new Point(124,124), new Point(0,0), new Point(4,1), 100, Color.White), new Vector2(100,100))
-            };
-
-            mTextPrompts = new TextPrompt[]
-            {
-                new TextPrompt(new Vector2(0, 600), 3, "Arrow keys to move", ScreenManager.darkBlue),
-                new TextPrompt(new Vector2(0, 600), 3, "Hold space to push", ScreenManager.darkBlue)
-            };
-
-            mTextPromptManager = new TextPromptManager(mTextPrompts);
+            mForegroundTextures = new Texture2D[] { ScreenManager.contentMgr.Load<Texture2D>("Sprites/canopy") };
         }
 
         public override void UnloadAssests()
@@ -45,21 +39,21 @@ namespace Stonephonia.Screens
 
         public override void Update(GameTime gameTime)
         {
-            //InputManager.NoInputTimeOut(gameTime, 10, new GameplayScreen(), new IntroCutscene());
+            //InputManager.NoInputTimeOut(gameTime, 10, new GameplayScreen(), new SplashScreen());
 
             mRoomTimer.Update(gameTime);
-            
+
             foreach (Reflection reflection in mReflections)
             {
                 reflection.Update(gameTime);
             }
 
-            foreach (Rock rock in ScreenManager.rock)
+            foreach (Rock rock in mRocks)
             {
                 rock.Update(gameTime, ScreenManager.pusher);
             }
 
-            ScreenManager.pusher.Update(gameTime, mRoomTimer, ScreenManager.rock);
+            ScreenManager.pusher.Update(gameTime, mRoomTimer, mRocks);
             mLeafManager.Update(gameTime, ScreenManager.pusher);
             mTextPromptManager.Update(gameTime);
 
@@ -78,23 +72,29 @@ namespace Stonephonia.Screens
                 //reflection.Draw(spriteBatch);
             }
 
-            foreach (Rock rock in ScreenManager.rock)
+            foreach (Rock rock in mRocks)
             {
                 rock.Draw(spriteBatch);
             }
 
             ScreenManager.pusher.Draw(spriteBatch);
             mLeafManager.Draw(spriteBatch);
-            spriteBatch.Draw(ScreenManager.canopy, new Rectangle(0, 0, 800, 800), Color.White);
+
+            foreach (Texture2D foreground in mForegroundTextures)
+            {
+                spriteBatch.Draw(foreground, new Rectangle(0, 0, 800, 800), Color.White);
+            }
+
             mTextPromptManager.Draw(spriteBatch);
 
             // Debug Stats
+            //spriteBatch.DrawString(ScreenManager.font, $"Timer: {mRoomTimer.mCurrentTime}", new Vector2(600, 0), Color.Red);
+            spriteBatch.DrawString(ScreenManager.font, $"mVelocity: {ScreenManager.pusher.mVelocity}", new Vector2(0, 15), Color.White);
+
             //ScreenManager.pusher.DrawDebug(gameTime, spriteBatch);
             // spriteBatch.Draw(ScreenManager.pixel, rock.mCollisionRect, Color.Blue * 0.5f);
             // ScreenManager.pusher.Draw(gameTime, spriteBatch); 
-            spriteBatch.DrawString(ScreenManager.font, $"Timer: {mRoomTimer.mCurrentTime}", new Vector2(600, 0), Color.Red);
             //spriteBatch.DrawString(ScreenManager.font, $"mCurrentRock: {Array.IndexOf(ScreenManager.rock, ScreenManager.pusher.mCurrentRock)}", new Vector2(600, 0), Color.Red);
-             spriteBatch.DrawString(ScreenManager.font, $"mVelocity: {ScreenManager.pusher.mVelocity}", new Vector2(0, 15), Color.White);
             // spriteBatch.DrawString(ScreenManager.font, $"mPushVelocity: {player.mPushVelocity}", new Vector2(0, 30), Color.Red);
         }
 

@@ -7,7 +7,7 @@ namespace Stonephonia
 {
     public class TextPrompt
     {
-        private Fader mFader;
+        public Fader mFader;
         private int mTimeLimit;
         public bool mInputReceived = false;
         public bool mTextComplete;
@@ -17,6 +17,16 @@ namespace Stonephonia
         {
             mTimeLimit = timeLimit;
             mFader = new Fader(ScreenManager.font, text, position, colour);
+        }
+
+        public static TextPrompt[] Load()
+        {
+            TextPrompt[] textPrompts = new TextPrompt[]
+            {
+                new TextPrompt(new Vector2(0, 600), 3, "Arrow keys to move", Colours.darkBlue),
+                new TextPrompt(new Vector2(0, 600), 3, "Hold space to push", Colours.darkBlue)
+            };
+            return textPrompts;
         }
 
         public void CheckInput(params Keys[] keys)

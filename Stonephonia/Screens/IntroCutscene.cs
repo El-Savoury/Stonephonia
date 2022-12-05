@@ -9,7 +9,8 @@ namespace Stonephonia.Screens
     public class IntroCutscene : Screen
     {
         Timer mRoomTimer;
-        AnimatedTextFader mTextFader;
+        AnimatedTextFader[] mTextFaders;
+        private int mTextFaderIndex = 0;
         Sprite mPlayerSprite, mFairySprite; /*playerFadeIn, fairyFadeIn;*/
         Fader mPlayerFader, mFairyFader;
         FaderManager mSpriteFaderManager;
@@ -25,7 +26,6 @@ namespace Stonephonia.Screens
             mPlayerSprite = ScreenManager.pusher.mSprite;
             mFairySprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_sheet"),
                            new Point(128, 128), new Point(0, 0), new Point(4, 1), 200, Color.White, false);
-            mTextFader = new AnimatedTextFader(ScreenManager.font, "You must document the passing of time", 100f, 0.5f, 0f);
             mFairyFader = new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_fader"), mFairyPosition, Color.White);
             mPlayerFader = new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_fader"), ScreenManager.pusher.mPosition, Color.White);
             mSpriteFaderManager = new FaderManager(new Fader[2] { mFairyFader, mPlayerFader });
@@ -33,12 +33,19 @@ namespace Stonephonia.Screens
             mBlackSquare = new Rectangle(0, 0, 800, 800);
             mWhiteSquare = mBlackSquare;
 
+            mTextFaders = new AnimatedTextFader[]
+            {
+                new AnimatedTextFader(ScreenManager.font, "Here we are", 140f, 0.5f, 0f),
+                new AnimatedTextFader(ScreenManager.font, "You must document the passing of time", 140f, 0.5f, 0f),
+
+            };
+
             mBackgroundTextures = new Texture2D[]
             {
                 ScreenManager.contentMgr.Load<Texture2D>("Sprites/background_trees"),
                 ScreenManager.contentMgr.Load<Texture2D>("Sprites/background_bushes"),
-                ScreenManager.canopy
-        };
+                ScreenManager.contentMgr.Load<Texture2D>("Sprites/canopy")
+            };
 
             //playerFadeIn = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_fade_in"),
             //             new Point(60, 84), new Point(0, 0), new Point(12, 1), 100, Color.White, 1.0f);
@@ -83,6 +90,22 @@ namespace Stonephonia.Screens
                 if (mFairyFader.mAlpha >= 1.0f) { mFairySprite.SetVisible(false); }
             }
             SpawnSpriteAnimation(gameTime, mFairyFader, mFairySprite, fadeSpeed1, fadeSpeed2, fairySpawnTime);
+        }
+
+        private void NextText(int timeLimit)
+        {
+            AnimatedTextFader text = mTextFaders[mTextFaderIndex];
+
+            if (text.mComplete && mRoomTimer.mCurrentTime > timeLimit) { text.FadeOut(); }
+            if (mRoomTimer.mCurrentTime > timeLimit + 5 && mRoomTimer.mCurrentTime < timeLimit + 6)
+            {
+                text.mTimer.Reset();
+                text.mComplete = false;
+            }
+            if (!text.mComplete && mRoomTimer.mCurrentTime > timeLimit + 6)
+            {
+                mTextFaderIndex++;
+            }
         }
 
         private void FadeToWhite()
@@ -147,7 +170,8 @@ namespace Stonephonia.Screens
         {
             mRoomTimer.Update(gameTime);
             mSpriteFaderManager.Update(gameTime);
-            mTextFader.Update(gameTime, (float)gameTime.ElapsedGameTime.TotalMilliseconds);
+            mTextFaders[mTextFaderIndex].Update(gameTime, (float)gameTime.ElapsedGameTime.TotalMilliseconds);
+            NextText(3);
             AnimateFairySprite(gameTime);
             SpawnSpriteAnimation(gameTime, mPlayerFader, mPlayerSprite, 0.03f, 0.02f, 8);
             FadeToWhite();
@@ -161,15 +185,13 @@ namespace Stonephonia.Screens
                 spriteBatch.Draw(background, new Rectangle(0, 0, 800, 800), Color.White);
             }
 
-            ScreenManager.rock[0].Draw(spriteBatch);
-
             spriteBatch.Draw(ScreenManager.pixel, mBlackSquare, Color.Black * mBlackSquareAlpha);
-            spriteBatch.Draw(ScreenManager.pixel, mWhiteSquare, ScreenManager.lightBlue * mWhiteSquareAlpha);
+            spriteBatch.Draw(ScreenManager.pixel, mWhiteSquare, Colours.lightBlue * mWhiteSquareAlpha);
 
             mPlayerSprite.Draw(spriteBatch, ScreenManager.pusher.mPosition);
             mFairySprite.Draw(spriteBatch, mFairyPosition);
             mSpriteFaderManager.Draw(spriteBatch);
-            mTextFader.Draw(spriteBatch, new Vector2(0, 600), 10, true, ScreenManager.lightBlue);
+            mTextFaders[mTextFaderIndex].Draw(spriteBatch, new Vector2(0, 600), 10, true, Colours.lightBlue);
 
             //playerFadeIn.Draw(spriteBatch, ScreenManager.pusher.mPosition);
             //fairyFadeIn.Draw(spriteBatch, mFairyPosition);

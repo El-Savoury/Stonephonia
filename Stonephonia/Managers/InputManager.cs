@@ -34,9 +34,10 @@ namespace Stonephonia
 
             if (mInputTimer.mCurrentTime > timeLimit)
             {
+                mInputTimer.Reset();
+
                 if (!recentInput) { ScreenManager.ChangeScreen(currentScreen, nextScreen); }
             }
-            else if (recentInput) { mInputTimer.Reset(); }
         }
 
         public static bool KeyPressed(params Keys[] keys)
