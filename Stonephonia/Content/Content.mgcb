@@ -13,18 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin ../../../../Game Assests/Stonephonia Assets/ground.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:../../../../Game Assests/Stonephonia Assets/ground.png;Sprites/ground.png
-
 #begin Font.spritefont
 /importer:FontDescriptionImporter
 /processor:LocalizedFontProcessor
@@ -116,6 +104,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/fairy_sheet.png
 
+#begin Sprites/ground.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/ground.png
+
 #begin Sprites/leaf_sheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -176,7 +176,7 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/player_fader.png
 
-#begin Sprites/player_stage_four_sheet.png
+#begin Sprites/player_stage_four.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -186,9 +186,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/player_stage_four_sheet.png
+/build:Sprites/player_stage_four.png
 
-#begin Sprites/player_stage_one_sheet.png
+#begin Sprites/player_stage_one.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -198,9 +198,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/player_stage_one_sheet.png
+/build:Sprites/player_stage_one.png
 
-#begin Sprites/player_stage_three_sheet.png
+#begin Sprites/player_stage_three.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -210,9 +210,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/player_stage_three_sheet.png
+/build:Sprites/player_stage_three.png
 
-#begin Sprites/player_stage_two_sheet.png
+#begin Sprites/player_stage_two.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -222,7 +222,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/player_stage_two_sheet.png
+/build:Sprites/player_stage_two.png
 
 #begin Sprites/rock_zero.png
 /importer:TextureImporter

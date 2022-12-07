@@ -9,7 +9,7 @@ namespace Stonephonia.Screens
     public class IntroCutscene : Screen
     {
         Timer mRoomTimer;
-        AnimatedTextFader[] mTextFaders;
+        //AnimatedTextFader[] mTextFaders;
         private int mTextFaderIndex = 0;
         Sprite mPlayerSprite, mFairySprite; /*playerFadeIn, fairyFadeIn;*/
         Fader mPlayerFader, mFairyFader;
@@ -33,12 +33,12 @@ namespace Stonephonia.Screens
             mBlackSquare = new Rectangle(0, 0, 800, 800);
             mWhiteSquare = mBlackSquare;
 
-            mTextFaders = new AnimatedTextFader[]
-            {
-                new AnimatedTextFader(ScreenManager.font, "Here we are", 140f, 0.5f, 0f),
-                new AnimatedTextFader(ScreenManager.font, "You must document the passing of time", 140f, 0.5f, 0f),
+            //mTextFaders = new AnimatedTextFader[]
+            //{
+            //    new AnimatedTextFader(ScreenManager.font, "Here we are", 140f, 0.5f, 0f),
+            //    new AnimatedTextFader(ScreenManager.font, "You must document the passing of time", 140f, 0.5f, 0f),
 
-            };
+            //};
 
             mBackgroundTextures = new Texture2D[]
             {
@@ -92,21 +92,21 @@ namespace Stonephonia.Screens
             SpawnSpriteAnimation(gameTime, mFairyFader, mFairySprite, fadeSpeed1, fadeSpeed2, fairySpawnTime);
         }
 
-        private void NextText(int timeLimit)
-        {
-            AnimatedTextFader text = mTextFaders[mTextFaderIndex];
+        //private void NextText(int timeLimit)
+        //{
+        //    AnimatedTextFader text = mTextFaders[mTextFaderIndex];
 
-            if (text.mComplete && mRoomTimer.mCurrentTime > timeLimit) { text.FadeOut(); }
-            if (mRoomTimer.mCurrentTime > timeLimit + 5 && mRoomTimer.mCurrentTime < timeLimit + 6)
-            {
-                text.mTimer.Reset();
-                text.mComplete = false;
-            }
-            if (!text.mComplete && mRoomTimer.mCurrentTime > timeLimit + 6)
-            {
-                mTextFaderIndex++;
-            }
-        }
+        //    if (text.mComplete && mRoomTimer.mCurrentTime > timeLimit) { text.FadeOut(); }
+        //    if (mRoomTimer.mCurrentTime > timeLimit + 5 && mRoomTimer.mCurrentTime < timeLimit + 6)
+        //    {
+        //        text.mTimer.Reset();
+        //        text.mComplete = false;
+        //    }
+        //    if (!text.mComplete && mRoomTimer.mCurrentTime > timeLimit + 6)
+        //    {
+        //        mTextFaderIndex++;
+        //    }
+        //}
 
         private void FadeToWhite()
         {
@@ -170,8 +170,8 @@ namespace Stonephonia.Screens
         {
             mRoomTimer.Update(gameTime);
             mSpriteFaderManager.Update(gameTime);
-            mTextFaders[mTextFaderIndex].Update(gameTime, (float)gameTime.ElapsedGameTime.TotalMilliseconds);
-            NextText(3);
+            //mTextFaders[mTextFaderIndex].Update(gameTime, (float)gameTime.ElapsedGameTime.TotalMilliseconds);
+            //NextText(3);
             AnimateFairySprite(gameTime);
             SpawnSpriteAnimation(gameTime, mPlayerFader, mPlayerSprite, 0.03f, 0.02f, 8);
             FadeToWhite();
@@ -191,7 +191,7 @@ namespace Stonephonia.Screens
             mPlayerSprite.Draw(spriteBatch, ScreenManager.pusher.mPosition);
             mFairySprite.Draw(spriteBatch, mFairyPosition);
             mSpriteFaderManager.Draw(spriteBatch);
-            mTextFaders[mTextFaderIndex].Draw(spriteBatch, new Vector2(0, 600), 10, true, Colours.lightBlue);
+            //mTextFaders[mTextFaderIndex].Draw(spriteBatch, new Vector2(0, 600), 10, true, Colours.lightBlue);
 
             //playerFadeIn.Draw(spriteBatch, ScreenManager.pusher.mPosition);
             //fairyFadeIn.Draw(spriteBatch, mFairyPosition);

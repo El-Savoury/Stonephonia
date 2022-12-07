@@ -77,7 +77,7 @@ namespace Stonephonia
 
         public void Draw(SpriteBatch spriteBatch, Vector2 position)
         {
-            spriteBatch.Draw(mTexture, position, new Rectangle(mCurrentFrame.X * mFrameSize.X, mCurrentFrame.Y * mFrameSize.Y, mFrameSize.X, mFrameSize.Y),
+            spriteBatch.Draw(mTexture, position, new Rectangle(mCurrentFrame.X * (mFrameSize.X + 4), mCurrentFrame.Y * mFrameSize.Y, mFrameSize.X, mFrameSize.Y),
                 mColour * mAlpha);
         }
 

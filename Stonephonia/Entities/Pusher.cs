@@ -14,9 +14,9 @@ namespace Stonephonia
 
         private Texture2D[] playerTextures = new Texture2D[3]
             {
-                ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_stage_two_sheet"),
-                ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_stage_three_sheet"),
-                ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_stage_four_sheet")
+                ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_stage_two"),
+                ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_stage_three"),
+                ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_stage_four")
             };
 
         public Pusher(Vector2 position, int collisionOffset, int maxSpeed)
@@ -171,7 +171,7 @@ namespace Stonephonia
             {
                 if (mVelocity > 0)
                 {
-                    mCurrentRock.mPosition.X = /*mPosition.X*/ (mCollisionRect.Left + mCollisionRect.Width) - mCurrentRock.mCollisionOffset;
+                    mCurrentRock.mPosition.X = (mCollisionRect.Left + mCollisionRect.Width) - mCurrentRock.mCollisionOffset;
                 }
                 else if (mVelocity < 0)
                 {
@@ -243,9 +243,8 @@ namespace Stonephonia
             }
             else if (mCurrentState == State.push && mVelocity > 0 && mCurrentRock.mPosition.X + mCurrentRock.mSprite.mFrameSize.X > rightStart)
             {
-                mStopSpeed = CalcStopSpeed(mCurrentRock.mPosition.X, rightStop, rightStart);
-                //mVelocity = Math.Clamp(mVelocity, mStopSpeed, mMaxSpeed);
-                //mVelocity = mStopSpeed;/*Math.Clamp(CalcStopSpeed(mPosition.X + mCurrentRock.mSprite.mFrameSize.X, rightStop, rightStart), 0, mMaxSpeed);*/
+                mStopSpeed = CalcStopSpeed(mCurrentRock.mPosition.X + mCurrentRock.mSprite.mFrameSize.X, rightStop, rightStart);
+                mVelocity = Math.Clamp(mVelocity, 0, mStopSpeed);
             }
         }
 
@@ -266,7 +265,7 @@ namespace Stonephonia
             TargetClosestRock(rock);
             CollideWithRock();
             GetRockSpeed();
-            StopRock(80, 150, 720, 600);
+            StopRock(80, 150, 720, 650);
             Move();
             PushRock();
             AgePlayer(playerTextures, gameTimer, 45);

@@ -70,13 +70,13 @@ namespace Stonephonia
 
             pusher = new Pusher(new Vector2(20, 452), 0, 4)
             {
-                mSprite = new Sprite(contentMgr.Load<Texture2D>("Sprites/player_stage_one_sheet"),
+                mSprite = new Sprite(contentMgr.Load<Texture2D>("Sprites/player_stage_one"),
                 new Point(60, 84), new Point(0, 0), new Point(2, 1), 200, Color.White, true),
             };
 
             particleManager.LoadAssets();
 
-              AddScreen(new GameplayScreen());
+             AddScreen(new GameplayScreen());
             // AddScreen(new IntroCutscene());
             // AddScreen(new SplashScreen());
         }
