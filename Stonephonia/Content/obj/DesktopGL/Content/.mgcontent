@@ -12,7 +12,6 @@
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/fairy_fade_sheet.png</File>
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/fairy_fader.png</File>
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/fairy_sheet.png</File>
-    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/ground.png</File>
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/leaf_sheet.png</File>
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/particle_large.png</File>
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/particle_small.png</File>
@@ -27,7 +26,6 @@
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/title_sheet.png</File>
   </SourceFiles>
   <DestFiles>
-    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

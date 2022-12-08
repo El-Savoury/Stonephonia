@@ -27,7 +27,6 @@ namespace Stonephonia.Screens
             {
                 ScreenManager.contentMgr.Load<Texture2D>("Sprites/background_trees"),
                 ScreenManager.contentMgr.Load<Texture2D>("Sprites/background_bushes"),
-                ScreenManager.contentMgr.Load<Texture2D>("Sprites/ground"),
             };
 
             mForegroundTextures = new Texture2D[] { ScreenManager.contentMgr.Load<Texture2D>("Sprites/canopy") };
