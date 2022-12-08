@@ -68,7 +68,7 @@ namespace Stonephonia.Screens
 
             foreach (Reflection reflection in mReflections)
             {
-                //reflection.Draw(spriteBatch);
+                reflection.Draw(spriteBatch);
             }
 
             foreach (Rock rock in mRocks)

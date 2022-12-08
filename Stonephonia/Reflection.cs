@@ -18,8 +18,8 @@ namespace Stonephonia
         {
             Reflection[] relections = new Reflection[]
             {
-                new Reflection(new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/river_rock_shadow"),
-                new Point(124, 124), new Point(0, 0), new Point(4, 1), 100, Color.White), new Vector2(100, 100))
+                //new Reflection(new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/river_rock_shadow"),
+                //new Point(124, 124), new Point(0, 0), new Point(4, 1), 100, Color.White), new Vector2(100, 100))
             };
             return relections;
         }

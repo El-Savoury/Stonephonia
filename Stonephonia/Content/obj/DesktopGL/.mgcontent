@@ -5,6 +5,28 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Font.spritefont</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sounds/Bells_0.mp3</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sounds/Bells_1.mp3</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sounds/Bells_2.mp3</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sounds/Bells_3.mp3</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sounds/Bells_4.mp3</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sounds/Flute_0.mp3</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sounds/Flute_1.mp3</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sounds/Flute_2.mp3</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sounds/Flute_3.mp3</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sounds/Flute_4.mp3</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sounds/Jungle_loop.mp3</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sounds/Main_themefinal.mp3</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sounds/Pad_0.mp3</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sounds/Pad_1.mp3</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sounds/Pad_2.mp3</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sounds/Pad_3.mp3</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sounds/Pad_4.mp3</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sounds/Rhodes_0.mp3</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sounds/Rhodes_1.mp3</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sounds/Rhodes_2.mp3</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sounds/Rhodes_3.mp3</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sounds/Rhodes_4.mp3</File>
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/background_bushes.png</File>
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/background_trees.png</File>
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/black_square.png</File>
@@ -26,6 +48,28 @@
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/title_sheet.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
