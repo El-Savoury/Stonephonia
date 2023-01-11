@@ -20,65 +20,65 @@
 /processorParam:TextureFormat=Compressed
 /build:Font.spritefont
 
-#begin Sounds/Bells_0.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Sounds/Bells_0.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Bells_0.mp3
+/build:Sounds/Bells_0.wav
 
-#begin Sounds/Bells_1.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Sounds/Bells_1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Bells_1.mp3
+/build:Sounds/Bells_1.wav
 
-#begin Sounds/Bells_2.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Sounds/Bells_2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Bells_2.mp3
+/build:Sounds/Bells_2.wav
 
-#begin Sounds/Bells_3.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Sounds/Bells_3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Bells_3.mp3
+/build:Sounds/Bells_3.wav
 
-#begin Sounds/Bells_4.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Sounds/Bells_4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Bells_4.mp3
+/build:Sounds/Bells_4.wav
 
-#begin Sounds/Flute_0.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Sounds/Flute_0.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Flute_0.mp3
+/build:Sounds/Flute_0.wav
 
-#begin Sounds/Flute_1.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Sounds/Flute_1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Flute_1.mp3
+/build:Sounds/Flute_1.wav
 
-#begin Sounds/Flute_2.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Sounds/Flute_2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Flute_2.mp3
+/build:Sounds/Flute_2.wav
 
-#begin Sounds/Flute_3.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Sounds/Flute_3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Flute_3.mp3
+/build:Sounds/Flute_3.wav
 
-#begin Sounds/Flute_4.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Sounds/Flute_4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Flute_4.mp3
+/build:Sounds/Flute_4.wav
 
 #begin Sounds/Jungle_loop.mp3
 /importer:Mp3Importer
@@ -86,71 +86,71 @@
 /processorParam:Quality=Best
 /build:Sounds/Jungle_loop.mp3
 
-#begin Sounds/Main_themefinal.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Sounds/Main_themefinal.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Main_themefinal.mp3
+/build:Sounds/Main_themefinal.wav
 
-#begin Sounds/Pad_0.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Sounds/Pad_0.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Pad_0.mp3
+/build:Sounds/Pad_0.wav
 
-#begin Sounds/Pad_1.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Sounds/Pad_1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Pad_1.mp3
+/build:Sounds/Pad_1.wav
 
-#begin Sounds/Pad_2.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Sounds/Pad_2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Pad_2.mp3
+/build:Sounds/Pad_2.wav
 
-#begin Sounds/Pad_3.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Sounds/Pad_3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Pad_3.mp3
+/build:Sounds/Pad_3.wav
 
-#begin Sounds/Pad_4.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Sounds/Pad_4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Pad_4.mp3
+/build:Sounds/Pad_4.wav
 
-#begin Sounds/Rhodes_0.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Sounds/Rhodes_0.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Rhodes_0.mp3
+/build:Sounds/Rhodes_0.wav
 
-#begin Sounds/Rhodes_1.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Sounds/Rhodes_1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Rhodes_1.mp3
+/build:Sounds/Rhodes_1.wav
 
-#begin Sounds/Rhodes_2.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Sounds/Rhodes_2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Rhodes_2.mp3
+/build:Sounds/Rhodes_2.wav
 
-#begin Sounds/Rhodes_3.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Sounds/Rhodes_3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Rhodes_3.mp3
+/build:Sounds/Rhodes_3.wav
 
-#begin Sounds/Rhodes_4.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Sounds/Rhodes_4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Rhodes_4.mp3
+/build:Sounds/Rhodes_4.wav
 
 #begin Sprites/background_bushes.png
 /importer:TextureImporter

@@ -8,6 +8,8 @@ namespace Stonephonia
     {
         private Timer mSoundTimer = new Timer();
         public int mSoundInterval;
+        private bool mIsColliding = false;
+        private bool mPreviousFrameColliding = false;
 
         private enum State
         {
@@ -93,16 +95,17 @@ namespace Stonephonia
         private void ActivateNearPlayer(GameTime gameTime, Pusher pusher)
         {
             Rock self = this;
+            mIsColliding = CollideWithPlayer(pusher);
 
             if (pusher.mCurrentState == Pusher.State.push && self == pusher.mCurrentRock)
             {
                 mCurrentState = State.pushed;
             }
-            else if (CollideWithPlayer(pusher) && !mSprite.mAnimationComplete)
+            else if (mIsColliding && !mPreviousFrameColliding)
             {
                 mCurrentState = State.active;
             }
-            else if (!CollideWithPlayer(pusher) && mSprite.mAnimationComplete)
+            else if (!mIsColliding && mSprite.mAnimationComplete)
             {
                 mCurrentState = State.inactive;
             }
@@ -137,6 +140,8 @@ namespace Stonephonia
         {
             ActivateNearPlayer(gameTime, pusher);
             PerformCurrentStateAction(gameTime);
+
+            mPreviousFrameColliding = mIsColliding;
 
             base.Update(gameTime);
         }
