@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
+
 using Stonephonia.Managers;
 
 namespace Stonephonia.Screens
@@ -9,7 +11,6 @@ namespace Stonephonia.Screens
         Timer mRoomTimer;
         LeafManager mLeafManager;
         Texture2D[] mBackgroundTextures, mForegroundTextures;
-        Reflection[] mReflections;
         TextPrompt[] mTextPrompts;
         TextPromptManager mTextPromptManager;
         Rock[] mRocks;
@@ -21,9 +22,9 @@ namespace Stonephonia.Screens
 
         public override void LoadAssets()
         {
+            ScreenManager.pusher.Load(ScreenManager.contentMgr);
             mRocks = Rock.Load();
             mTextPrompts = TextPrompt.Load();
-            mReflections = Reflection.Load();
             mRoomTimer = new Timer();
             mLeafManager = new LeafManager();
             mTextPromptManager = new TextPromptManager(mTextPrompts);
@@ -44,7 +45,7 @@ namespace Stonephonia.Screens
         private void OnActivate()
         {
             SoundManager.PlayMusic(SoundManager.MusicType.AmbientTrack, 0.5f);
-            SoundManager.PlaySFX(SoundManager.SFXType.MainTheme, 1.0f);
+            //SoundManager.PlaySFX(SoundManager.SFXType.MainTheme, 1.0f);
         }
 
         public override void Update(GameTime gameTime)
@@ -52,11 +53,6 @@ namespace Stonephonia.Screens
             //InputManager.NoInputTimeOut(gameTime, 10, new GameplayScreen(), new SplashScreen());
 
             mRoomTimer.Update(gameTime);
-
-            foreach (Reflection reflection in mReflections)
-            {
-                reflection.Update(gameTime);
-            }
 
             foreach (Rock rock in mRocks)
             {
@@ -75,11 +71,6 @@ namespace Stonephonia.Screens
             foreach (Texture2D background in mBackgroundTextures)
             {
                 spriteBatch.Draw(background, new Rectangle(0, 0, 800, 800), Color.White);
-            }
-
-            foreach (Reflection reflection in mReflections)
-            {
-                reflection.Draw(spriteBatch);
             }
 
             foreach (Rock rock in mRocks)

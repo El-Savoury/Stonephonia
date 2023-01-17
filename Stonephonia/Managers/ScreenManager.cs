@@ -77,9 +77,9 @@ namespace Stonephonia
 
             particleManager.LoadAssets();
 
-            // AddScreen(new GameplayScreen());
+             AddScreen(new GameplayScreen());
             // AddScreen(new IntroCutscene());
-             AddScreen(new SplashScreen());
+            // AddScreen(new SplashScreen());
         }
 
         protected override void UnloadContent()

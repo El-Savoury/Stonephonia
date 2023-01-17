@@ -52,23 +52,23 @@ namespace Stonephonia
             return rock;
         }
 
-        private void PerformCurrentStateAction(GameTime gameTime)
+        private void ChangeState(GameTime gameTime)
         {
             switch (mCurrentState)
             {
                 case State.active:
                     Sing(gameTime);
-                    //mSprite.mColour = Color.Red;
+                    
                     break;
 
                 case State.inactive:
                     ResetDefaultSprite();
-                    //mSprite.mColour = Color.White;
+                    
                     break;
 
                 case State.pushed:
                     Sing(gameTime);
-                    //mSprite.mColour = Color.Green;
+                  
                     break;
             }
         }
@@ -115,19 +115,31 @@ namespace Stonephonia
         {
             mSoundTimer.Update(gameTime);
 
-            if (mSoundTimer.mCurrentTime < mSoundInterval && !mSprite.mAnimationComplete)
+            if (mIsColliding && !mPreviousFrameColliding)
             {
+                SoundManager.PlaySFX(SoundManager.SFXType.bell, 1.0f);
                 mSprite.mCurrentFrame.Y = 1;
                 mSprite.Update(gameTime, false);
             }
-            else if (mSoundTimer.mCurrentTime < mSoundInterval && mSprite.mAnimationComplete)
-            {
-                mSprite.mCurrentFrame.Y = 0;
-            }
-            else
+
+            if(mSoundTimer.mCurrentTime > mSoundInterval)
             {
                 ResetDefaultSprite();
             }
+
+            //if (mSoundTimer.mCurrentTime < mSoundInterval && !mSprite.mAnimationComplete)
+            //{
+            //    mSprite.mCurrentFrame.Y = 1;
+            //    mSprite.Update(gameTime, false);
+            //}
+            //else if (mSoundTimer.mCurrentTime < mSoundInterval && mSprite.mAnimationComplete)
+            //{
+            //    mSprite.mCurrentFrame.Y = 0;
+            //}
+            //else
+            //{
+            //    ResetDefaultSprite();
+            //}
         }
 
         private void ResetDefaultSprite()
@@ -139,7 +151,7 @@ namespace Stonephonia
         public void Update(GameTime gameTime, Pusher pusher)
         {
             ActivateNearPlayer(gameTime, pusher);
-            PerformCurrentStateAction(gameTime);
+            ChangeState(gameTime);
 
             mPreviousFrameColliding = mIsColliding;
 

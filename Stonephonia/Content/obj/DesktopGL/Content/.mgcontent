@@ -39,6 +39,7 @@
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/particle_small.png</File>
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/player_fade_in.png</File>
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/player_fader.png</File>
+    <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/player_reflection.png</File>
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/player_stage_four.png</File>
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/player_stage_one.png</File>
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/player_stage_three.png</File>
@@ -48,6 +49,7 @@
     <File>C:/Users/Ross/Documents/C#/Visual Studio Projects/Stonephonia/Stonephonia/Content/Sprites/title_sheet.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

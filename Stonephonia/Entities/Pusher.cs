@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 namespace Stonephonia
 {
@@ -12,16 +13,26 @@ namespace Stonephonia
         private bool mDirection = true;
         private float mStopSpeed;
 
-        private Texture2D[] playerTextures = new Texture2D[3]
-            {
-                ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_stage_two"),
-                ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_stage_three"),
-                ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_stage_four")
-            };
+        private Texture2D[] mPlayerTextures;
+        private Reflection mReflection;
 
         public Pusher(Vector2 position, int collisionOffset, int maxSpeed)
                 : base(position, collisionOffset, maxSpeed)
         {
+        }
+
+        public void Load(ContentManager content)
+        {
+            mPlayerTextures = new Texture2D[3]
+            {
+                content.Load<Texture2D>("Sprites/player_stage_two"),
+                content.Load<Texture2D>("Sprites/player_stage_three"),
+                content.Load<Texture2D>("Sprites/player_stage_four")
+            };
+
+            mReflection = new Reflection(new Sprite(content.Load<Texture2D>("Sprites/player_reflection"),
+               new Point(80, 80), new Point(0, 0), new Point(4, 1), 150, Color.White),
+               new Vector2(ScreenManager.pusher.mPosition.X, ScreenManager.pusher.mPosition.Y + 112));
         }
 
         public enum State
@@ -63,6 +74,13 @@ namespace Stonephonia
                     break;
             }
             mSprite.Update(gameTime, true);
+        }
+
+        private void UpdateReflection(GameTime gameTime)
+        {
+            mReflection.mPosition.X = mPosition.X;
+            mReflection.mSprite.mCurrentFrame.Y = mDirection ? 0 : 1;
+            mReflection.Update(gameTime);
         }
 
         private void CalculateMovement()
@@ -268,10 +286,18 @@ namespace Stonephonia
             StopRock(80, 150, 720, 650);
             Move();
             PushRock();
-            AgePlayer(playerTextures, gameTimer, 45);
+            AgePlayer(mPlayerTextures, gameTimer, 45);
             SetAnimation(gameTime);
+            UpdateReflection(gameTime);
 
             base.Update(gameTime);
+        }
+
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            mReflection.Draw(spriteBatch);
+            base.Draw(spriteBatch);
         }
 
         public void DrawDebug(GameTime gameTime, SpriteBatch spriteBatch)

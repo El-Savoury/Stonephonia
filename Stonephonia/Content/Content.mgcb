@@ -296,6 +296,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/player_fader.png
 
+#begin Sprites/player_reflection.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/player_reflection.png
+
 #begin Sprites/player_stage_four.png
 /importer:TextureImporter
 /processor:TextureProcessor
