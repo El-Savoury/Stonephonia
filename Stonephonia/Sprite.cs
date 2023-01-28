@@ -35,6 +35,7 @@ namespace Stonephonia
         public void ResetAnimation(Point currentFrame)
         {
             mCurrentFrame = currentFrame;
+            mTimeSinceLastFrame = 0;
             mAnimationComplete = false;
         }
 
@@ -44,7 +45,7 @@ namespace Stonephonia
             if (!mAnimationComplete && mTimeSinceLastFrame > mTimePerFrame)
             {
                 mTimeSinceLastFrame = 0;
-                ++mCurrentFrame.X;
+                mCurrentFrame.X++;
 
                 if (mCurrentFrame.X >= mSheetSize.X)
                 {

@@ -78,7 +78,7 @@ namespace Stonephonia
 
         private void UpdateReflection(GameTime gameTime)
         {
-            mReflection.mPosition.X = mPosition.X;
+            mReflection.mPosition.X = mPosition.X - 12;
             mReflection.mSprite.mCurrentFrame.Y = mDirection ? 0 : 1;
             mReflection.Update(gameTime);
         }

@@ -15,7 +15,7 @@ namespace Stonephonia.Screens
         Fader mBlackFader;
         Vector2 mTitlePosition;
         TextPrompt mPressSpacePrompt;
-        int mTitleSpeed = 4;
+        //int mTitleSpeed = 4;
         int mRandomTime;
 
         public override void LoadAssets()

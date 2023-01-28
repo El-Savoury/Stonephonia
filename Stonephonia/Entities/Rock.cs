@@ -6,10 +6,10 @@ namespace Stonephonia
 {
     public class Rock : Entity
     {
-        private Timer mSoundTimer = new Timer();
-        public int mSoundInterval;
         private bool mIsColliding = false;
-        private bool mPreviousFrameColliding = false;
+        private int mCounter;
+        private int mInterval;
+        private SoundManager.SFXType mSound;
 
         private enum State
         {
@@ -31,44 +31,54 @@ namespace Stonephonia
             rock[0] = new Rock(new Vector2(150, 452), 16, 3, 0.03f)
             {
                 mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_zero_sheet"),
-                new Point(92, 84), new Point(0, 0), new Point(2, 1), 200, Color.White),
-                mSoundInterval = 4
+                new Point(92, 84), new Point(0, 0), new Point(2, 2), 300, Color.White),
+                mInterval = 200,
+                mCounter = 201,
+                mSound = SoundManager.SFXType.flute
             };
             rock[1] = new Rock(new Vector2(300, 452), 15, 3, 0.02f)
             {
                 mSprite = new Sprite(ScreenManager.pixel, new Point(48, 84), new Point(0, 0), new Point(1, 1), 15, Color.Pink),
-                mSoundInterval = 2
+                mInterval = 200,
+                mCounter = 201,
+                mSound = SoundManager.SFXType.bell
             };
             rock[2] = new Rock(new Vector2(400, 452), 0, 2, 0.008f)
             {
                 mSprite = new Sprite(ScreenManager.pixel, new Point(64, 84), new Point(0, 0), new Point(1, 1), 15, Color.Orange),
-                mSoundInterval = 2
+                mInterval = 200,
+                mCounter = 201,
+                mSound = SoundManager.SFXType.pad
             };
             rock[3] = new Rock(new Vector2(500, 452), 0, 1, 0.005f)
             {
                 mSprite = new Sprite(ScreenManager.pixel, new Point(96, 84), new Point(0, 0), new Point(1, 1), 15, Color.LightBlue),
-                mSoundInterval = 2
+                mInterval = 200,
+                mCounter = 201,
+                mSound = SoundManager.SFXType.rhodes
             };
             return rock;
         }
 
-        private void ChangeState(GameTime gameTime)
+        private void ChangeState()
         {
             switch (mCurrentState)
             {
-                case State.active:
-                    Sing(gameTime);
-                    
-                    break;
 
                 case State.inactive:
-                    ResetDefaultSprite();
-                    
+                    ResetRock();
+                    break;
+
+                case State.active:
+                    mCounter++;
+                    Sing();
                     break;
 
                 case State.pushed:
-                    Sing(gameTime);
-                  
+                    Sing();
+                    break;
+
+                default:
                     break;
             }
         }
@@ -92,7 +102,7 @@ namespace Stonephonia
             }
         }
 
-        private void ActivateNearPlayer(GameTime gameTime, Pusher pusher)
+        private void ActivateNearPlayer(Pusher pusher)
         {
             Rock self = this;
             mIsColliding = CollideWithPlayer(pusher);
@@ -101,7 +111,7 @@ namespace Stonephonia
             {
                 mCurrentState = State.pushed;
             }
-            else if (mIsColliding && !mPreviousFrameColliding)
+            else if (mIsColliding)
             {
                 mCurrentState = State.active;
             }
@@ -111,49 +121,27 @@ namespace Stonephonia
             }
         }
 
-        private void Sing(GameTime gameTime)
+        private void Sing()
         {
-            mSoundTimer.Update(gameTime);
-
-            if (mIsColliding && !mPreviousFrameColliding)
+            if (mCounter > mInterval)
             {
-                SoundManager.PlaySFX(SoundManager.SFXType.bell, 1.0f);
-                mSprite.mCurrentFrame.Y = 1;
-                mSprite.Update(gameTime, false);
+                SoundManager.PlaySFX(mSound, 1.0f);
+                mCounter = 0;
+                mSprite.ResetAnimation(new Point(0, 1));
             }
-
-            if(mSoundTimer.mCurrentTime > mSoundInterval)
-            {
-                ResetDefaultSprite();
-            }
-
-            //if (mSoundTimer.mCurrentTime < mSoundInterval && !mSprite.mAnimationComplete)
-            //{
-            //    mSprite.mCurrentFrame.Y = 1;
-            //    mSprite.Update(gameTime, false);
-            //}
-            //else if (mSoundTimer.mCurrentTime < mSoundInterval && mSprite.mAnimationComplete)
-            //{
-            //    mSprite.mCurrentFrame.Y = 0;
-            //}
-            //else
-            //{
-            //    ResetDefaultSprite();
-            //}
         }
 
-        private void ResetDefaultSprite()
+        private void ResetRock()
         {
-            mSprite.ResetAnimation(new Point(0, 0));
-            mSoundTimer.Reset();
+            mCounter = mInterval + 1;
+            if (mSprite.mAnimationComplete) { mSprite.ResetAnimation(new Point(0, 0)); }
         }
 
         public void Update(GameTime gameTime, Pusher pusher)
         {
-            ActivateNearPlayer(gameTime, pusher);
-            ChangeState(gameTime);
-
-            mPreviousFrameColliding = mIsColliding;
+            ActivateNearPlayer(pusher);
+            ChangeState();
+            mSprite.Update(gameTime, false);
 
             base.Update(gameTime);
         }

@@ -88,6 +88,8 @@ namespace Stonephonia.Screens
 
             mTextPromptManager.Draw(spriteBatch);
 
+            mRocks[0].DrawDebug(spriteBatch);
+
             // Debug Stats
             //spriteBatch.DrawString(ScreenManager.font, $"Timer: {mRoomTimer.mCurrentTime}", new Vector2(600, 0), Color.Red);
             spriteBatch.DrawString(ScreenManager.font, $"mVelocity: {ScreenManager.pusher.mVelocity}", new Vector2(0, 15), Color.White);
