@@ -12,6 +12,8 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<None Remove="Content\Sprites\ground.png" />
+		<None Remove="Content\Sprites\push_reflection.png" />
+		<None Remove="Content\Sprites\rock_sheet.png" />
 		<None Remove="Icon.ico" />
 		<None Remove="Icon.bmp" />
 	</ItemGroup>

@@ -28,17 +28,18 @@ namespace Stonephonia
         public static Rock[] Load()
         {
             Rock[] rock = new Rock[4];
-            rock[0] = new Rock(new Vector2(150, 452), 16, 3, 0.03f)
+            rock[0] = new Rock(new Vector2(150, 452), 32, 4, 0.03f)
             {
-                mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_zero_sheet"),
-                new Point(92, 84), new Point(0, 0), new Point(2, 2), 300, Color.White),
+                mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_sheet"),
+                new Point(100, 84), new Point(0, 0), new Point(2, 2), 300, Color.White),
                 mInterval = 200,
                 mCounter = 201,
                 mSound = SoundManager.SFXType.flute
             };
-            rock[1] = new Rock(new Vector2(300, 452), 15, 3, 0.02f)
+            rock[1] = new Rock(new Vector2(300, 452), 16, 3, 0.02f)
             {
-                mSprite = new Sprite(ScreenManager.pixel, new Point(48, 84), new Point(0, 0), new Point(1, 1), 15, Color.Pink),
+                mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_zero_sheet"),
+                new Point(92, 84), new Point(0, 0), new Point(2, 2), 300, Color.White),
                 mInterval = 200,
                 mCounter = 201,
                 mSound = SoundManager.SFXType.bell

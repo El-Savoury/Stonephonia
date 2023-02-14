@@ -64,20 +64,24 @@ namespace Stonephonia
                     break;
 
                 case State.push:
-                    if (mDirection) { mSprite.mCurrentFrame.Y = 4; }
-                    else { mSprite.mCurrentFrame.Y = 5; }
+                    if (mDirection) { mSprite.mCurrentFrame.Y = mCurrentRock.mPosition.X + mCurrentRock.mSprite.mFrameSize.X < 650 ? 4 : 6; }
+                    else { mSprite.mCurrentFrame.Y = mCurrentRock.mPosition.X < 150 ? 7 : 5; }
+                    break;
 
                     //// TODO: MAKE PUSH ANIMATION SPEED PERCENTAGE BASED
                     //if (mVelocity < 1) { mSprite.mTimePerFrame = 400; }
                     //else if (mVelocity < 1.5) { mSprite.mTimePerFrame = 300; }
                     //else if (mVelocity < 2) { mSprite.mTimePerFrame = 200; }
-                    break;
+                    //break;
             }
             mSprite.Update(gameTime, true);
         }
 
         private void UpdateReflection(GameTime gameTime)
         {
+            if (mCurrentState == State.push) { mReflection.mSprite.mTexture = ScreenManager.contentMgr.Load<Texture2D>("Sprites/push_reflection"); }
+            else { mReflection.mSprite.mTexture = ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_reflection"); }
+
             mReflection.mPosition.X = mPosition.X - 12;
             mReflection.mSprite.mCurrentFrame.Y = mDirection ? 0 : 1;
             mReflection.Update(gameTime);
