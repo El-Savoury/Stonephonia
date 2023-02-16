@@ -80,17 +80,11 @@
 /processorParam:Quality=Best
 /build:Sounds/Flute_4.wav
 
-#begin Sounds/Jungle_loop.mp3
+#begin Sounds/Minimalism.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
-/build:Sounds/Jungle_loop.mp3
-
-#begin Sounds/Main_themefinal.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/Main_themefinal.wav
+/build:Sounds/Minimalism.mp3
 
 #begin Sounds/Pad_0.wav
 /importer:WavImporter
@@ -391,30 +385,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/rock_sheet.png
-
-#begin Sprites/rock_sheet.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Sprites/rock_sheet.png
-
-#begin Sprites/rock_zero.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Sprites/rock_zero.png
 
 #begin Sprites/rock_zero_sheet.png
 /importer:TextureImporter

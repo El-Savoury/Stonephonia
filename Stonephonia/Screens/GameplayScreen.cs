@@ -45,7 +45,6 @@ namespace Stonephonia.Screens
         private void OnActivate()
         {
             SoundManager.PlayMusic(SoundManager.MusicType.AmbientTrack, 0.5f);
-            //SoundManager.PlaySFX(SoundManager.SFXType.MainTheme, 1.0f);
         }
 
         public override void Update(GameTime gameTime)

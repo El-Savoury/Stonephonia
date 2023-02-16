@@ -69,7 +69,7 @@ namespace Stonephonia.Managers
         {
             EmitterFollowsRock(pusher);
 
-            if (mLeafList.Count < 3 && mRandom.Next(0, 30) == 5)
+            if (mLeafList.Count < 3 && mRandom.Next(0, 45) == 5)
             {
                 SpawnLeaf(new Vector2(mRandom.Next(mEmitter.X, mEmitter.X + mEmitter.Width), mEmitter.Y));
             }
