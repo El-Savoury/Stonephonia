@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
-
 using Stonephonia.Managers;
 
 namespace Stonephonia.Screens
@@ -14,6 +13,7 @@ namespace Stonephonia.Screens
         TextPrompt[] mTextPrompts;
         TextPromptManager mTextPromptManager;
         Rock[] mRocks;
+        bool mInputDetected = false;
 
         public GameplayScreen()
         {
@@ -47,10 +47,36 @@ namespace Stonephonia.Screens
             SoundManager.PlayMusic(SoundManager.MusicType.AmbientTrack, 0.5f);
         }
 
+
+        private bool WinConditionMet()
+        {
+            if (mRocks[3].mPosition.X < mRocks[2].mPosition.X &&
+                mRocks[2].mPosition.X < mRocks[1].mPosition.X &&
+                mRocks[1].mPosition.X < mRocks[0].mPosition.X)
+            {
+                return true;
+            }
+            else { return false; }
+        }
+
+        private void ChangeScreen(GameTime gameTime, float timeLimit)
+        {
+            if (mRoomTimer.mCurrentTime > timeLimit)
+            {
+                //if (!mInputDetected) { ScreenManager.ChangeScreen(new GameplayScreen(), new SplashScreen()); }
+                if (WinConditionMet()) { ScreenManager.ChangeScreen(new GameplayScreen(), new WinScreen()); }
+                else if (!WinConditionMet()) { GotoLoseScreen(ScreenManager.pusher); }
+            }
+        }
+
+        private void GotoLoseScreen(Pusher pusher)
+        {
+           pusher.KillPlayer();
+            //ScreenManager.ChangeScreen(new GameplayScreen(), new LoseScreen());
+        }
+
         public override void Update(GameTime gameTime)
         {
-            //InputManager.NoInputTimeOut(gameTime, 10, new GameplayScreen(), new SplashScreen());
-
             mRoomTimer.Update(gameTime);
 
             foreach (Rock rock in mRocks)
@@ -61,6 +87,8 @@ namespace Stonephonia.Screens
             ScreenManager.pusher.Update(gameTime, mRoomTimer, mRocks);
             mLeafManager.Update(gameTime, ScreenManager.pusher);
             mTextPromptManager.Update(gameTime);
+
+            ChangeScreen(gameTime, 10);
 
             base.Update(gameTime);
         }
@@ -85,8 +113,11 @@ namespace Stonephonia.Screens
                 spriteBatch.Draw(foreground, new Rectangle(0, 0, 800, 800), Color.White);
             }
 
+            ScreenManager.pusher.DrawDebug(gameTime, spriteBatch);
+
             mTextPromptManager.Draw(spriteBatch);
-            spriteBatch.DrawString(ScreenManager.font, $"mVelocity: {ScreenManager.pusher.mVelocity}", new Vector2(0, 15), Color.White);
+            spriteBatch.DrawString(ScreenManager.font, $"mRoomTimer: {mRoomTimer.mCurrentTime}", new Vector2(0, 15), Color.White);
+            //spriteBatch.DrawString(ScreenManager.font, $"input: {mInputDetected}", new Vector2(300, 300), Color.White);
         }
 
     }

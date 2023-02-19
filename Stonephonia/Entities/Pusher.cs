@@ -14,6 +14,7 @@ namespace Stonephonia
         private float mStopSpeed;
 
         private Texture2D[] mPlayerTextures;
+        private Sprite mDeathSprite;
         private Reflection mReflection;
 
         public Pusher(Vector2 position, int collisionOffset, int maxSpeed)
@@ -23,12 +24,16 @@ namespace Stonephonia
 
         public void Load(ContentManager content)
         {
-            mPlayerTextures = new Texture2D[3]
+            mPlayerTextures = new Texture2D[4]
             {
                 content.Load<Texture2D>("Sprites/player_stage_two"),
                 content.Load<Texture2D>("Sprites/player_stage_three"),
-                content.Load<Texture2D>("Sprites/player_stage_four")
+                content.Load<Texture2D>("Sprites/player_stage_four"),
+                content.Load<Texture2D>("Sprites/player_death")
             };
+
+            mDeathSprite = new Sprite(mPlayerTextures[3],
+                new Point(64, 84), new Point(0, 0), new Point(4, 2), 80, Color.White);
 
             mReflection = new Reflection(new Sprite(content.Load<Texture2D>("Sprites/player_reflection"),
                new Point(80, 80), new Point(0, 0), new Point(4, 1), 150, Color.White),
@@ -39,7 +44,8 @@ namespace Stonephonia
         {
             idle,
             walk,
-            push
+            push,
+            dead
         }
 
         public State mCurrentState = State.idle;
@@ -68,6 +74,11 @@ namespace Stonephonia
                     else { mSprite.mCurrentFrame.Y = mCurrentRock.mPosition.X < 150 ? 7 : 5; }
                     break;
 
+                case State.dead:
+                    if (mDirection) { mSprite.mCurrentFrame.Y = 0; }
+                    else { mSprite.mCurrentFrame.Y = 1; }
+                    break;
+
                     //// TODO: MAKE PUSH ANIMATION SPEED PERCENTAGE BASED
                     //if (mVelocity < 1) { mSprite.mTimePerFrame = 400; }
                     //else if (mVelocity < 1.5) { mSprite.mTimePerFrame = 300; }
@@ -75,6 +86,14 @@ namespace Stonephonia
                     //break;
             }
             mSprite.Update(gameTime, true);
+        }
+
+        public void KillPlayer()
+        {
+            mCurrentState = State.dead;
+            mSprite = mDeathSprite;
+            mSprite.mFrameSize = new Point(76, 84);
+            mMaxSpeed = 0;
         }
 
         private void UpdateReflection(GameTime gameTime)
@@ -272,7 +291,7 @@ namespace Stonephonia
 
         private void AgePlayer(Texture2D[] playerTextures, Timer gameTimer, int timeInterval)
         {
-            if (gameTimer.mCurrentTime > timeInterval && Array.IndexOf(playerTextures, mSprite.mTexture) < playerTextures.Length - 1)
+            if (gameTimer.mCurrentTime > timeInterval && Array.IndexOf(playerTextures, mSprite.mTexture) < playerTextures.Length - 2)
             {
                 mSprite.mTexture = playerTextures[Array.IndexOf(playerTextures, mSprite.mTexture) + 1];
                 mSprite.mTimePerFrame += 25;
@@ -290,13 +309,12 @@ namespace Stonephonia
             StopRock(80, 150, 720, 650);
             Move();
             PushRock();
-            AgePlayer(mPlayerTextures, gameTimer, 45);
+            AgePlayer(mPlayerTextures, gameTimer, 5);
             SetAnimation(gameTime);
             UpdateReflection(gameTime);
 
             base.Update(gameTime);
         }
-
 
         public override void Draw(SpriteBatch spriteBatch)
         {

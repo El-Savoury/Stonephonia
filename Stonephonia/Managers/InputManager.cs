@@ -9,7 +9,7 @@ namespace Stonephonia
         private static KeyboardState mCurrentKeyState, mPrevKeyState;
         private static Timer mInputTimer = new Timer();
 
-        private static bool AnyInputDetected()
+        public static bool AnyInputDetected()
         {
             if (Keyboard.GetState().GetPressedKeyCount() > 0) { return true; }
             else { return false; }
