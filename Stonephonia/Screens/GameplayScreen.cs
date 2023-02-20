@@ -65,13 +65,13 @@ namespace Stonephonia.Screens
             {
                 //if (!mInputDetected) { ScreenManager.ChangeScreen(new GameplayScreen(), new SplashScreen()); }
                 if (WinConditionMet()) { ScreenManager.ChangeScreen(new GameplayScreen(), new WinScreen()); }
-                else if (!WinConditionMet()) { GotoLoseScreen(ScreenManager.pusher); }
+                else if (!WinConditionMet()) { GotoLoseScreen(gameTime, ScreenManager.pusher); }
             }
         }
 
-        private void GotoLoseScreen(Pusher pusher)
+        private void GotoLoseScreen(GameTime gameTime, Pusher pusher)
         {
-           pusher.KillPlayer();
+           pusher.KillPlayer(gameTime);
             //ScreenManager.ChangeScreen(new GameplayScreen(), new LoseScreen());
         }
 

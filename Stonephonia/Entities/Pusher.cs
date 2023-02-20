@@ -33,7 +33,7 @@ namespace Stonephonia
             };
 
             mDeathSprite = new Sprite(mPlayerTextures[3],
-                new Point(64, 84), new Point(0, 0), new Point(4, 2), 80, Color.White);
+                new Point(100, 84), new Point(0, 0), new Point(4, 2), 400, Color.White, false);
 
             mReflection = new Reflection(new Sprite(content.Load<Texture2D>("Sprites/player_reflection"),
                new Point(80, 80), new Point(0, 0), new Point(4, 1), 150, Color.White),
@@ -75,10 +75,10 @@ namespace Stonephonia
                     break;
 
                 case State.dead:
-                    if (mDirection) { mSprite.mCurrentFrame.Y = 0; }
-                    else { mSprite.mCurrentFrame.Y = 1; }
                     break;
 
+                default:
+                    break;
                     //// TODO: MAKE PUSH ANIMATION SPEED PERCENTAGE BASED
                     //if (mVelocity < 1) { mSprite.mTimePerFrame = 400; }
                     //else if (mVelocity < 1.5) { mSprite.mTimePerFrame = 300; }
@@ -88,11 +88,14 @@ namespace Stonephonia
             mSprite.Update(gameTime, true);
         }
 
-        public void KillPlayer()
+        public void KillPlayer(GameTime gameTime)
         {
-            mCurrentState = State.dead;
-            mSprite = mDeathSprite;
-            mSprite.mFrameSize = new Point(76, 84);
+            ChangeState(State.dead);
+            mSprite.SetVisible(false);
+            mDeathSprite.SetVisible(true);
+            mDeathSprite.Update(gameTime, false);
+            if (mDirection) { mDeathSprite.mCurrentFrame.Y = 0; }
+            else { mDeathSprite.mCurrentFrame.Y = 1; }
             mMaxSpeed = 0;
         }
 
@@ -319,18 +322,20 @@ namespace Stonephonia
         public override void Draw(SpriteBatch spriteBatch)
         {
             mReflection.Draw(spriteBatch);
+            mDeathSprite.Draw(spriteBatch, new Vector2(mPosition.X - 15, mPosition.Y));
             base.Draw(spriteBatch);
         }
+
 
         public void DrawDebug(GameTime gameTime, SpriteBatch spriteBatch)
         {
             //spriteBatch.Draw(ScreenManager.pixel, new Rectangle((int)mPosition.X, (int)mPosition.Y, mCollisionRect.Width, mCollisionRect.Height), Color.Red * 0.3f);
 
             spriteBatch.DrawString(ScreenManager.font, $"mPosition: {mPosition.X}", new Vector2(0, 0), Color.White);
-            spriteBatch.DrawString(ScreenManager.font, $"currentState: {mCurrentState}", new Vector2(300, 0), Color.White);
+            spriteBatch.DrawString(ScreenManager.font, $"mDirection: {mDirection}", new Vector2(300, 0), Color.Red);
             spriteBatch.DrawString(ScreenManager.font, $"mVelocity: {mVelocity}", new Vector2(0, 20), Color.White);
             spriteBatch.DrawString(ScreenManager.font, $"mPushVelocity: {mPushVelocity}", new Vector2(300, 20), Color.White);
-            spriteBatch.DrawString(ScreenManager.font, $"stopspeed: {mStopSpeed}", new Vector2(600, 20), Color.White);
+            spriteBatch.DrawString(ScreenManager.font, $"state: {mCurrentState}", new Vector2(600, 20), Color.White);
         }
     }
 }

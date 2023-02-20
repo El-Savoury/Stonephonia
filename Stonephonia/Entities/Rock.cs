@@ -31,7 +31,7 @@ namespace Stonephonia
             rock[0] = new Rock(new Vector2(150, 452), 32, 4, 0.03f)
             {
                 mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_sheet"),
-                new Point(100, 84), new Point(0, 0), new Point(2, 2), 300, Color.White),
+                new Point(100, 84), new Point(0, 0), new Point(2, 2), 200, Color.White),
                 mInterval = 200,
                 mCounter = 201,
                 mSound = SoundManager.SFXType.flute
@@ -39,7 +39,7 @@ namespace Stonephonia
             rock[1] = new Rock(new Vector2(300, 452), 16, 3, 0.02f)
             {
                 mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_zero_sheet"),
-                new Point(92, 84), new Point(0, 0), new Point(2, 2), 300, Color.White),
+                new Point(92, 84), new Point(0, 0), new Point(2, 2), 200, Color.White),
                 mInterval = 200,
                 mCounter = 201,
                 mSound = SoundManager.SFXType.bell
@@ -124,6 +124,11 @@ namespace Stonephonia
 
         private void Sing()
         {
+            if (mSprite.mAnimationComplete)
+            {
+                mSprite.ResetAnimation(new Point(0, 0));
+            }
+
             if (mCounter > mInterval)
             {
                 SoundManager.PlaySFX(mSound, 1.0f);
@@ -140,8 +145,11 @@ namespace Stonephonia
 
         public void Update(GameTime gameTime, Pusher pusher)
         {
-            ActivateNearPlayer(pusher);
-            ChangeState();
+            if (pusher.mCurrentState != Pusher.State.dead)
+            {
+                ActivateNearPlayer(pusher);
+                ChangeState();
+            }
             mSprite.Update(gameTime, false);
 
             base.Update(gameTime);

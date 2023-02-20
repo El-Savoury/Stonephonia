@@ -49,7 +49,8 @@ namespace Stonephonia
 
                 if (mCurrentFrame.X >= mSheetSize.X)
                 {
-                    mCurrentFrame = new Point(0, 0);
+                    //mCurrentFrame = new Point(0, 0);
+                    mCurrentFrame.X = mSheetSize.X - 1;
                     mAnimationComplete = true;
                 }
             }
