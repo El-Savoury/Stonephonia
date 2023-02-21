@@ -88,6 +88,14 @@ namespace Stonephonia.Managers
             }
         }
 
+        public void FadeOutLeaves(float fadeAmount)
+        {
+            foreach (Leaf leaf in mLeafList)
+            {
+                leaf.FadeOut(fadeAmount);
+            }
+        }
+
         public void Update(GameTime gameTime, Pusher pusher)
         {
             if (pusher.mCurrentState == Pusher.State.push) { EmitMultipleLeaves(pusher); }
@@ -109,7 +117,7 @@ namespace Stonephonia.Managers
                 leaf.Draw(spriteBatch);
             }
 
-            spriteBatch.Draw(ScreenManager.pixel, mEmitter, Color.Blue);
+            //spriteBatch.Draw(ScreenManager.pixel, mEmitter, Color.Blue);
         }
 
     }

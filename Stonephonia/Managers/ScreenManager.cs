@@ -18,7 +18,7 @@ namespace Stonephonia
         public static SpriteFont font;
         public static Texture2D pixel, blackSquare;
         public static Pusher pusher;
-        
+
         private readonly int windowWidth = 1280;
         private readonly int windowHeight = 720;
         private readonly int nativeResWidth = 800;
@@ -64,7 +64,7 @@ namespace Stonephonia
 
             font = Content.Load<SpriteFont>("Font");
             blackSquare = contentMgr.Load<Texture2D>("Sprites/black_square");
-            
+
             // Create 1x1 white pixel texture
             pixel = new Texture2D(GraphicsDevice, 1, 1);
             pixel.SetData(new Color[] { Color.White });

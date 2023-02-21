@@ -109,6 +109,11 @@ namespace Stonephonia
             mReflection.Update(gameTime);
         }
 
+        public void FadeOutReflection(float fadeAmount)
+        {
+            mReflection.mSprite.mAlpha -= fadeAmount;
+        }
+
         private void CalculateMovement()
         {
             int inputDir = 0;

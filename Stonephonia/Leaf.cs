@@ -52,6 +52,11 @@ namespace Stonephonia
             mPosition.X += 9;
         }
 
+        public void FadeOut(float fadeAmount)
+        {
+            mSprite.mAlpha -= 0.05f;
+        }
+
         public void Update(GameTime gameTime)
         {
             mSprite.Update(gameTime, true);
