@@ -127,6 +127,7 @@ namespace Stonephonia.Screens
             foreach (Rock rock in mRocks)
             {
                 rock.Draw(spriteBatch);
+                rock.DrawReflection(spriteBatch);
             }
 
             mScreenTransition.Draw(spriteBatch);

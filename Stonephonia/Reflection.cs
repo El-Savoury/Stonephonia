@@ -14,8 +14,14 @@ namespace Stonephonia
             mPosition = position;
         }
 
-        public void Update(GameTime gameTime)
+        public void Fade(float fadeAmount)
         {
+            mSprite.mAlpha -= fadeAmount;
+        }
+
+        public void Update(GameTime gameTime, float position)
+        {
+            mPosition.X = position;
             mSprite.Update(gameTime, true);
         }
 
