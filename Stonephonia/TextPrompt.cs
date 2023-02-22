@@ -50,7 +50,7 @@ namespace Stonephonia
             }
             else if (timer.mCurrentTime > mTimeLimit && timer.mCurrentTime < mTimeLimit * 3 && !mInputReceived)
             {
-                ShowText();
+                ShowText(true, 0.02f);
             }
             else if (timer.mCurrentTime > mTimeLimit * 3 && !mInputReceived)
             {
@@ -66,7 +66,7 @@ namespace Stonephonia
             }
             else if (timer.mCurrentTime > mTimeLimit && timer.mCurrentTime < mTimeLimit * 3)
             {
-                ShowText();
+                ShowText(true, 0.02f);
             }
             else if (timer.mCurrentTime > mTimeLimit * 3 && pusher.mCurrentState != Pusher.State.push)
             {
@@ -74,9 +74,9 @@ namespace Stonephonia
             }
         }
 
-        private void ShowText()
+        public void ShowText(bool visible, float fadeAmount)
         {
-            mFader.SmoothFade(true, 0.02f);
+            mFader.SmoothFade(visible, fadeAmount);
         }
 
         private void FlashText()
@@ -84,7 +84,7 @@ namespace Stonephonia
             mFader.Flash(1.0f, 0.3f, 0.04f);
         }
 
-        private void HideText(Timer timer)
+        public void HideText(Timer timer)
         {
             mFader.SmoothFade(false, 0.05f);
             if (mAlpha <= 0.0f)

@@ -61,27 +61,33 @@ namespace Stonephonia.Screens
             else { return false; }
         }
 
-        private void ChangeScreen(GameTime gameTime, float timeLimit)
+        private void ChangeScreen(GameTime gameTime, float timeLimit, Pusher pusher)
         {
             if (mRoomTimer.mCurrentTime > timeLimit)
             {
                 //if (!mInputDetected) { ScreenManager.ChangeScreen(new GameplayScreen(), new SplashScreen()); }
-                if (WinConditionMet()) { ScreenManager.ChangeScreen(new GameplayScreen(), new WinScreen()); }
-                else if (!WinConditionMet()) { GotoLoseScreen(gameTime, ScreenManager.pusher, timeLimit + 3); }
+                if (WinConditionMet())
+                {
+                    pusher.mMaxSpeed = 0;
+                    ScreenTransition(new LoseScreen(), timeLimit + 3, pusher); 
+                }
+                else if (!WinConditionMet()) 
+                {
+                    pusher.KillPlayer(gameTime);
+                    ScreenTransition(new LoseScreen(),  timeLimit + 3, pusher); 
+                }
             }
         }
 
-        private void GotoLoseScreen(GameTime gameTime, Pusher pusher, float timeLimit)
+        private void ScreenTransition(Screen nextScreen, float timeLimit, Pusher pusher)
         {
             float fadeIn = 0.008f;
-            float fadeOut = 0.008f;
-
-            pusher.KillPlayer(gameTime);
+            float fadeOut = 0.04f;
 
             if (mRoomTimer.mCurrentTime > timeLimit)
             {
-                mScreenTransition.FadeToNextScreen(fadeIn, fadeOut, new GameplayScreen(), new LoseScreen());
-                FadeOutAssets(pusher, fadeOut);
+                mScreenTransition.FadeToNextScreen(fadeIn, fadeOut, new GameplayScreen(), nextScreen);
+                FadeOutAssets(pusher, fadeIn);
             }
         }
 
@@ -90,7 +96,7 @@ namespace Stonephonia.Screens
             mTextureAlpha -= fadeAmount;
             mLeafManager.FadeOutLeaves(fadeAmount);
             pusher.FadeOutReflection(fadeAmount);
-            //mTextPromptManager.
+            mTextPromptManager.FadeOutPrompt(fadeAmount);
         }
 
         public override void Update(GameTime gameTime)
@@ -106,7 +112,7 @@ namespace Stonephonia.Screens
             mLeafManager.Update(gameTime, ScreenManager.pusher);
             mTextPromptManager.Update(gameTime);
 
-            ChangeScreen(gameTime, 10);
+            ChangeScreen(gameTime, 10, ScreenManager.pusher);
 
             base.Update(gameTime);
         }

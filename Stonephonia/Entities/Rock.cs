@@ -36,10 +36,10 @@ namespace Stonephonia
                 mCounter = 201,
                 mSound = SoundManager.SFXType.flute
             };
-            rock[1] = new Rock(new Vector2(300, 452), 16, 3, 0.02f)
+            rock[1] = new Rock(new Vector2(300, 452), 20, 3, 0.02f)
             {
                 mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_zero_sheet"),
-                new Point(92, 84), new Point(0, 0), new Point(2, 2), 200, Color.White),
+                new Point(96, 84), new Point(0, 0), new Point(2, 2), 200, Color.White),
                 mInterval = 200,
                 mCounter = 201,
                 mSound = SoundManager.SFXType.bell

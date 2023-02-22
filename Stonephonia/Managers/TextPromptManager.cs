@@ -43,6 +43,14 @@ namespace Stonephonia.Managers
             }
         }
 
+        public void FadeOutPrompt(float fadeAmount)
+        {
+            foreach (TextPrompt text in mtextArray)
+            {
+                text.mFader.mAlpha -= fadeAmount;
+            }
+        }
+
         public void Update(GameTime gameTime)
         {
             mTimer.Update(gameTime);
