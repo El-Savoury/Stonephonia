@@ -3,72 +3,80 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Stonephonia.Effects;
+using Stonephonia.Managers;
 
 namespace Stonephonia
 {
     public class CutsceneSprite
     {
-        private Sprite mSprite;
-        private Texture2D mMask;
-        float mFade1, mFade2;
-        float mMaskAlpha;
-        float mDelayCounter = 0;
-        bool mVisible = false;
-        Vector2 mPosition;
+        public Sprite mSprite;
+        private Fader mMask;
+        private FaderManager mMaskManager;
+        float mFade1 = 0.03f;
+        float mFade2 = 0.02f;
+        int mStartTime, mStopTime;
+        int mDelay = 2;
+        private Vector2 mPosition;
+        Timer mTimer = new Timer();
 
-        public CutsceneSprite(Sprite sprite, Texture2D mask, float fade1, float fade2)
+        public enum State
         {
+            inactive,
+            activated,
+            deactivated,
+        }
+
+        public State mCurrentState;
+        
+        public CutsceneSprite(Vector2 postion, int startTime, int StopTime, State state, Sprite sprite, Fader mask)
+        {
+            mPosition = postion;
+            mStartTime = startTime;
+            mStopTime = StopTime;
+            mCurrentState = state;
             mSprite = sprite;
             mMask = mask;
-            mFade1 = fade1;
-            mFade2 = fade2;
+            mMaskManager = new FaderManager(new Fader[1] { mMask });
         }
 
-        public void FadeInMask()
+        public void FadeMaskIn()
         {
-            if (mMaskAlpha < 1.0f)
+            mMaskManager.FadeInAndOut(mMask, mFade1, mFade2, mStartTime, mDelay);
+            if (mMask.mAlpha >= 1.0f) { mSprite.SetVisible(true); }
+            else if (mMask.mAlpha <= 0.0f && mSprite.mAlpha >= 1.0f) { mCurrentState = State.activated; }
+        }
+
+        public void FadeMaskOut()
+        {
+            mMaskManager.FadeInAndOut(mMask, mFade2, mFade1, mStopTime, mDelay);
+            if (mMask.mAlpha >= 1.0f) { mSprite.SetVisible(false); }
+        }
+
+        public void Update(GameTime gameTime, bool loop)
+        {
+            mTimer.Update(gameTime);
+            mMaskManager.Update(gameTime);
+
+            if (mCurrentState == State.inactive)
             {
-                mMaskAlpha += mFade1;
-                if (mMaskAlpha >= 1.0f) { mSprite.SetVisible(true); }
+                FadeMaskIn();
             }
-            else 
+            else if (mCurrentState == State.activated)
             {
-
+                if (mTimer.mCurrentTime > mStopTime) { mCurrentState = State.deactivated; }
+                mSprite.Update(gameTime, loop);
             }
-        }
-
-        public void Fade(float delayTime)
-        {
-            if (!mVisible)
+            else if (mCurrentState == State.deactivated)
             {
-                mMaskAlpha += mFade1;
-                if (mMaskAlpha >= 1.0f) 
-                {
-                    mDelayCounter++;
-                    mSprite.SetVisible(true);
-                    mVisible = true;
-                }
-
+                FadeMaskOut();
             }
-        }
-
-        public void FadeOut()
-        {
-
-        }
-
-        public void Update(GameTime gameTime)
-        {
-
-            if (mMaskAlpha <= 0.0f && mVisible) { mSprite.Update(gameTime, true); }
-
-
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             mSprite.Draw(spriteBatch, mPosition);
-            spriteBatch.Draw(mMask, mPosition, Color.White * mMaskAlpha);
+            mMask.DrawSprite(spriteBatch);
         }
     }
 }

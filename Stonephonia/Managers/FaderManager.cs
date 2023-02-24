@@ -9,8 +9,8 @@ namespace Stonephonia.Managers
     public class FaderManager
     {
         private Timer mTimer;
+        public Fader mFader;
         public Fader[] mFaders;
-
 
         public FaderManager(Fader[] faders)
         {
@@ -46,6 +46,14 @@ namespace Stonephonia.Managers
             foreach (Fader fader in mFaders)
             {
                 fader.DrawSprite(spriteBatch);
+            }
+        }
+
+        public void DrawString(SpriteBatch spriteBatch)
+        {
+            foreach (Fader fader in mFaders)
+            {
+                fader.DrawString(spriteBatch, true);
             }
         }
 

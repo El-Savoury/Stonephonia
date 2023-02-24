@@ -10,7 +10,7 @@ namespace Stonephonia
     {
         public Rock mCurrentRock;
         private float mPushVelocity = 0.0f;
-        private bool mDirection = true;
+        public bool mDirection = true;
         private float mStopSpeed;
 
         private Texture2D[] mPlayerTextures;
@@ -33,7 +33,7 @@ namespace Stonephonia
             };
 
             mDeathSprite = new Sprite(mPlayerTextures[3],
-                new Point(100, 84), new Point(0, 0), new Point(4, 2), 400, Color.White, false);
+                new Point(100, 84), new Point(0, 0), new Point(4, 2), 500, Color.White, false);
 
             mReflection = new Reflection(new Sprite(content.Load<Texture2D>("Sprites/player_reflection"),
                new Point(80, 80), new Point(0, 0), new Point(4, 1), 150, Color.White),
@@ -316,7 +316,7 @@ namespace Stonephonia
             StopRock(80, 150, 720, 650);
             Move();
             PushRock();
-            AgePlayer(mPlayerTextures, gameTimer, 5);
+            AgePlayer(mPlayerTextures, gameTimer, 1);
             SetAnimation(gameTime);
             UpdateReflection(gameTime);
 
