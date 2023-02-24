@@ -69,12 +69,12 @@ namespace Stonephonia.Screens
                 if (WinConditionMet())
                 {
                     pusher.mMaxSpeed = 0;
-                    ScreenTransition(new LoseScreen(), timeLimit + 3, pusher); 
+                    ScreenTransition(new LoseScreen(), timeLimit + 3, pusher);
                 }
-                else if (!WinConditionMet()) 
+                else if (!WinConditionMet())
                 {
                     pusher.KillPlayer(gameTime);
-                    ScreenTransition(new LoseScreen(),  timeLimit + 3, pusher); 
+                    ScreenTransition(new LoseScreen(), timeLimit + 3, pusher);
                 }
             }
         }
@@ -86,7 +86,7 @@ namespace Stonephonia.Screens
 
             if (mRoomTimer.mCurrentTime > timeLimit)
             {
-                mScreenTransition.FadeToNextScreen(fadeIn, fadeOut, new GameplayScreen(), nextScreen);
+                mScreenTransition.FadeToCutscene(fadeIn, fadeOut, new GameplayScreen(), nextScreen);
                 FadeOutAssets(pusher, fadeIn);
             }
         }

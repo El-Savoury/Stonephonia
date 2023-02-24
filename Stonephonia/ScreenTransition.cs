@@ -8,7 +8,7 @@ namespace Stonephonia
     {
         private Rectangle mBlackSquare, mWhiteSquare;
         private float mBlackSquareAlpha, mWhiteSquareAlpha;
-        bool fadingIn = true;
+        public bool mFadingIn = true;
 
         public ScreenTransition()
         {
@@ -18,16 +18,16 @@ namespace Stonephonia
             mWhiteSquareAlpha = 0.0f;
         }
 
-        public void FadeToNextScreen(float fadeIn, float fadeOut, Screen currentScreen, Screen nextScreen)
+        public void FadeToCutscene(float fadeIn, float fadeOut, Screen currentScreen, Screen nextScreen)
         {
-            if (fadingIn)
+            if (mFadingIn)
             {
                 mWhiteSquareAlpha += fadeIn;
 
                 if (mWhiteSquareAlpha >= 1.0f)
                 {
                     mBlackSquareAlpha = 1.0f;
-                    fadingIn = false;
+                    mFadingIn = false;
                 }
             }
 
@@ -38,9 +38,24 @@ namespace Stonephonia
             }
         }
 
-        public void Update(GameTime gameTime)
-        {
 
+        public void FadeToGamePlay(float fadeIn, float fadeOut, Screen currentScreen, Screen nextScreen)
+        {
+            if (mFadingIn)
+            {
+                mWhiteSquareAlpha += fadeIn;
+
+                if (mWhiteSquareAlpha >= 1.0f)
+                {
+                    mFadingIn = false;
+                }
+            }
+
+            else
+            {
+                mWhiteSquareAlpha -= fadeOut;
+                if (mWhiteSquareAlpha <= 0.0f) { ScreenManager.ChangeScreen(currentScreen, nextScreen); }
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)

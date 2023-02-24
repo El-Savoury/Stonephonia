@@ -218,6 +218,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/death_right.png
 
+#begin Sprites/default_bg.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/default_bg.png
+
 #begin Sprites/fairy_fade_sheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
