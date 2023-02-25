@@ -61,6 +61,7 @@ namespace Stonephonia
             contentMgr = Content;
             spriteBatch = new SpriteBatch(GraphicsDevice);
             SoundManager.LoadContent(Content);
+            SoundManager.PlayMusic(SoundManager.MusicType.jungleLoop, 0.5f);
 
             font = Content.Load<SpriteFont>("Font");
             blackSquare = contentMgr.Load<Texture2D>("Sprites/black_square");

@@ -20,6 +20,12 @@
 /processorParam:TextureFormat=Compressed
 /build:Font.spritefont
 
+#begin Sounds/jungle_loop.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sounds/jungle_loop.mp3
+
 #begin Sounds/SFX/bell0.mp3
 /importer:Mp3Importer
 /processor:SoundEffectProcessor
@@ -94,7 +100,7 @@
 
 #begin Sounds/theme_space.mp3
 /importer:Mp3Importer
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sounds/theme_space.mp3
 

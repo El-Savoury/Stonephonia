@@ -22,9 +22,9 @@ namespace Stonephonia.Screens
         SoundManager.SFXType[] mSounds = new SoundManager.SFXType[]
         {
             SoundManager.SFXType.bell,
-            SoundManager.SFXType.flute,
-            SoundManager.SFXType.pad,
-            SoundManager.SFXType.rhodes
+            SoundManager.SFXType.marimba,
+            SoundManager.SFXType.wobble,
+            SoundManager.SFXType.wood
         };
 
 

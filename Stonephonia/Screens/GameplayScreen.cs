@@ -16,7 +16,7 @@ namespace Stonephonia.Screens
         ScreenTransition mScreenTransition;
         float mTextureAlpha = 1.0f;
         bool mInputDetected = false;
-        int mRoomEndTime = 15;
+        int mRoomEndTime = 35;
 
         public GameplayScreen()
         {
@@ -48,7 +48,7 @@ namespace Stonephonia.Screens
 
         private void OnActivate()
         {
-            SoundManager.PlayMusic(SoundManager.MusicType.AmbientTrack, 0.5f);
+            SoundManager.PlaySFX(SoundManager.SFXType.mainTheme, 0.5f);
         }
 
         private bool WinConditionMet()
@@ -145,7 +145,7 @@ namespace Stonephonia.Screens
 
             mTextPromptManager.Draw(spriteBatch);
 
-            spriteBatch.DrawString(ScreenManager.font, $"mRoomTimer: {mRoomTimer.mCurrentTime}", new Vector2(0, 15), Color.White);
+            //spriteBatch.DrawString(ScreenManager.font, $"mRoomTimer: {mRoomTimer.mCurrentTime}", new Vector2(0, 15), Color.White);
             //spriteBatch.DrawString(ScreenManager.font, $"input: {mInputDetected}", new Vector2(300, 300), Color.White);
         }
 

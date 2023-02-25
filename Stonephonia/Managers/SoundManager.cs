@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
 
+using Stonephonia.Sounds;
+
 
 namespace Stonephonia
 {
@@ -12,33 +14,47 @@ namespace Stonephonia
     {
         public enum MusicType
         {
-            AmbientTrack
+            jungleLoop
         }
 
         public enum SFXType
         {
-            MainTheme,
+            mainTheme,
             bell,
-            flute,
-            pad,
-            rhodes
+            marimba,
+            wobble,
+            wood
         }
 
         private static Dictionary<MusicType, Song> mSongs;
-        private static Dictionary<SFXType, SoundEffect> mSFX;
+        private static Dictionary<SFXType, GameSFX> mSFX;
 
         public static void LoadContent(ContentManager content)
         {
             mSongs = new Dictionary<MusicType, Song> { };
-            mSongs.Add(MusicType.AmbientTrack, content.Load<Song>("Sounds/theme_space"));
+            mSongs.Add(MusicType.jungleLoop, content.Load<Song>("Sounds/jungle_loop"));
 
             MediaPlayer.IsRepeating = true;
 
-            mSFX = new Dictionary<SFXType, SoundEffect> { };
-            mSFX.Add(SFXType.bell, content.Load<SoundEffect>("Sounds/SFX/bell0"));
-            mSFX.Add(SFXType.flute, content.Load<SoundEffect>("Sounds/SFX/marimba0"));
-            mSFX.Add(SFXType.pad, content.Load<SoundEffect>("Sounds/SFX/wood0"));
-            mSFX.Add(SFXType.rhodes, content.Load<SoundEffect>("Sounds/SFX/wobble0"));
+            mSFX = new Dictionary<SFXType, GameSFX>();
+
+            mSFX.Add(SFXType.mainTheme, new GameSongSFX(content, "Sounds/theme_space"));
+
+            mSFX.Add(SFXType.bell, new GameRandomSFX(content, ("Sounds/SFX/bell0", 0.6f)
+                                                            , ("Sounds/SFX/bell1", 0.6f)));
+
+            mSFX.Add(SFXType.marimba, new GameRandomSFX(content, ("Sounds/SFX/marimba0", 1.0f)
+                                                               , ("Sounds/SFX/marimba1", 1.0f)
+                                                               , ("Sounds/SFX/marimba2", 1.0f)
+                                                               , ("Sounds/SFX/marimba3", 1.0f)
+                                                               , ("Sounds/SFX/marimba4", 1.0f)));
+
+            mSFX.Add(SFXType.wobble, new GameRandomSFX(content, ("Sounds/SFX/wobble0", 1.0f)
+                                                              , ("Sounds/SFX/wobble1", 1.0f)));
+
+            mSFX.Add(SFXType.wood, new GameRandomSFX(content, ("Sounds/SFX/wood0", 1.0f)
+                                                            , ("Sounds/SFX/wood1", 1.0f)
+                                                            , ("Sounds/SFX/wood2", 1.0f)));
         }
 
         public static void PlayMusic(MusicType musicType, float volume)
@@ -49,6 +65,10 @@ namespace Stonephonia
                 MediaPlayer.Volume = volume;
             }
         }
+        public static void StopMusic()
+        {
+            MediaPlayer.Stop();
+        }
 
         public static void PlaySFX(SFXType sfx, float volume)
         {
@@ -58,9 +78,12 @@ namespace Stonephonia
             }
         }
 
-        public static void StopMusic()
+        public static void StopSFX(SFXType sfx)
         {
-            MediaPlayer.Stop();
+            if (mSFX.ContainsKey(sfx))
+            {
+                mSFX[sfx].StopAll();
+            }
         }
     }
 }

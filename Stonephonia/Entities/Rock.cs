@@ -39,7 +39,7 @@ namespace Stonephonia
 
                 mInterval = 200,
                 mCounter = 201,
-                mSound = SoundManager.SFXType.flute
+                mSound = SoundManager.SFXType.bell
             };
             rock[1] = new Rock(new Vector2(300, 452), 20, 3, 0.02f)
             {
@@ -51,7 +51,7 @@ namespace Stonephonia
 
                 mInterval = 200,
                 mCounter = 201,
-                mSound = SoundManager.SFXType.bell
+                mSound = SoundManager.SFXType.wobble
             };
             rock[2] = new Rock(new Vector2(400, 452), 0, 2, 0.008f)
             {
@@ -62,7 +62,7 @@ namespace Stonephonia
 
                 mInterval = 200,
                 mCounter = 201,
-                mSound = SoundManager.SFXType.pad
+                mSound = SoundManager.SFXType.wood
             };
             rock[3] = new Rock(new Vector2(500, 452), 0, 1, 0.005f)
             {
@@ -73,7 +73,7 @@ namespace Stonephonia
 
                 mInterval = 200,
                 mCounter = 201,
-                mSound = SoundManager.SFXType.rhodes
+                mSound = SoundManager.SFXType.marimba
             };
             return rock;
         }
