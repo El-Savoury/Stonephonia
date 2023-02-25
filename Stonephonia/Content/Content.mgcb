@@ -20,131 +20,83 @@
 /processorParam:TextureFormat=Compressed
 /build:Font.spritefont
 
-#begin Sounds/Bells_0.wav
-/importer:WavImporter
+#begin Sounds/SFX/bell0.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Bells_0.wav
+/build:Sounds/SFX/bell0.mp3
 
-#begin Sounds/Bells_1.wav
-/importer:WavImporter
+#begin Sounds/SFX/bell1.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Bells_1.wav
+/build:Sounds/SFX/bell1.mp3
 
-#begin Sounds/Bells_2.wav
-/importer:WavImporter
+#begin Sounds/SFX/marimba0.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Bells_2.wav
+/build:Sounds/SFX/marimba0.mp3
 
-#begin Sounds/Bells_3.wav
-/importer:WavImporter
+#begin Sounds/SFX/marimba1.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Bells_3.wav
+/build:Sounds/SFX/marimba1.mp3
 
-#begin Sounds/Bells_4.wav
-/importer:WavImporter
+#begin Sounds/SFX/marimba2.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Bells_4.wav
+/build:Sounds/SFX/marimba2.mp3
 
-#begin Sounds/Flute_0.wav
-/importer:WavImporter
+#begin Sounds/SFX/marimba3.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Flute_0.wav
+/build:Sounds/SFX/marimba3.mp3
 
-#begin Sounds/Flute_1.wav
-/importer:WavImporter
+#begin Sounds/SFX/marimba4.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Flute_1.wav
+/build:Sounds/SFX/marimba4.mp3
 
-#begin Sounds/Flute_2.wav
-/importer:WavImporter
+#begin Sounds/SFX/wobble0.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Flute_2.wav
+/build:Sounds/SFX/wobble0.mp3
 
-#begin Sounds/Flute_3.wav
-/importer:WavImporter
+#begin Sounds/SFX/wobble1.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Flute_3.wav
+/build:Sounds/SFX/wobble1.mp3
 
-#begin Sounds/Flute_4.wav
-/importer:WavImporter
+#begin Sounds/SFX/wood0.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Flute_4.wav
+/build:Sounds/SFX/wood0.mp3
 
-#begin Sounds/Minimalism.mp3
+#begin Sounds/SFX/wood1.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/SFX/wood1.mp3
+
+#begin Sounds/SFX/wood2.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/SFX/wood2.mp3
+
+#begin Sounds/theme_space.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
-/build:Sounds/Minimalism.mp3
-
-#begin Sounds/Pad_0.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/Pad_0.wav
-
-#begin Sounds/Pad_1.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/Pad_1.wav
-
-#begin Sounds/Pad_2.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/Pad_2.wav
-
-#begin Sounds/Pad_3.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/Pad_3.wav
-
-#begin Sounds/Pad_4.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/Pad_4.wav
-
-#begin Sounds/Rhodes_0.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/Rhodes_0.wav
-
-#begin Sounds/Rhodes_1.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/Rhodes_1.wav
-
-#begin Sounds/Rhodes_2.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/Rhodes_2.wav
-
-#begin Sounds/Rhodes_3.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/Rhodes_3.wav
-
-#begin Sounds/Rhodes_4.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/Rhodes_4.wav
+/build:Sounds/theme_space.mp3
 
 #begin Sprites/background_bushes.png
 /importer:TextureImporter

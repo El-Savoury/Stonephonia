@@ -30,15 +30,15 @@ namespace Stonephonia
         public static void LoadContent(ContentManager content)
         {
             mSongs = new Dictionary<MusicType, Song> { };
-            mSongs.Add(MusicType.AmbientTrack, content.Load<Song>("Sounds/Minimalism"));
+            mSongs.Add(MusicType.AmbientTrack, content.Load<Song>("Sounds/theme_space"));
 
             MediaPlayer.IsRepeating = true;
 
             mSFX = new Dictionary<SFXType, SoundEffect> { };
-            mSFX.Add(SFXType.bell, content.Load<SoundEffect>("Sounds/Bells_0"));
-            mSFX.Add(SFXType.flute, content.Load<SoundEffect>("Sounds/Flute_0"));
-            mSFX.Add(SFXType.pad, content.Load<SoundEffect>("Sounds/Pad_0"));
-            mSFX.Add(SFXType.rhodes, content.Load<SoundEffect>("Sounds/Rhodes_0"));
+            mSFX.Add(SFXType.bell, content.Load<SoundEffect>("Sounds/SFX/bell0"));
+            mSFX.Add(SFXType.flute, content.Load<SoundEffect>("Sounds/SFX/marimba0"));
+            mSFX.Add(SFXType.pad, content.Load<SoundEffect>("Sounds/SFX/wood0"));
+            mSFX.Add(SFXType.rhodes, content.Load<SoundEffect>("Sounds/SFX/wobble0"));
         }
 
         public static void PlayMusic(MusicType musicType, float volume)
