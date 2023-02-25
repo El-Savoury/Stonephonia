@@ -12,11 +12,11 @@ namespace Stonephonia.Screens
         Texture2D[] mBackgroundTextures, mForegroundTextures;
         TextPrompt[] mTextPrompts;
         TextPromptManager mTextPromptManager;
-        Rock[] mRocks;
+        public static Rock[] mRocks;
         ScreenTransition mScreenTransition;
         float mTextureAlpha = 1.0f;
         bool mInputDetected = false;
-        int mRoomEndTime = 15;
+        int mRoomEndTime = 1;
 
         public GameplayScreen()
         {
@@ -66,11 +66,12 @@ namespace Stonephonia.Screens
         {
             if (mRoomTimer.mCurrentTime > timeLimit)
             {
+                SoundManager.StopMusic();
                 //if (!mInputDetected) { ScreenManager.ChangeScreen(new GameplayScreen(), new SplashScreen()); }
-                if (WinConditionMet())
+                if (!WinConditionMet())
                 {
                     pusher.mMaxSpeed = 0;
-                    ScreenTransition(new LoseScreen(), timeLimit + 3, pusher);
+                    ScreenTransition(new WinScreen(), timeLimit, pusher);
                 }
                 else if (!WinConditionMet())
                 {
@@ -87,7 +88,7 @@ namespace Stonephonia.Screens
 
             if (mRoomTimer.mCurrentTime > timeLimit)
             {
-                mScreenTransition.FadeToCutscene(fadeIn, fadeOut, new GameplayScreen(), nextScreen);
+                mScreenTransition.FadeToCutscene(fadeIn, fadeOut, this, nextScreen);
                 FadeOutAssets(pusher, fadeIn);
             }
         }

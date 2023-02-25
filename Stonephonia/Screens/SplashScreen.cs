@@ -15,7 +15,6 @@ namespace Stonephonia.Screens
         Fader mBlackFader;
         Vector2 mTitlePosition;
         TextPrompt mPressSpacePrompt;
-        //int mTitleSpeed = 4;
         int mInterval;
         int mCounter = 0;
 
@@ -34,7 +33,7 @@ namespace Stonephonia.Screens
             mbackground = new Rectangle(0, 0, GamePort.renderSurface.Width, GamePort.renderSurface.Height);
             mBlackFader = new Fader(ScreenManager.blackSquare, Vector2.Zero, Color.White, 1.0f);
             mTitleSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/title_sheet"),
-                new Point(90, 20), new Point(0, 0), new Point(4, 1), 100, Color.White);
+                new Point(90, 20), new Point(0, 0), new Point(5, 1), 100, Color.White);
             mTitleSprite.mAnimationComplete = true;
             mTitlePosition = new Vector2((GamePort.renderSurface.Width / 2) - (mTitleSprite.mFrameSize.X * 3),
                                         (GamePort.renderSurface.Height / 2) - (mTitleSprite.mFrameSize.Y * 6));
@@ -53,7 +52,7 @@ namespace Stonephonia.Screens
             {
                 mPressSpacePrompt.mFader.mAlpha = 0.0f;
                 if (mTitleSprite.mAlpha > 0.0f) { mTitleSprite.mAlpha -= 0.03f; }
-                else { ScreenManager.ChangeScreen(new SplashScreen(), new IntroCutscene()); }
+                else { ScreenManager.ChangeScreen(this, new IntroCutscene()); }
             }
         }
 
@@ -63,27 +62,13 @@ namespace Stonephonia.Screens
 
             if (mCounter > mInterval)
             {
-                SoundManager.PlaySFX(mSounds[mRandom.Next(0, 5)], 1.0f);
+                SoundManager.PlaySFX(mSounds[mRandom.Next(0, 4)], 1.0f);
                 mTitleSprite.ResetAnimation(new Point(0, 0));
                 mTitleSprite.mAnimationComplete = false;
                 mCounter = 0;
                 mInterval = mRandom.Next(15 * 30, 40 * 30);
             }
         }
-
-        //private void MoveTitle()
-        //{
-        //    if (mRoomTimer.mCurrentTime > 0.2f)
-        //    {
-        //        if (mTitlePosition.Y >= 240 ||
-        //            mTitlePosition.Y <= 225)
-        //        {
-        //            mTitleSpeed *= -1;
-        //        }
-        //        mTitlePosition.Y += mTitleSpeed;
-        //        mRoomTimer.Reset();
-        //    }
-        //}
 
         public override void Update(GameTime gameTime)
         {
@@ -92,24 +77,7 @@ namespace Stonephonia.Screens
             mRoomTimer.Update(gameTime);
             mPressSpacePrompt.PromptInput(mRoomTimer, Keys.Space);
             mPressSpacePrompt.Update(gameTime);
-
             mTitleSprite.Update(gameTime, false);
-
-            //if (mRoomTimer.mCurrentTime < 0.5)
-            //{
-            //    mPressSpaceFader.mAlpha = 1;
-            //}
-            //else if (mRoomTimer.mCurrentTime < 1)
-            //{
-            //    mPressSpaceFader.mAlpha = 0;
-            //}
-            //else
-            //{
-            //    mRoomTimer.Reset();
-            //}
-
-
-            // MoveTitle();
             FlashTitle();
             StartGame();
 

@@ -77,7 +77,7 @@ namespace Stonephonia
 
             particleManager.LoadAssets();
 
-            AddScreen(new GameplayScreen());
+             AddScreen(new GameplayScreen());
             // AddScreen(new IntroCutscene());
             // AddScreen(new SplashScreen());
         }
@@ -149,14 +149,14 @@ namespace Stonephonia
 
             if (screenList.Count < 1)
             {
-                AddScreen(new GameplayScreen());
+                AddScreen(new Screen());
             }
         }
 
         public static void ChangeScreen(Screen currentScreen, Screen nextScreen)
         {
-            RemoveScreen(currentScreen);
             AddScreen(nextScreen);
+            RemoveScreen(currentScreen);
         }
 
         private void UserControlWindow()

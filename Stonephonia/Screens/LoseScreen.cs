@@ -16,7 +16,7 @@ namespace Stonephonia.Screens
         Vector2 mFairyPos = new Vector2(600, 300);
         Vector2 mPlayerDeathPos = new Vector2(ScreenManager.pusher.mPosition.X - 15, ScreenManager.pusher.mPosition.Y);
         Vector2 mPlayerPos = new Vector2(20, 452);
-        Texture2D mDeathFader;
+        Texture2D mDeathTexture;
         Fader mText;
         FaderManager mTextFader;
         ScreenTransition mScreenTransition;
@@ -33,12 +33,6 @@ namespace Stonephonia.Screens
 
         public LoseScreen()
         {
-            OnActivate();
-        }
-
-        private void OnActivate()
-        {
-
         }
 
         public override void LoadAssets()
@@ -47,8 +41,8 @@ namespace Stonephonia.Screens
             mScreenTransition = new ScreenTransition();
             mDefaultbg = ScreenManager.contentMgr.Load<Texture2D>("Sprites/default_bg");
 
-            if (ScreenManager.pusher.mDirection) { mDeathFader = ScreenManager.contentMgr.Load<Texture2D>("Sprites/death_right"); }
-            else { mDeathFader = ScreenManager.contentMgr.Load<Texture2D>("Sprites/death_left"); }
+            if (ScreenManager.pusher.mDirection) { mDeathTexture = ScreenManager.contentMgr.Load<Texture2D>("Sprites/death_right"); }
+            else { mDeathTexture = ScreenManager.contentMgr.Load<Texture2D>("Sprites/death_left"); }
 
             mFairy = new CutsceneSprite(mFairyPos, fairySpawn, fairyDespawn, CutsceneSprite.State.inactive,
                 new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_sheet"),
@@ -58,7 +52,7 @@ namespace Stonephonia.Screens
             mPlayerDeath = new CutsceneSprite(mPlayerDeathPos, 0, deathDespawn, CutsceneSprite.State.activated,
                 new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_death"),
                 new Point(100, 84), new Point(3, ScreenManager.pusher.mDirection ? 0 : 1), new Point(4, 2), 1000, Color.White, true),
-                new Fader(mDeathFader, new Vector2(mPlayerDeathPos.X - 7, mPlayerDeathPos.Y), Color.White));
+                new Fader(mDeathTexture, new Vector2(mPlayerDeathPos.X - 7, mPlayerDeathPos.Y), Color.White));
 
             mPlayer = new CutsceneSprite(mPlayerPos, playerSpawn, playerStopTime, CutsceneSprite.State.inactive,
                 new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_stage_one"),
@@ -73,11 +67,6 @@ namespace Stonephonia.Screens
         {
         }
 
-        private void RemoveBlackSquare()
-        {
-            if (!mScreenTransition.mFadingIn) { mBlackSquareAlpha = 0.0f; }
-        }
-
         private void GotoGameplayScreen(Screen nextScreen, float timeLimit)
         {
             float fadeIn = 0.008f;
@@ -85,9 +74,9 @@ namespace Stonephonia.Screens
 
             if (mRoomTimer.mCurrentTime > timeLimit)
             {
-                mScreenTransition.FadeToGamePlay(fadeOut, fadeIn, new LoseScreen(), nextScreen);
+                mScreenTransition.FadeToGamePlay(fadeOut, fadeIn, this, nextScreen);
                 ScreenManager.pusher.Reset();
-                RemoveBlackSquare();
+                if (!mScreenTransition.mFadingIn) { mBlackSquareAlpha = 0.0f; }
             }
         }
 

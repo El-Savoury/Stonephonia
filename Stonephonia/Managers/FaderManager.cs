@@ -9,7 +9,6 @@ namespace Stonephonia.Managers
     public class FaderManager
     {
         private Timer mTimer;
-        public Fader mFader;
         public Fader[] mFaders;
 
         public FaderManager(Fader[] faders)
