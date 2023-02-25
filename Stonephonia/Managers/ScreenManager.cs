@@ -94,7 +94,7 @@ namespace Stonephonia
 
         protected override void Update(GameTime gameTime)
         {
-            InputManager.Update(gameTime);
+            //InputManager.Update(gameTime);
             UserControlWindow();
 
             int startIndex = screenList.Count - 1;

@@ -87,6 +87,7 @@ namespace Stonephonia.Screens
 
         public override void Update(GameTime gameTime)
         {
+            InputManager.Update(gameTime);
             mBlackFader.SmoothFade(false, 0.03f);
             mRoomTimer.Update(gameTime);
             mPressSpacePrompt.PromptInput(mRoomTimer, Keys.Space);

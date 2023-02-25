@@ -15,6 +15,7 @@ namespace Stonephonia.Screens
         CutsceneSprite mFairy, mPlayerDeath, mPlayer;
         Vector2 mFairyPos = new Vector2(600, 300);
         Vector2 mPlayerDeathPos = new Vector2(ScreenManager.pusher.mPosition.X - 15, ScreenManager.pusher.mPosition.Y);
+        Vector2 mPlayerPos = new Vector2(20, 452);
         Texture2D mDeathFader;
         Fader mText;
         FaderManager mTextFader;
@@ -59,10 +60,10 @@ namespace Stonephonia.Screens
                 new Point(100, 84), new Point(3, ScreenManager.pusher.mDirection ? 0 : 1), new Point(4, 2), 1000, Color.White, true),
                 new Fader(mDeathFader, new Vector2(mPlayerDeathPos.X - 7, mPlayerDeathPos.Y), Color.White));
 
-            mPlayer = new CutsceneSprite(ScreenManager.pusher.mPosition, playerSpawn, playerStopTime, CutsceneSprite.State.inactive,
+            mPlayer = new CutsceneSprite(mPlayerPos, playerSpawn, playerStopTime, CutsceneSprite.State.inactive,
                 new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_stage_one"),
                 new Point(60, 84), new Point(0, 0), new Point(2, 1), 200, Color.White, false),
-                new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_fader"), ScreenManager.pusher.mPosition, Color.White));
+                new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_fader"), mPlayerPos, Color.White));
 
             mText = new Fader(ScreenManager.font, "\"Try again\"", new Vector2(0, 600), Colours.lightBlue, 0.0f);
             mTextFader = new FaderManager(new Fader[1] { mText });
@@ -85,7 +86,7 @@ namespace Stonephonia.Screens
             if (mRoomTimer.mCurrentTime > timeLimit)
             {
                 mScreenTransition.FadeToGamePlay(fadeOut, fadeIn, new LoseScreen(), nextScreen);
-                ScreenManager.pusher.mSprite.SetVisible(true);
+                ScreenManager.pusher.Reset();
                 RemoveBlackSquare();
             }
         }

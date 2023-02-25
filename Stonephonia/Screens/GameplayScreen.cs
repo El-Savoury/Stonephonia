@@ -16,6 +16,7 @@ namespace Stonephonia.Screens
         ScreenTransition mScreenTransition;
         float mTextureAlpha = 1.0f;
         bool mInputDetected = false;
+        int mRoomEndTime = 15;
 
         public GameplayScreen()
         {
@@ -101,6 +102,7 @@ namespace Stonephonia.Screens
 
         public override void Update(GameTime gameTime)
         {
+            InputManager.Update(gameTime);
             mRoomTimer.Update(gameTime);
 
             foreach (Rock rock in mRocks)
@@ -112,7 +114,7 @@ namespace Stonephonia.Screens
             mLeafManager.Update(gameTime, ScreenManager.pusher);
             mTextPromptManager.Update(gameTime);
 
-            ChangeScreen(gameTime, 15, ScreenManager.pusher);
+            ChangeScreen(gameTime, mRoomEndTime, ScreenManager.pusher);
 
             base.Update(gameTime);
         }
