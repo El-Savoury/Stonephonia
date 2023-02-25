@@ -112,7 +112,7 @@ namespace Stonephonia.Screens
             mLeafManager.Update(gameTime, ScreenManager.pusher);
             mTextPromptManager.Update(gameTime);
 
-            ChangeScreen(gameTime, 1, ScreenManager.pusher);
+            ChangeScreen(gameTime, 15, ScreenManager.pusher);
 
             base.Update(gameTime);
         }

@@ -316,7 +316,7 @@ namespace Stonephonia
             StopRock(80, 150, 720, 650);
             Move();
             PushRock();
-            AgePlayer(mPlayerTextures, gameTimer, 1);
+            AgePlayer(mPlayerTextures, gameTimer, 15);
             SetAnimation(gameTime);
             UpdateReflection(gameTime);
 
