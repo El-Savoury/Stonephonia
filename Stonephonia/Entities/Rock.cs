@@ -161,7 +161,7 @@ namespace Stonephonia
 
         public void Update(GameTime gameTime, Pusher pusher)
         {
-            mReflection.Update(gameTime, mPosition.X);
+            UpdateReflection(gameTime);
             
             if (pusher.mCurrentState != Pusher.State.dead)
             {
@@ -171,6 +171,11 @@ namespace Stonephonia
             mSprite.Update(gameTime, false);
             
             base.Update(gameTime);
+        }
+
+        public void UpdateReflection(GameTime gameTime)
+        {
+            mReflection.Update(gameTime, mPosition.X);
         }
 
         public void DrawReflection(SpriteBatch spriteBatch)

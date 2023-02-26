@@ -18,15 +18,17 @@ namespace Stonephonia.Screens
         Vector2 mPlayerPos = ScreenManager.pusher.mPosition;
         Vector2 mFairyPos = new Vector2(600, 300);
         ScreenTransition mScreenTransition;
+        Rock[] mRocks;
 
         int fairySpawn = 3;
         int fairyDespawn = 24;
         int playerSpawn = 7;
-        int whiteSquareFade = 28;
         int changeScreen = 27;
 
         public override void LoadAssets()
         {
+            ScreenManager.pusher.Load(ScreenManager.contentMgr);
+            mRocks = Rock.Load();
             mRoomTimer = new Timer();
             mDefaultbg = ScreenManager.contentMgr.Load<Texture2D>("Sprites/default_bg");
             mWhiteSquare = new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/white_square"), Vector2.Zero, Color.White);
@@ -77,17 +79,32 @@ namespace Stonephonia.Screens
                 mScreenTransition.FadeToGamePlay(fadeIn, fadeOut, this);
                 if (!mScreenTransition.mFadingIn) { mBlackSquareAlpha = 0.0f; }
             }
+
+            foreach(Rock rock in mRocks)
+            {
+                rock.UpdateReflection(gameTime);
+            }
+
+            ScreenManager.pusher.mReflection.Update(gameTime, ScreenManager.pusher.mPosition.X - 12);
         }
 
         public override void Draw(GameTime gametime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(mDefaultbg, Vector2.Zero, Color.White);
+            ScreenManager.pusher.mReflection.Draw(spriteBatch);
+
+            foreach (Rock rock in mRocks)
+            {
+                rock.Draw(spriteBatch);
+                rock.DrawReflection(spriteBatch);
+            }
             spriteBatch.Draw(ScreenManager.blackSquare, Vector2.Zero, Color.White * mBlackSquareAlpha);
             mTextFader.DrawString(spriteBatch);
             mFairy.Draw(spriteBatch);
             mSquareFader.Draw(spriteBatch);
             mScreenTransition.Draw(spriteBatch);
             mPlayer.Draw(spriteBatch);
+
         }
     }
 }

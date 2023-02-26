@@ -12,11 +12,11 @@ namespace Stonephonia
         private float mPushVelocity = 0.0f;
         public bool mDirection = true;
         private float mStopSpeed;
-        int mAgeTime = 5;
+        int mAgeTime = 1;
 
         private Texture2D[] mPlayerTextures;
         private Sprite mDeathSprite;
-        private Reflection mReflection;
+        public  Reflection mReflection;
 
         public Pusher(Vector2 position, int collisionOffset, int maxSpeed)
                 : base(position, collisionOffset, maxSpeed)
@@ -38,7 +38,7 @@ namespace Stonephonia
 
             mReflection = new Reflection(new Sprite(content.Load<Texture2D>("Sprites/player_reflection"),
                new Point(80, 80), new Point(0, 0), new Point(4, 1), 150, Color.White),
-               new Vector2(ScreenManager.pusher.mPosition.X, ScreenManager.pusher.mPosition.Y + 112));
+               new Vector2(ScreenManager.pusher.mPosition.X - 12, ScreenManager.pusher.mPosition.Y + 112));
         }
 
         public enum State

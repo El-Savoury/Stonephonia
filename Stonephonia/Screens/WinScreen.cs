@@ -15,9 +15,9 @@ namespace Stonephonia.Screens
         Rock[] mRocks = GameplayScreen.mRocks;
         CutsceneSprite mFairy, mPlayerRock;
         Vector2 mFairyPos = new Vector2(600, 300);
-        float mBlackSquareAlpha = 1.0f;
         Vector2 mPlayerPos = ScreenManager.pusher.mPosition;
 
+        float mBlackSquareAlpha = 1.0f;
         int fairySpawn = 3;
         int fairyDespawn = 24;
         int playerRockSpawn = 19;
@@ -42,7 +42,7 @@ namespace Stonephonia.Screens
             mFairy = new CutsceneSprite(mFairyPos, fairySpawn, fairyDespawn, CutsceneSprite.State.inactive,
              new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_sheet"),
              new Point(128, 128), new Point(0, 0), new Point(4, 1), 200, Color.White, false),
-             new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_fader"), new Vector2(mFairyPos.X,mFairyPos.Y + 4), Color.White));
+             new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_fader"), new Vector2(mFairyPos.X, mFairyPos.Y + 4), Color.White));
 
             mPlayerRock = new CutsceneSprite(mPlayerPos, playerRockSpawn, playerRockDespawn, CutsceneSprite.State.inactive,
              new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_rock"),
@@ -62,8 +62,8 @@ namespace Stonephonia.Screens
 
         private void ShowText()
         {
-            mTextFader.FadeInAndOut(mText[0], 0.02f, 0.03f, 7, 4); 
-            mTextFader.FadeInAndOut(mText[1], 0.02f, 0.03f, 13, 4); 
+            mTextFader.FadeInAndOut(mText[0], 0.02f, 0.03f, 7, 4);
+            mTextFader.FadeInAndOut(mText[1], 0.02f, 0.03f, 13, 4);
         }
 
         private void HidePlayer()
@@ -90,6 +90,11 @@ namespace Stonephonia.Screens
             FadeWhiteSquare();
             ShowText();
 
+            foreach (Rock rock in mRocks)
+            {
+                rock.UpdateReflection(gameTime);
+            }
+
             if (mRoomTimer.mCurrentTime > changeScreen) { ScreenManager.ChangeScreen(this, new SplashScreen()); }
         }
 
@@ -100,6 +105,7 @@ namespace Stonephonia.Screens
             foreach (Rock rock in mRocks)
             {
                 rock.Draw(spriteBatch);
+                rock.DrawReflection(spriteBatch);
             }
 
             spriteBatch.Draw(ScreenManager.blackSquare, Vector2.Zero, Color.White * mBlackSquareAlpha);

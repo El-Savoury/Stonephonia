@@ -68,7 +68,7 @@ namespace Stonephonia.Screens
             {
                 SoundManager.StopMusic();
                 //if (!mInputDetected) { ScreenManager.ChangeScreen(new GameplayScreen(), new SplashScreen()); }
-                if (WinConditionMet())
+                if (!WinConditionMet())
                 {
                     pusher.mCurrentState = Pusher.State.dead;
                     pusher.mMaxSpeed = 0;
