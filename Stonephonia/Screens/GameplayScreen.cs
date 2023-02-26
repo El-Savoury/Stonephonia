@@ -68,7 +68,7 @@ namespace Stonephonia.Screens
             {
                 SoundManager.StopMusic();
                 //if (!mInputDetected) { ScreenManager.ChangeScreen(new GameplayScreen(), new SplashScreen()); }
-                if (!WinConditionMet())
+                if (WinConditionMet())
                 {
                     pusher.mCurrentState = Pusher.State.dead;
                     pusher.mMaxSpeed = 0;
@@ -79,6 +79,12 @@ namespace Stonephonia.Screens
                     pusher.KillPlayer(gameTime);
                     ScreenTransition(new LoseScreen(), timeLimit + 3, pusher);
                 }
+
+                foreach (TextPrompt prompt in mTextPrompts)
+                {
+                    prompt.mFader.mAlpha -= 0.05f;
+                }
+
             }
         }
 

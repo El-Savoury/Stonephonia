@@ -168,7 +168,6 @@ namespace Stonephonia
         {
             mPrevKeyState = mCurrentKeyState;
             mCurrentKeyState = Keyboard.GetState();
-
             GetPadState();
         }
     }

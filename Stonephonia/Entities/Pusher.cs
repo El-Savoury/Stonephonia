@@ -15,7 +15,7 @@ namespace Stonephonia
         int mAgeTime = 15;
 
         private Texture2D[] mPlayerTextures;
-        private Sprite mDeathSprite;
+        private Sprite mDeathSprite, mSweatSprite;
         public Reflection mReflection;
 
         public Pusher(Vector2 position, int collisionOffset, int maxSpeed)
@@ -35,6 +35,9 @@ namespace Stonephonia
 
             mDeathSprite = new Sprite(mPlayerTextures[3],
                 new Point(100, 84), new Point(0, 0), new Point(4, 2), 500, Color.White, false);
+
+            mSweatSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/sweat"),
+                new Point(88, 84), new Point(0, 0), new Point(2, 2), mSprite.mTimePerFrame, Color.White, false);
 
             mReflection = new Reflection(new Sprite(content.Load<Texture2D>("Sprites/player_reflection"),
                new Point(80, 80), new Point(0, 0), new Point(4, 1), 150, Color.White),
@@ -73,6 +76,28 @@ namespace Stonephonia
                 case State.push:
                     if (mDirection) { mSprite.mCurrentFrame.Y = mCurrentRock.mPosition.X + mCurrentRock.mSprite.mFrameSize.X < 650 ? 4 : 6; }
                     else { mSprite.mCurrentFrame.Y = mCurrentRock.mPosition.X < 150 ? 7 : 5; }
+
+
+                    if (mDirection)
+                    {
+                        if (mCurrentRock.mPosition.X + mCurrentRock.mSprite.mFrameSize.X < 700) { mSprite.mCurrentFrame.Y = 4; }
+                        else
+                        {
+                            mSprite.mCurrentFrame.Y = 6;
+                            mSweatSprite.mCurrentFrame.Y = 0;
+                            mSweatSprite.SetVisible(true);
+                        }
+                    }
+                    else
+                    {
+                        if (mCurrentRock.mPosition.X > 100) { mSprite.mCurrentFrame.Y = 5; }
+                        else
+                        {
+                            mSprite.mCurrentFrame.Y = 7;
+                            mSweatSprite.mCurrentFrame.Y = 1;
+                            mSweatSprite.SetVisible(true);
+                        }
+                    }
                     break;
 
                 case State.dead:
@@ -236,6 +261,7 @@ namespace Stonephonia
             ChangeState(State.walk);
             mCurrentRock = null;
             mPushVelocity = 0.0f;
+            mSweatSprite.SetVisible(false);
         }
 
         // AABB Collision
@@ -332,6 +358,7 @@ namespace Stonephonia
             AgePlayer(mPlayerTextures, gameTimer, mAgeTime);
             SetAnimation(gameTime);
             UpdateReflection(gameTime);
+            mSweatSprite.Update(gameTime, true);
 
             base.Update(gameTime);
         }
@@ -340,6 +367,7 @@ namespace Stonephonia
         {
             mReflection.Draw(spriteBatch);
             mDeathSprite.Draw(spriteBatch, new Vector2(mPosition.X - 15, mPosition.Y));
+            mSweatSprite.Draw(spriteBatch, new Vector2(mPosition.X - 12, mPosition.Y + 8));
             base.Draw(spriteBatch);
         }
 

@@ -50,6 +50,7 @@ namespace Stonephonia
 
             Window.ClientSizeChanged += (sender, args) => GamePort.KeepAspectRatio(Window);
             GamePort.KeepAspectRatio(Window);
+            graphicsDeviceMgr.IsFullScreen = true;
 
             particleManager = new ParticleManager();
 
@@ -77,9 +78,9 @@ namespace Stonephonia
 
             particleManager.LoadAssets();
 
-            // AddScreen(new GameplayScreen());
+             AddScreen(new GameplayScreen());
             // AddScreen(new IntroCutscene());
-             AddScreen(new SplashScreen());
+            //AddScreen(new SplashScreen());
         }
 
         protected override void UnloadContent()
@@ -163,7 +164,7 @@ namespace Stonephonia
         {
             ToggleFullScreen();
 
-            if (InputManager.KeyPressed(Keys.Escape))
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 Exit();
             }
@@ -171,7 +172,7 @@ namespace Stonephonia
 
         private void ToggleFullScreen()
         {
-            if (InputManager.KeyReleased(Keys.LeftAlt) && InputManager.KeyReleased(Keys.Enter))
+            if (Keyboard.GetState().IsKeyDown(Keys.F11))
             {
                 if (graphicsDeviceMgr.IsFullScreen)
                 {

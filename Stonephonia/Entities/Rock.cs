@@ -35,7 +35,7 @@ namespace Stonephonia
                 new Point(100, 84), new Point(0, 0), new Point(2, 2), 200, Color.White),
 
                 mReflection = new Reflection(new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/tiny_rock_reflection"),
-               new Point(100, 40), new Point(0, 0), new Point(4, 1), 150, Color.White),new Vector2(150, ScreenManager.pusher.mPosition.Y + 112)),
+               new Point(100, 40), new Point(3, 0), new Point(4, 1), 150, Color.White),new Vector2(150, ScreenManager.pusher.mPosition.Y + 112)),
 
                 mInterval = 200,
                 mCounter = 201,
@@ -53,9 +53,10 @@ namespace Stonephonia
                 mCounter = 201,
                 mSound = SoundManager.SFXType.bell
             };
-            rock[2] = new Rock(new Vector2(400, 452), 0, 2, 0.008f)
+            rock[2] = new Rock(new Vector2(400, 424), 12, 2, 0.008f)
             {
-                mSprite = new Sprite(ScreenManager.pixel, new Point(64, 84), new Point(0, 0), new Point(1, 1), 15, Color.Orange),
+                mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_tall_sheet"),
+                new Point(96, 112), new Point(0, 0), new Point(2, 2), 200, Color.White),
 
                 mReflection = new Reflection(new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/tiny_rock_reflection"),
                new Point(100, 40), new Point(0, 0), new Point(4, 1), 150, Color.White), Vector2.Zero),
