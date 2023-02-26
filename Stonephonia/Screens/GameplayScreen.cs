@@ -16,7 +16,7 @@ namespace Stonephonia.Screens
         ScreenTransition mScreenTransition;
         float mTextureAlpha = 1.0f;
         bool mInputDetected = false;
-        int mRoomEndTime = 5;
+        int mRoomEndTime = 15;
 
         public GameplayScreen()
         {

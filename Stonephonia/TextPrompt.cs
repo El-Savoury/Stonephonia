@@ -23,14 +23,19 @@ namespace Stonephonia
         {
             TextPrompt[] textPrompts = new TextPrompt[]
             {
-                new TextPrompt(new Vector2(0, 600), 3, "Arrow keys to move", Colours.darkBlue),
-                new TextPrompt(new Vector2(0, 600), 3, "Hold space to push", Colours.darkBlue)
+                new TextPrompt(new Vector2(0, 600), 3, "D-Pad to move", Colours.darkBlue),
+                new TextPrompt(new Vector2(0, 600), 3, "Hold (A) to push", Colours.darkBlue)
             };
             return textPrompts;
         }
 
-        public void CheckInput(params Keys[] keys)
+        public void CheckKeyInput(bool anyInput, params Keys[] keys)
         {
+            if (anyInput)
+            {
+                if (InputManager.AnyKeyInputDetected()) { mInputReceived = true; }
+            }
+
             foreach (Keys key in keys)
             {
                 if (InputManager.SpecificInputDetected(key))
@@ -40,9 +45,26 @@ namespace Stonephonia
             }
         }
 
-        public void PromptInput(Timer timer, params Keys[] keys)
+        public void CheckPadInput(bool anyInput, params Buttons[] buttons)
         {
-            CheckInput(keys);
+            if (anyInput)
+            {
+                if (InputManager.AnyPadInputDetected(buttons)) { mInputReceived = true; }
+            }
+
+            foreach (Buttons button in buttons)
+            {
+                if (InputManager.SpecificInputDetected(button))
+                {
+                    mInputReceived = true;
+                }
+            }
+        }
+
+        public void PromptInput(bool anyInput, Timer timer, Buttons[] buttons, params Keys[] keys)
+        {
+            CheckKeyInput(anyInput, keys);
+            CheckPadInput(anyInput, buttons);
 
             if (mInputReceived)
             {

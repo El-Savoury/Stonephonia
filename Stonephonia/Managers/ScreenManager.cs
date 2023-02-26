@@ -35,7 +35,7 @@ namespace Stonephonia
             graphicsDeviceMgr = new GraphicsDeviceManager(this);
             this.TargetElapsedTime = new TimeSpan(333333);
             Window.AllowUserResizing = false;
-            IsMouseVisible = true;
+            IsMouseVisible = false;
             Content.RootDirectory = "Content";
         }
 
@@ -77,9 +77,9 @@ namespace Stonephonia
 
             particleManager.LoadAssets();
 
-             AddScreen(new GameplayScreen());
+            // AddScreen(new GameplayScreen());
             // AddScreen(new IntroCutscene());
-            // AddScreen(new SplashScreen());
+             AddScreen(new SplashScreen());
         }
 
         protected override void UnloadContent()

@@ -12,11 +12,11 @@ namespace Stonephonia
         private float mPushVelocity = 0.0f;
         public bool mDirection = true;
         private float mStopSpeed;
-        int mAgeTime = 1;
+        int mAgeTime = 15;
 
         private Texture2D[] mPlayerTextures;
         private Sprite mDeathSprite;
-        public  Reflection mReflection;
+        public Reflection mReflection;
 
         public Pusher(Vector2 position, int collisionOffset, int maxSpeed)
                 : base(position, collisionOffset, maxSpeed)
@@ -117,11 +117,11 @@ namespace Stonephonia
         private void CalculateMovement()
         {
             int inputDir = 0;
-            if (InputManager.KeyHeld(Keys.Right))
+            if (InputManager.KeyHeld(Keys.Right) || InputManager.PadHeld(Buttons.DPadRight))
             {
                 inputDir += 1;
             }
-            if (InputManager.KeyHeld(Keys.Left))
+            if (InputManager.KeyHeld(Keys.Left) || InputManager.PadHeld(Buttons.DPadLeft))
             {
                 inputDir -= 1;
             }
@@ -132,7 +132,9 @@ namespace Stonephonia
 
             // Prevent player from moving when no keys are pressed or both are held
             if (InputManager.KeyReleased(Keys.Right) && InputManager.KeyReleased(Keys.Left) ||
-                InputManager.KeyHeld(Keys.Right) && InputManager.KeyHeld(Keys.Left))
+                InputManager.KeyHeld(Keys.Right) && InputManager.KeyHeld(Keys.Left) ||
+                InputManager.PadReleased(Buttons.DPadRight) && InputManager.PadReleased(Buttons.DPadLeft) ||
+                InputManager.PadHeld(Buttons.DPadRight) && InputManager.PadHeld(Buttons.DPadLeft))
             {
                 mVelocity = 0.0f;
             }
@@ -171,7 +173,7 @@ namespace Stonephonia
 
         private void CollideWithRock()
         {
-            if (mCurrentRock != null && !Collision(0, mCurrentRock) && Collision(mVelocity, mCurrentRock) && InputManager.KeyHeld(Keys.Space))
+            if (mCurrentRock != null && !Collision(0, mCurrentRock) && Collision(mVelocity, mCurrentRock) && (InputManager.KeyHeld(Keys.Space) || InputManager.PadHeld(Buttons.A)))
             {
                 if (CollisionRight(mVelocity, mCurrentRock))
                 {
@@ -190,7 +192,7 @@ namespace Stonephonia
                 ChangeState(State.push);
             }
             // If player has a target rock but is not colliding with it, clear current target.
-            else if (mCurrentRock != null && !Collision(mVelocity, mCurrentRock) && InputManager.KeyHeld(Keys.Space))
+            else if (mCurrentRock != null && !Collision(mVelocity, mCurrentRock) && (InputManager.KeyHeld(Keys.Space) || InputManager.PadHeld(Buttons.A)))
             {
                 ReleaseRock();
             }
@@ -198,7 +200,7 @@ namespace Stonephonia
 
         private void GetRockSpeed()
         {
-            if (mCurrentState == State.push && mVelocity != 0 && InputManager.KeyHeld(Keys.Space))
+            if (mCurrentState == State.push && mVelocity != 0 && (InputManager.KeyHeld(Keys.Space) || InputManager.PadHeld(Buttons.A)))
             {
                 mPushVelocity += Math.Sign(mVelocity) * mCurrentRock.mAcceleration;
                 mPushVelocity = Math.Clamp(mPushVelocity, -mCurrentRock.mMaxSpeed, mCurrentRock.mMaxSpeed);
@@ -208,7 +210,7 @@ namespace Stonephonia
                 }
                 mVelocity = mPushVelocity;
             }
-            else if (mCurrentState == State.push && !InputManager.KeyHeld(Keys.Space))
+            else if (mCurrentState == State.push && (!InputManager.KeyHeld(Keys.Space) || !InputManager.PadHeld(Buttons.A)))
             {
                 ReleaseRock();
             }
@@ -216,7 +218,7 @@ namespace Stonephonia
 
         private void PushRock()
         {
-            if (mCurrentState == State.push && InputManager.KeyHeld(Keys.Space))
+            if (mCurrentState == State.push && (InputManager.KeyHeld(Keys.Space) || InputManager.PadHeld(Buttons.A)))
             {
                 if (mVelocity > 0)
                 {

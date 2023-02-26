@@ -18,6 +18,9 @@ namespace Stonephonia.Screens
         int mInterval;
         int mCounter = 0;
 
+        Buttons[] mButtons = new Buttons[] {Buttons.A, Buttons.B, Buttons.X, Buttons.Y,
+                                Buttons.DPadUp, Buttons.DPadDown, Buttons.DPadLeft, Buttons.DPadRight };
+
         SoundManager.SFXType[] mSounds = new SoundManager.SFXType[]
         {
             SoundManager.SFXType.bell,
@@ -36,7 +39,7 @@ namespace Stonephonia.Screens
             mTitleSprite.mAnimationComplete = true;
             mTitlePosition = new Vector2((GamePort.renderSurface.Width / 2) - (mTitleSprite.mFrameSize.X * 3),
                                         (GamePort.renderSurface.Height / 2) - (mTitleSprite.mFrameSize.Y * 6));
-            mPressSpacePrompt = new TextPrompt(new Vector2(0, 600), 0, "Press space", Colours.lightBlue);
+            mPressSpacePrompt = new TextPrompt(new Vector2(0, 600), 0, "Press Any Button", Colours.lightBlue);
 
             base.LoadAssets();
         }
@@ -74,7 +77,7 @@ namespace Stonephonia.Screens
             InputManager.Update(gameTime);
             mBlackFader.SmoothFade(false, 0.03f);
             mRoomTimer.Update(gameTime);
-            mPressSpacePrompt.PromptInput(mRoomTimer, Keys.Space);
+            mPressSpacePrompt.PromptInput(true, mRoomTimer, mButtons, Keys.Space);
             mPressSpacePrompt.Update(gameTime);
             mTitleSprite.Update(gameTime, false);
             FlashTitle();

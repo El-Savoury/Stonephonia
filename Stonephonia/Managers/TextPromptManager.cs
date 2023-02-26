@@ -8,31 +8,23 @@ namespace Stonephonia.Managers
     {
         private TextPrompt[] mtextArray;
         private Timer mTimer = new Timer();
-        // private bool mCollision = false;
 
         public TextPromptManager(TextPrompt[] text)
         {
             mtextArray = text;
         }
 
-        //private void EnablePromptOnCollision()
-        //{
-        //    foreach (Rock rock in ScreenManager.rock)
-        //    {
-        //        if (rock.CollideWithPlayer(ScreenManager.pusher))
-        //        {
-        //            mCollision = true;
-        //        }
-        //    }
-        //}
+        Buttons[] mButtons = new Buttons[]
+        {
+            Buttons.DPadRight,
+            Buttons.DPadLeft
+        };
 
         private void DisplayPrompts() // Kind of bodged hard coded way to show input prompts
         {
-            //EnablePromptOnCollision();
-
             if (!mtextArray[0].mTextComplete)
             {
-                mtextArray[0].PromptInput(mTimer, Keys.Left, Keys.Right);
+                mtextArray[0].PromptInput(false, mTimer, mButtons, Keys.Left, Keys.Right);
             }
             else if (!mtextArray[1].mTextComplete)
             {
