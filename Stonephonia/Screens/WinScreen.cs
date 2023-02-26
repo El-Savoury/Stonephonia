@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Stonephonia.Managers;
 using Stonephonia.Effects;
@@ -45,7 +42,7 @@ namespace Stonephonia.Screens
             mFairy = new CutsceneSprite(mFairyPos, fairySpawn, fairyDespawn, CutsceneSprite.State.inactive,
              new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_sheet"),
              new Point(128, 128), new Point(0, 0), new Point(4, 1), 200, Color.White, false),
-             new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_fader"), mFairyPos, Color.White));
+             new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_fader"), new Vector2(mFairyPos.X,mFairyPos.Y + 4), Color.White));
 
             mPlayerRock = new CutsceneSprite(mPlayerPos, playerRockSpawn, playerRockDespawn, CutsceneSprite.State.inactive,
              new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_rock"),
@@ -56,6 +53,7 @@ namespace Stonephonia.Screens
         public override void UnloadAssests()
         {
         }
+
         private void FadeWhiteSquare()
         {
             mSquareFader.FadeInAndOut(mWhiteSquare, 0.03f, 0.02f, whiteSquareFade, 2);

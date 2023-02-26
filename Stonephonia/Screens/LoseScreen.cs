@@ -47,7 +47,7 @@ namespace Stonephonia.Screens
             mFairy = new CutsceneSprite(mFairyPos, fairySpawn, fairyDespawn, CutsceneSprite.State.inactive,
                 new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_sheet"),
                 new Point(128, 128), new Point(0, 0), new Point(4, 1), 200, Color.White, false),
-                new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_fader"), mFairyPos, Color.White));
+                new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_fader"), new Vector2(mFairyPos.X, mFairyPos.Y + 4), Color.White));
 
             mPlayerDeath = new CutsceneSprite(mPlayerDeathPos, 0, deathDespawn, CutsceneSprite.State.activated,
                 new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_death"),
@@ -67,14 +67,14 @@ namespace Stonephonia.Screens
         {
         }
 
-        private void GotoGameplayScreen(Screen nextScreen, float timeLimit)
+        private void GotoGameplayScreen(float timeLimit)
         {
             float fadeIn = 0.008f;
             float fadeOut = 0.04f;
 
             if (mRoomTimer.mCurrentTime > timeLimit)
             {
-                mScreenTransition.FadeToGamePlay(fadeOut, fadeIn, this, nextScreen);
+                mScreenTransition.FadeToGamePlay(fadeOut, fadeIn, this);
                 ScreenManager.pusher.Reset();
                 if (!mScreenTransition.mFadingIn) { mBlackSquareAlpha = 0.0f; }
             }
@@ -89,7 +89,7 @@ namespace Stonephonia.Screens
             mPlayer.Update(gameTime, true);
             mTextFader.FadeInAndOut(mText, 0.02f, 0.03f, textSpawn, textOnScreen);
             mTextFader.Update(gameTime);
-            GotoGameplayScreen(new GameplayScreen(), changeScreen);
+            GotoGameplayScreen(changeScreen);
         }
 
         public override void Draw(GameTime gametime, SpriteBatch spriteBatch)

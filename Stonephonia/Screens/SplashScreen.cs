@@ -26,7 +26,6 @@ namespace Stonephonia.Screens
             SoundManager.SFXType.rhodes
         };
 
-
         public override void LoadAssets()
         {
             mInterval = mRandom.Next(15 * 30, 40 * 30);

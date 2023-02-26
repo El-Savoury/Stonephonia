@@ -16,7 +16,7 @@ namespace Stonephonia.Screens
         ScreenTransition mScreenTransition;
         float mTextureAlpha = 1.0f;
         bool mInputDetected = false;
-        int mRoomEndTime = 1;
+        int mRoomEndTime = 5;
 
         public GameplayScreen()
         {
@@ -68,8 +68,9 @@ namespace Stonephonia.Screens
             {
                 SoundManager.StopMusic();
                 //if (!mInputDetected) { ScreenManager.ChangeScreen(new GameplayScreen(), new SplashScreen()); }
-                if (!WinConditionMet())
+                if (WinConditionMet())
                 {
+                    pusher.mCurrentState = Pusher.State.dead;
                     pusher.mMaxSpeed = 0;
                     ScreenTransition(new WinScreen(), timeLimit, pusher);
                 }

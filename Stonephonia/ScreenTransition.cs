@@ -39,7 +39,7 @@ namespace Stonephonia
         }
 
 
-        public void FadeToGamePlay(float fadeIn, float fadeOut, Screen currentScreen, Screen nextScreen)
+        public void FadeToGamePlay(float fadeIn, float fadeOut, Screen currentScreen)
         {
             if (mFadingIn)
             {
@@ -54,7 +54,7 @@ namespace Stonephonia
             else
             {
                 mWhiteSquareAlpha -= fadeOut;
-                if (mWhiteSquareAlpha <= 0.0f) { ScreenManager.ChangeScreen(currentScreen, nextScreen); }
+                if (mWhiteSquareAlpha <= 0.0f) { ScreenManager.ChangeScreen(currentScreen, new GameplayScreen()); }
             }
         }
 

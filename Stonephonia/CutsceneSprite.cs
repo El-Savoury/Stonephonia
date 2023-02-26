@@ -13,8 +13,8 @@ namespace Stonephonia
         public Sprite mSprite;
         private Fader mMask;
         private FaderManager mMaskManager;
-        float mFade1 = 0.03f;
-        float mFade2 = 0.02f;
+        float mFade1 = 0.04f;
+        float mFade2 = 0.03f;
         int mStartTime, mStopTime;
         int mDelay = 2;
         private Vector2 mPosition;
