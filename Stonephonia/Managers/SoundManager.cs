@@ -21,7 +21,11 @@ namespace Stonephonia
             bell,
             flute,
             pad,
-            rhodes
+            rhodes,
+            bass,
+            plinks,
+            square,
+            vamp
         }
 
         private static Dictionary<MusicType, Song> mSongs;
@@ -39,6 +43,10 @@ namespace Stonephonia
             mSFX.Add(SFXType.flute, content.Load<SoundEffect>("Sounds/Flute_0"));
             mSFX.Add(SFXType.pad, content.Load<SoundEffect>("Sounds/Pad_0"));
             mSFX.Add(SFXType.rhodes, content.Load<SoundEffect>("Sounds/Rhodes_0"));
+            mSFX.Add(SFXType.bass, content.Load<SoundEffect>("Sounds/rocksounds/musicBass"));
+            mSFX.Add(SFXType.plinks, content.Load<SoundEffect>("Sounds/rocksounds/musicPlinks"));
+            mSFX.Add(SFXType.square, content.Load<SoundEffect>("Sounds/rocksounds/musicSquare"));
+            mSFX.Add(SFXType.vamp, content.Load<SoundEffect>("Sounds/rocksounds/musicVamp"));
         }
 
         public static void PlayMusic(MusicType musicType, float volume)

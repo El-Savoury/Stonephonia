@@ -17,6 +17,7 @@ namespace Stonephonia
         private Texture2D[] mPlayerTextures;
         private Sprite mDeathSprite, mSweatSprite;
         public Reflection mReflection;
+        Vector2 mSweatPosition;
 
         public Pusher(Vector2 position, int collisionOffset, int maxSpeed)
                 : base(position, collisionOffset, maxSpeed)
@@ -37,11 +38,13 @@ namespace Stonephonia
                 new Point(100, 84), new Point(0, 0), new Point(4, 2), 500, Color.White, false);
 
             mSweatSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/sweat"),
-                new Point(88, 84), new Point(0, 0), new Point(2, 2), mSprite.mTimePerFrame, Color.White, false);
+                new Point(108, 80), new Point(0, 0), new Point(2, 2), mSprite.mTimePerFrame, Color.White, false);
 
             mReflection = new Reflection(new Sprite(content.Load<Texture2D>("Sprites/player_reflection"),
                new Point(80, 80), new Point(0, 0), new Point(4, 1), 150, Color.White),
                new Vector2(ScreenManager.pusher.mPosition.X - 12, ScreenManager.pusher.mPosition.Y + 112));
+
+            mSweatPosition = new Vector2(ScreenManager.pusher.mPosition.X, ScreenManager.pusher.mPosition.Y);
         }
 
         public enum State
@@ -85,6 +88,7 @@ namespace Stonephonia
                         {
                             mSprite.mCurrentFrame.Y = 6;
                             mSweatSprite.mCurrentFrame.Y = 0;
+                            //mSweatPosition.X = ScreenManager.pusher.mPosition.X - 26 ;
                             mSweatSprite.SetVisible(true);
                         }
                     }
@@ -95,6 +99,7 @@ namespace Stonephonia
                         {
                             mSprite.mCurrentFrame.Y = 7;
                             mSweatSprite.mCurrentFrame.Y = 1;
+                            //mSweatPosition.X = ScreenManager.pusher.mPosition.X - 36;
                             mSweatSprite.SetVisible(true);
                         }
                     }
@@ -332,6 +337,7 @@ namespace Stonephonia
                 mSprite.mTexture = playerTextures[Array.IndexOf(playerTextures, mSprite.mTexture) + 1];
                 mSprite.mTimePerFrame += 25;
                 mMaxSpeed--;
+                mSweatSprite.mTimePerFrame = mSprite.mTimePerFrame;
                 gameTimer.Reset();
             }
         }
@@ -367,7 +373,7 @@ namespace Stonephonia
         {
             mReflection.Draw(spriteBatch);
             mDeathSprite.Draw(spriteBatch, new Vector2(mPosition.X - 15, mPosition.Y));
-            mSweatSprite.Draw(spriteBatch, new Vector2(mPosition.X - 12, mPosition.Y + 8));
+            mSweatSprite.Draw(spriteBatch, new Vector2(mPosition.X - 24, mPosition.Y + 4));
             base.Draw(spriteBatch);
         }
 

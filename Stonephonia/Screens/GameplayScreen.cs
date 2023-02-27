@@ -20,7 +20,7 @@ namespace Stonephonia.Screens
 
         public GameplayScreen()
         {
-            OnActivate();
+            //OnActivate();
         }
 
         public override void LoadAssets()

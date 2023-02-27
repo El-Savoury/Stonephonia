@@ -146,6 +146,30 @@
 /processorParam:Quality=Best
 /build:Sounds/Rhodes_4.wav
 
+#begin Sounds/rocksounds/musicBass.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/rocksounds/musicBass.mp3
+
+#begin Sounds/rocksounds/musicPlinks.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/rocksounds/musicPlinks.mp3
+
+#begin Sounds/rocksounds/musicSquare.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/rocksounds/musicSquare.mp3
+
+#begin Sounds/rocksounds/musicVamp.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/rocksounds/musicVamp.mp3
+
 #begin Sprites/background_bushes.png
 /importer:TextureImporter
 /processor:TextureProcessor
