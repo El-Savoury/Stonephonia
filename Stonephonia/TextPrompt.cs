@@ -23,7 +23,7 @@ namespace Stonephonia
         {
             TextPrompt[] textPrompts = new TextPrompt[]
             {
-                new TextPrompt(new Vector2(0, 600), 3, "D-Pad to move", Colours.darkBlue),
+                new TextPrompt(new Vector2(0, 600), 3, "D-PAD to move", Colours.darkBlue),
                 new TextPrompt(new Vector2(0, 600), 3, "Hold (A) to push", Colours.darkBlue)
             };
             return textPrompts;

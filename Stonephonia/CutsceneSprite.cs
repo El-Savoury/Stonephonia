@@ -19,6 +19,7 @@ namespace Stonephonia
         int mDelay = 2;
         private Vector2 mPosition;
         Timer mTimer = new Timer();
+        
 
         public enum State
         {

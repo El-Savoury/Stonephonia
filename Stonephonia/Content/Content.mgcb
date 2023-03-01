@@ -20,6 +20,30 @@
 /processorParam:TextureFormat=Compressed
 /build:Font.spritefont
 
+#begin Sounds/agesounds/ageBass.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/agesounds/ageBass.mp3
+
+#begin Sounds/agesounds/agePlinks.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/agesounds/agePlinks.mp3
+
+#begin Sounds/agesounds/ageSquare.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/agesounds/ageSquare.mp3
+
+#begin Sounds/agesounds/ageVamp.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/agesounds/ageVamp.mp3
+
 #begin Sounds/Bells_0.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -470,6 +494,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/rock_sheet.png
 
+#begin Sprites/rock_tall_reflection.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/rock_tall_reflection.png
+
 #begin Sprites/rock_tall_sheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -529,6 +565,42 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/title_sheet.png
+
+#begin Sprites/trees/trees_stage_2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/trees/trees_stage_2.png
+
+#begin Sprites/trees/trees_stage_3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/trees/trees_stage_3.png
+
+#begin Sprites/trees/trees_stage_4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/trees/trees_stage_4.png
 
 #begin Sprites/white_square.png
 /importer:TextureImporter

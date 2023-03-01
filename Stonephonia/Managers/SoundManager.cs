@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
 
-
 namespace Stonephonia
 {
     public static class SoundManager
@@ -17,7 +16,6 @@ namespace Stonephonia
 
         public enum SFXType
         {
-            MainTheme,
             bell,
             flute,
             pad,
@@ -25,11 +23,15 @@ namespace Stonephonia
             bass,
             plinks,
             square,
-            vamp
+            vamp,
+            ageBass,
+            agePlinks,
+            ageSquare,
+            ageVamp
         }
 
-        private static Dictionary<MusicType, Song> mSongs;
-        private static Dictionary<SFXType, SoundEffect> mSFX;
+        public static Dictionary<MusicType, Song> mSongs;
+        public static Dictionary<SFXType, SoundEffect> mSFX;
 
         public static void LoadContent(ContentManager content)
         {
@@ -47,6 +49,10 @@ namespace Stonephonia
             mSFX.Add(SFXType.plinks, content.Load<SoundEffect>("Sounds/rocksounds/musicPlinks"));
             mSFX.Add(SFXType.square, content.Load<SoundEffect>("Sounds/rocksounds/musicSquare"));
             mSFX.Add(SFXType.vamp, content.Load<SoundEffect>("Sounds/rocksounds/musicVamp"));
+            mSFX.Add(SFXType.ageBass, content.Load<SoundEffect>("Sounds/agesounds/ageBass"));
+            mSFX.Add(SFXType.agePlinks, content.Load<SoundEffect>("Sounds/agesounds/agePlinks"));
+            mSFX.Add(SFXType.ageSquare, content.Load<SoundEffect>("Sounds/agesounds/ageSquare"));
+            mSFX.Add(SFXType.ageVamp, content.Load<SoundEffect>("Sounds/agesounds/ageVamp"));
         }
 
         public static void PlayMusic(MusicType musicType, float volume)

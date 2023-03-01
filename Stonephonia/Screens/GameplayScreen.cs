@@ -1,6 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
 using Stonephonia.Managers;
 
 namespace Stonephonia.Screens
@@ -9,14 +10,17 @@ namespace Stonephonia.Screens
     {
         Timer mRoomTimer;
         LeafManager mLeafManager;
-        Texture2D[] mBackgroundTextures, mForegroundTextures;
+        ScreenTransition mScreenTransition;
+        Texture2D[] mBackgroundTextures, mForegroundTextures, mTreeTextures;
+        Texture2D mTreeTexture;
         TextPrompt[] mTextPrompts;
         TextPromptManager mTextPromptManager;
+        SoundManager.SFXType[] mAgeSounds;
         public static Rock[] mRocks;
-        ScreenTransition mScreenTransition;
         float mTextureAlpha = 1.0f;
         bool mInputDetected = false;
         int mRoomEndTime = 15;
+        int mCounter;
 
         public GameplayScreen()
         {
@@ -32,11 +36,27 @@ namespace Stonephonia.Screens
             mLeafManager = new LeafManager();
             mTextPromptManager = new TextPromptManager(mTextPrompts);
             mScreenTransition = new ScreenTransition();
+            mTreeTexture = ScreenManager.contentMgr.Load<Texture2D>("Sprites/background_trees");
+
+            mAgeSounds = new SoundManager.SFXType[]
+            {
+                SoundManager.SFXType.ageSquare,
+                SoundManager.SFXType.ageVamp,
+                SoundManager.SFXType.agePlinks,
+                SoundManager.SFXType.ageBass
+            };
+
+            mTreeTextures = new Texture2D[]
+            {
+                ScreenManager.contentMgr.Load<Texture2D>("Sprites/trees/trees_stage_2"),
+                ScreenManager.contentMgr.Load<Texture2D>("Sprites/trees/trees_stage_3"),
+                ScreenManager.contentMgr.Load<Texture2D>("Sprites/trees/trees_stage_4")
+            };
 
             mBackgroundTextures = new Texture2D[]
             {
-                ScreenManager.contentMgr.Load<Texture2D>("Sprites/background_trees"),
-                ScreenManager.contentMgr.Load<Texture2D>("Sprites/background_bushes"),
+              mTreeTexture,
+              ScreenManager.contentMgr.Load<Texture2D>("Sprites/background_bushes"),
             };
 
             mForegroundTextures = new Texture2D[] { ScreenManager.contentMgr.Load<Texture2D>("Sprites/canopy") };
@@ -67,7 +87,7 @@ namespace Stonephonia.Screens
             if (mRoomTimer.mCurrentTime > timeLimit)
             {
                 SoundManager.StopMusic();
-                //if (!mInputDetected) { ScreenManager.ChangeScreen(new GameplayScreen(), new SplashScreen()); }
+                if (!mInputDetected) { ScreenManager.ChangeScreen(this, new SplashScreen()); }
                 if (WinConditionMet())
                 {
                     pusher.mCurrentState = Pusher.State.dead;
@@ -85,6 +105,30 @@ namespace Stonephonia.Screens
                     prompt.mFader.mAlpha -= 0.05f;
                 }
 
+            }
+        }
+
+        private void CheckInput()
+        {
+            if (InputManager.AnyKeyInputDetected() || InputManager.AnyPadInputDetected())
+            {
+                mInputDetected = true;
+                mCounter = 0;
+            }
+            else if (mCounter > 600)
+            {
+                mInputDetected = false;
+            }
+        }
+
+        private void UpdateBackground(Texture2D[] treeTextures)
+        {
+            if (mRoomTimer.mCurrentTime >= 15 && Array.IndexOf(treeTextures, mTreeTexture) < mTreeTextures.Length - 1)
+            {
+                mTreeTexture = treeTextures[Array.IndexOf(treeTextures, mTreeTexture) + 1];
+                mBackgroundTextures[0] = mTreeTexture;
+                mRoomTimer.Reset();
+                SoundManager.PlaySFX(mAgeSounds[Array.IndexOf(treeTextures, mTreeTexture)], 1.0f);
             }
         }
 
@@ -110,18 +154,20 @@ namespace Stonephonia.Screens
 
         public override void Update(GameTime gameTime)
         {
-            InputManager.Update(gameTime);
             mRoomTimer.Update(gameTime);
+            InputManager.Update(gameTime);
+            CheckInput();
 
             foreach (Rock rock in mRocks)
             {
                 rock.Update(gameTime, ScreenManager.pusher);
             }
 
-            ScreenManager.pusher.Update(gameTime, mRoomTimer, mRocks);
+            ScreenManager.pusher.Update(gameTime, mRocks);
             mLeafManager.Update(gameTime, ScreenManager.pusher);
             mTextPromptManager.Update(gameTime);
 
+            UpdateBackground(mTreeTextures);
             ChangeScreen(gameTime, mRoomEndTime, ScreenManager.pusher);
 
             base.Update(gameTime);

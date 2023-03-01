@@ -22,9 +22,11 @@ namespace Stonephonia.Screens
 
         int fairySpawn = 3;
         int fairyDespawn = 24;
-        int playerSpawn = 7;
-        int changeScreen = 27;
-
+        int playerSpawn = 9;
+        int changeScreen = 28;
+        int textOne = 7;
+        int textTwo = 16;
+        
         public override void LoadAssets()
         {
             ScreenManager.pusher.Load(ScreenManager.contentMgr);
@@ -58,8 +60,8 @@ namespace Stonephonia.Screens
         }
         private void ShowText()
         {
-            mTextFader.FadeInAndOut(mText[0], 0.02f, 0.03f, 5, 4);
-            mTextFader.FadeInAndOut(mText[1], 0.02f, 0.03f, 13, 8);
+            mTextFader.FadeInAndOut(mText[0], 0.02f, 0.03f, textOne, 6);
+            mTextFader.FadeInAndOut(mText[1], 0.02f, 0.03f, textTwo, 8);
         }
 
         public override void Update(GameTime gameTime)

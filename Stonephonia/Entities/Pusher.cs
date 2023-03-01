@@ -8,16 +8,15 @@ namespace Stonephonia
 {
     public class Pusher : Entity
     {
+        private Timer mTimer = new Timer();
         public Rock mCurrentRock;
         private float mPushVelocity = 0.0f;
         public bool mDirection = true;
         private float mStopSpeed;
-        int mAgeTime = 15;
-
+        public int mAgeTime = 15;
         private Texture2D[] mPlayerTextures;
         private Sprite mDeathSprite, mSweatSprite;
         public Reflection mReflection;
-        Vector2 mSweatPosition;
 
         public Pusher(Vector2 position, int collisionOffset, int maxSpeed)
                 : base(position, collisionOffset, maxSpeed)
@@ -43,8 +42,6 @@ namespace Stonephonia
             mReflection = new Reflection(new Sprite(content.Load<Texture2D>("Sprites/player_reflection"),
                new Point(80, 80), new Point(0, 0), new Point(4, 1), 150, Color.White),
                new Vector2(ScreenManager.pusher.mPosition.X - 12, ScreenManager.pusher.mPosition.Y + 112));
-
-            mSweatPosition = new Vector2(ScreenManager.pusher.mPosition.X, ScreenManager.pusher.mPosition.Y);
         }
 
         public enum State
@@ -330,15 +327,15 @@ namespace Stonephonia
             }
         }
 
-        private void AgePlayer(Texture2D[] playerTextures, Timer gameTimer, int timeInterval)
+        private void AgePlayer(Texture2D[] playerTextures, int timeInterval)
         {
-            if (gameTimer.mCurrentTime > timeInterval && Array.IndexOf(playerTextures, mSprite.mTexture) < playerTextures.Length - 2)
+            if (mTimer.mCurrentTime > timeInterval && Array.IndexOf(playerTextures, mSprite.mTexture) < playerTextures.Length - 2)
             {
                 mSprite.mTexture = playerTextures[Array.IndexOf(playerTextures, mSprite.mTexture) + 1];
                 mSprite.mTimePerFrame += 25;
                 mMaxSpeed--;
                 mSweatSprite.mTimePerFrame = mSprite.mTimePerFrame;
-                gameTimer.Reset();
+                mTimer.Reset();
             }
         }
 
@@ -352,16 +349,17 @@ namespace Stonephonia
             mDirection = true;
         }
 
-        public void Update(GameTime gameTime, Timer gameTimer, Rock[] rock)
+        public void Update(GameTime gameTime, Rock[] rock)
         {
+            mTimer.Update(gameTime);
             CalculateMovement();
             TargetClosestRock(rock);
             CollideWithRock();
             GetRockSpeed();
-            StopRock(80, 150, 720, 650);
+            StopRock(70, 120, 730, 680);
             Move();
             PushRock();
-            AgePlayer(mPlayerTextures, gameTimer, mAgeTime);
+            AgePlayer(mPlayerTextures, mAgeTime);
             SetAnimation(gameTime);
             UpdateReflection(gameTime);
             mSweatSprite.Update(gameTime, true);
