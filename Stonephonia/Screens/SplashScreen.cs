@@ -23,10 +23,10 @@ namespace Stonephonia.Screens
 
         SoundManager.SFXType[] mSounds = new SoundManager.SFXType[]
         {
-            SoundManager.SFXType.bell,
-            SoundManager.SFXType.flute,
-            SoundManager.SFXType.pad,
-            SoundManager.SFXType.rhodes
+            SoundManager.SFXType.ageVamp,
+            SoundManager.SFXType.agePlinks,
+            SoundManager.SFXType.ageSquare,
+            SoundManager.SFXType.ageBass
         };
 
         public override void LoadAssets()

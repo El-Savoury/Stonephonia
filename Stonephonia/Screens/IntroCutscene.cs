@@ -26,7 +26,12 @@ namespace Stonephonia.Screens
         int changeScreen = 28;
         int textOne = 7;
         int textTwo = 16;
-        
+
+        public IntroCutscene()
+        {
+            SoundManager.StartAmbientTrack();
+        }
+
         public override void LoadAssets()
         {
             ScreenManager.pusher.Load(ScreenManager.contentMgr);
@@ -48,11 +53,15 @@ namespace Stonephonia.Screens
              new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_sheet"),
              new Point(128, 128), new Point(0, 0), new Point(4, 1), 200, Color.White, false),
              new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_fader"), new Vector2(mFairyPos.X, mFairyPos.Y + 4), Color.White));
+            mFairy.mSound = SoundManager.SFXType.fairy;
+            mFairy.mVolume = 1.0f;
 
             mPlayer = new CutsceneSprite(mPlayerPos, playerSpawn, 1000000, CutsceneSprite.State.inactive,
             new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_stage_one"),
             new Point(60, 84), new Point(0, 0), new Point(2, 1), 200, Color.White, false),
             new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_fader"), mPlayerPos, Color.White));
+            mPlayer.mSound = SoundManager.SFXType.pad;
+            mPlayer.mVolume = 0.5f;
         }
 
         public override void UnloadAssests()
@@ -82,7 +91,7 @@ namespace Stonephonia.Screens
                 if (!mScreenTransition.mFadingIn) { mBlackSquareAlpha = 0.0f; }
             }
 
-            foreach(Rock rock in mRocks)
+            foreach (Rock rock in mRocks)
             {
                 rock.UpdateReflection(gameTime);
             }

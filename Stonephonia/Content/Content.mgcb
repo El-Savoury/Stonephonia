@@ -13,6 +13,18 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin ../../../../Game Assests/Stonephonia Assets/default_bg.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../../../../Game Assests/Stonephonia Assets/default_bg.png;Sprites/default_bg.png
+
 #begin Font.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -74,6 +86,12 @@
 /processorParam:Quality=Best
 /build:Sounds/Bells_4.wav
 
+#begin Sounds/fadesounds/fairy.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/fadesounds/fairy.mp3
+
 #begin Sounds/Flute_0.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -104,11 +122,11 @@
 /processorParam:Quality=Best
 /build:Sounds/Flute_4.wav
 
-#begin Sounds/Minimalism.mp3
+#begin Sounds/Jungle_loop.mp3
 /importer:Mp3Importer
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Minimalism.mp3
+/build:Sounds/Jungle_loop.mp3
 
 #begin Sounds/Pad_0.wav
 /importer:WavImporter
@@ -265,18 +283,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/death_right.png
-
-#begin Sprites/default_bg.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Sprites/default_bg.png
 
 #begin Sprites/fairy_fade_sheet.png
 /importer:TextureImporter
@@ -481,6 +487,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/push_reflection.png
+
+#begin Sprites/rock_4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/rock_4.png
 
 #begin Sprites/rock_sheet.png
 /importer:TextureImporter

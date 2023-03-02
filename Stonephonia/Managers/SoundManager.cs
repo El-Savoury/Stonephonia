@@ -14,6 +14,10 @@ namespace Stonephonia
             AmbientTrack
         }
 
+        public static float mMusicVolume = 0.0f;
+        private static SFXType mJungle = SFXType.ambient;
+        private static SoundEffectInstance mAmbientTrack;
+
         public enum SFXType
         {
             bell,
@@ -27,7 +31,9 @@ namespace Stonephonia
             ageBass,
             agePlinks,
             ageSquare,
-            ageVamp
+            ageVamp,
+            fairy,
+            ambient
         }
 
         public static Dictionary<MusicType, Song> mSongs;
@@ -36,7 +42,7 @@ namespace Stonephonia
         public static void LoadContent(ContentManager content)
         {
             mSongs = new Dictionary<MusicType, Song> { };
-            mSongs.Add(MusicType.AmbientTrack, content.Load<Song>("Sounds/Minimalism"));
+            //mSongs.Add(MusicType.AmbientTrack, content.Load<Song>("Sounds/Jungle_loop"));
 
             MediaPlayer.IsRepeating = true;
 
@@ -53,6 +59,34 @@ namespace Stonephonia
             mSFX.Add(SFXType.agePlinks, content.Load<SoundEffect>("Sounds/agesounds/agePlinks"));
             mSFX.Add(SFXType.ageSquare, content.Load<SoundEffect>("Sounds/agesounds/ageSquare"));
             mSFX.Add(SFXType.ageVamp, content.Load<SoundEffect>("Sounds/agesounds/ageVamp"));
+            mSFX.Add(SFXType.fairy, content.Load<SoundEffect>("Sounds/fadeSounds/fairy"));
+            mSFX.Add(SFXType.ambient, content.Load<SoundEffect>("Sounds/Jungle_loop"));
+        }
+
+        public static void StartAmbientTrack()
+        {
+            mAmbientTrack = mSFX[mJungle].CreateInstance();
+            mAmbientTrack.Volume = mMusicVolume;
+            mAmbientTrack.Play();
+        }
+
+        public static void StopAmbientTrack()
+        {
+            if (mAmbientTrack != null)
+            {
+                mAmbientTrack.Stop();
+            }
+        }
+
+        public static void FadeAmbientTrack(bool up, float amount)
+        {
+            if (mAmbientTrack != null)
+            {
+                if (up) { mMusicVolume += amount; }
+                else { mMusicVolume -= amount; }
+                mMusicVolume = Math.Clamp(mMusicVolume, 0.0f, 0.8f);
+                mAmbientTrack.Volume = mMusicVolume;
+            }
         }
 
         public static void PlayMusic(MusicType musicType, float volume)

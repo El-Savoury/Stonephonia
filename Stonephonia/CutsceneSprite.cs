@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
 using Stonephonia.Effects;
 using Stonephonia.Managers;
 
@@ -10,16 +11,18 @@ namespace Stonephonia
 {
     public class CutsceneSprite
     {
+        Timer mTimer = new Timer();
         public Sprite mSprite;
         private Fader mMask;
         private FaderManager mMaskManager;
+        public SoundManager.SFXType mSound;
+        public float mVolume;
+        int mSoundPlayed = 0;
         float mFade1 = 0.04f;
         float mFade2 = 0.03f;
         int mStartTime, mStopTime;
         int mDelay = 2;
         private Vector2 mPosition;
-        Timer mTimer = new Timer();
-        
 
         public enum State
         {
@@ -29,7 +32,7 @@ namespace Stonephonia
         }
 
         public State mCurrentState;
-        
+
         public CutsceneSprite(Vector2 postion, int startTime, int StopTime, State state, Sprite sprite, Fader mask)
         {
             mPosition = postion;
@@ -54,6 +57,12 @@ namespace Stonephonia
             if (mMask.mAlpha >= 1.0f) { mSprite.SetVisible(false); }
         }
 
+        private void PlaySound()
+        {
+            SoundManager.mSFX[mSound].Play(mVolume, 0, 0);
+            mSoundPlayed++;
+        }
+
         public void Update(GameTime gameTime, bool loop)
         {
             mTimer.Update(gameTime);
@@ -62,6 +71,7 @@ namespace Stonephonia
             if (mCurrentState == State.inactive)
             {
                 FadeMaskIn();
+                if (mTimer.mCurrentTime > mStartTime && mSoundPlayed < 1) { PlaySound(); }
             }
             else if (mCurrentState == State.activated)
             {
@@ -70,6 +80,7 @@ namespace Stonephonia
             }
             else if (mCurrentState == State.deactivated)
             {
+                if (mSoundPlayed < 2) { PlaySound(); }
                 FadeMaskOut();
             }
         }

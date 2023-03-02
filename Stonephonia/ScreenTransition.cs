@@ -20,6 +20,8 @@ namespace Stonephonia
 
         public void FadeToCutscene(float fadeIn, float fadeOut, Screen currentScreen, Screen nextScreen)
         {
+            SoundManager.FadeAmbientTrack(false, 0.005f);
+
             if (mFadingIn)
             {
                 mWhiteSquareAlpha += fadeIn;
@@ -39,8 +41,10 @@ namespace Stonephonia
         }
 
 
-        public void FadeToGamePlay(float fadeIn, float fadeOut, Screen currentScreen)
+        public void FadeToGamePlay(float fadeOut, float fadeIn, Screen currentScreen)
         {
+            SoundManager.FadeAmbientTrack(true, 0.005f);
+
             if (mFadingIn)
             {
                 mWhiteSquareAlpha += fadeIn;

@@ -22,9 +22,12 @@ namespace Stonephonia.Screens
         int mRoomEndTime = 15;
         int mCounter;
 
+        int mPlayerRockLayer = 0;
+
         public GameplayScreen()
         {
             //OnActivate();
+
         }
 
         public override void LoadAssets()
@@ -86,9 +89,13 @@ namespace Stonephonia.Screens
         {
             if (mRoomTimer.mCurrentTime > timeLimit)
             {
-                SoundManager.StopMusic();
-                if (!mInputDetected) { ScreenManager.ChangeScreen(this, new SplashScreen()); }
-                if (WinConditionMet())
+                if (!mInputDetected)
+                {
+                    SoundManager.StopAmbientTrack();
+                    ScreenManager.ChangeScreen(this, new SplashScreen());
+                    ScreenManager.pusher.Reset();
+                }
+                else if (WinConditionMet())
                 {
                     pusher.mCurrentState = Pusher.State.dead;
                     pusher.mMaxSpeed = 0;
@@ -110,24 +117,26 @@ namespace Stonephonia.Screens
 
         private void CheckInput()
         {
+            mCounter++;
+            if (mCounter > 600)
+            {
+                mInputDetected = false;
+            }
+
             if (InputManager.AnyKeyInputDetected() || InputManager.AnyPadInputDetected())
             {
                 mInputDetected = true;
                 mCounter = 0;
             }
-            else if (mCounter > 600)
-            {
-                mInputDetected = false;
-            }
+           
         }
 
         private void UpdateBackground(Texture2D[] treeTextures)
         {
-            if (mRoomTimer.mCurrentTime >= 15 && Array.IndexOf(treeTextures, mTreeTexture) < mTreeTextures.Length - 1)
+            if (mRoomTimer.mCurrentTime >= 14.99 && Array.IndexOf(treeTextures, mTreeTexture) < mTreeTextures.Length - 1)
             {
                 mTreeTexture = treeTextures[Array.IndexOf(treeTextures, mTreeTexture) + 1];
                 mBackgroundTextures[0] = mTreeTexture;
-                mRoomTimer.Reset();
                 SoundManager.PlaySFX(mAgeSounds[Array.IndexOf(treeTextures, mTreeTexture)], 1.0f);
             }
         }
@@ -152,6 +161,19 @@ namespace Stonephonia.Screens
             mTextPromptManager.FadeOutPrompt(fadeAmount);
         }
 
+        public bool CheckRockOcclusion(float x, int rockIndex)
+        {
+            for (int i = rockIndex + 1; i < mRocks.Length; i++)
+            {
+                float rockLeft = mRocks[i].mPosition.X;
+                float rockRight = mRocks[i].mPosition.X + mRocks[i].mSprite.mFrameSize.X;
+
+                if (x > rockLeft && x < rockRight) { return true; }
+            }
+
+            return false;
+        }
+
         public override void Update(GameTime gameTime)
         {
             mRoomTimer.Update(gameTime);
@@ -163,7 +185,7 @@ namespace Stonephonia.Screens
                 rock.Update(gameTime, ScreenManager.pusher);
             }
 
-            ScreenManager.pusher.Update(gameTime, mRocks);
+            ScreenManager.pusher.Update(gameTime, mRocks, mRoomTimer, this, 0, 0);
             mLeafManager.Update(gameTime, ScreenManager.pusher);
             mTextPromptManager.Update(gameTime);
 

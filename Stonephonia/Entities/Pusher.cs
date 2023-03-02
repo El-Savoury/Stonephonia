@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Stonephonia.Screens;
 
 namespace Stonephonia
 {
@@ -184,9 +185,9 @@ namespace Stonephonia
             KeepEntityOnScreen();
         }
 
-        private void TargetClosestRock(Rock[] rock)
+        private void TargetClosestRock(Rock[] rock, GameplayScreen gameplayScreen, float x, int rockIndex)
         {
-            if (mCurrentState != State.push)
+            if (mCurrentState != State.push && !gameplayScreen.CheckRockOcclusion(x, rockIndex))
             {
                 for (int i = 0; i < rock.Length; i++)
                 {
@@ -327,15 +328,15 @@ namespace Stonephonia
             }
         }
 
-        private void AgePlayer(Texture2D[] playerTextures, int timeInterval)
+        private void AgePlayer(Texture2D[] playerTextures, Timer timer, int timeInterval)
         {
-            if (mTimer.mCurrentTime > timeInterval && Array.IndexOf(playerTextures, mSprite.mTexture) < playerTextures.Length - 2)
+            if (timer.mCurrentTime > timeInterval && Array.IndexOf(playerTextures, mSprite.mTexture) < playerTextures.Length - 2)
             {
                 mSprite.mTexture = playerTextures[Array.IndexOf(playerTextures, mSprite.mTexture) + 1];
                 mSprite.mTimePerFrame += 25;
                 mMaxSpeed--;
                 mSweatSprite.mTimePerFrame = mSprite.mTimePerFrame;
-                mTimer.Reset();
+                timer.Reset();
             }
         }
 
@@ -349,17 +350,17 @@ namespace Stonephonia
             mDirection = true;
         }
 
-        public void Update(GameTime gameTime, Rock[] rock)
+        public void Update(GameTime gameTime, Rock[] rock, Timer timer, GameplayScreen gameplayScreen, float x, int index)
         {
             mTimer.Update(gameTime);
             CalculateMovement();
-            TargetClosestRock(rock);
+            TargetClosestRock(rock, gameplayScreen, x, index);
             CollideWithRock();
             GetRockSpeed();
             StopRock(70, 120, 730, 680);
             Move();
             PushRock();
-            AgePlayer(mPlayerTextures, mAgeTime);
+            AgePlayer(mPlayerTextures, timer, mAgeTime);
             SetAnimation(gameTime);
             UpdateReflection(gameTime);
             mSweatSprite.Update(gameTime, true);

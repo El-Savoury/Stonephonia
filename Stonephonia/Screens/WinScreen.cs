@@ -84,7 +84,7 @@ namespace Stonephonia.Screens
             mTextFader.Update(gameTime);
             mFairy.Update(gameTime, true);
             mPlayerRock.Update(gameTime, true);
-            ScreenManager.pusher.Update(gameTime, mRocks);
+            ScreenManager.pusher.Update(gameTime, mRocks, mRoomTimer, null, 0, 0);
             SetSpriteDirection();
             HidePlayer();
             FadeWhiteSquare();
