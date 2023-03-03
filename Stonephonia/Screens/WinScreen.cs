@@ -18,12 +18,14 @@ namespace Stonephonia.Screens
         Vector2 mPlayerPos = ScreenManager.pusher.mPosition;
 
         float mBlackSquareAlpha = 1.0f;
-        int fairySpawn = 3;
-        int fairyDespawn = 24;
-        int playerRockSpawn = 19;
+        int fairySpawn = 2;
+        int fairyDespawn = 19;
+        int playerRockSpawn = 15;
         int playerRockDespawn = 1000000;
-        int whiteSquareFade = 28;
-        int changeScreen = 48;
+        int whiteSquareFade = 21;
+        int changeScreen = 37;
+        int textOne = 4;
+        int textTwo = 9;
 
         public override void LoadAssets()
         {
@@ -64,8 +66,8 @@ namespace Stonephonia.Screens
 
         private void ShowText()
         {
-            mTextFader.FadeInAndOut(mText[0], 0.02f, 0.03f, 7, 4);
-            mTextFader.FadeInAndOut(mText[1], 0.02f, 0.03f, 13, 4);
+            mTextFader.FadeInAndOut(mText[0], 0.02f, 0.03f, textOne, 3);
+            mTextFader.FadeInAndOut(mText[1], 0.02f, 0.03f, textTwo, 4);
         }
 
         private void HidePlayer()
@@ -79,11 +81,21 @@ namespace Stonephonia.Screens
             if (mRoomTimer.mCurrentTime > 3) { ScreenManager.pusher.mDirection = true; }
         }
 
+        private void ChangeScreen()
+        {
+            if (mRoomTimer.mCurrentTime > changeScreen)
+            {
+                ScreenManager.pusher.Reset();
+                ScreenManager.ChangeScreen(this, new SplashScreen());
+            }
+        }
+
         public override void Update(GameTime gameTime)
         {
             mRoomTimer.Update(gameTime);
             mSquareFader.Update(gameTime);
             mTextFader.Update(gameTime);
+            if (mRoomTimer.mCurrentTime > fairyDespawn) { mFairy.mMask.mPosition.Y = mFairyPos.Y; }
             mFairy.Update(gameTime, true);
             mPlayerRock.Update(gameTime, true);
             ScreenManager.pusher.Update(gameTime, mRocks, mRoomTimer, null);
@@ -97,7 +109,7 @@ namespace Stonephonia.Screens
                 rock.UpdateReflection(gameTime);
             }
 
-            if (mRoomTimer.mCurrentTime > changeScreen) { ScreenManager.ChangeScreen(this, new SplashScreen()); }
+            ChangeScreen();
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

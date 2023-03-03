@@ -81,7 +81,7 @@ namespace Stonephonia
             rock[3] = new Rock(new Vector2(150, 452), 32, 4, 0.03f)
             {
                 mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_sheet"),
-             new Point(100, 84), new Point(0, 0), new Point(2, 2), 200, Color.White),
+             new Point(96, 84), new Point(0, 0), new Point(2, 2), 200, Color.White),
 
                 mReflection = new Reflection(new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/tiny_rock_reflection"),
             new Point(100, 40), new Point(3, 0), new Point(4, 1), 150, Color.White), new Vector2(150, ScreenManager.pusher.mPosition.Y + 112)),

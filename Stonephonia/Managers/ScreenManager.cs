@@ -80,7 +80,7 @@ namespace Stonephonia
 
             AddScreen(new GameplayScreen());
             // AddScreen(new IntroCutscene());
-            // AddScreen(new SplashScreen());
+             //AddScreen(new SplashScreen());
         }
 
         protected override void UnloadContent()

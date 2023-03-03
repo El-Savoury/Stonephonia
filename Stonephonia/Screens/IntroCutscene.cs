@@ -20,12 +20,12 @@ namespace Stonephonia.Screens
         ScreenTransition mScreenTransition;
         Rock[] mRocks;
 
-        int fairySpawn = 3;
-        int fairyDespawn = 24;
-        int playerSpawn = 9;
-        int changeScreen = 28;
-        int textOne = 7;
-        int textTwo = 16;
+        int fairySpawn = 2;
+        int fairyDespawn = 21;
+        int playerSpawn = 8;
+        int changeScreen = 23;
+        int textOne = 5;
+        int textTwo = 13;
 
         public IntroCutscene()
         {
@@ -52,8 +52,8 @@ namespace Stonephonia.Screens
             mFairy = new CutsceneSprite(mFairyPos, fairySpawn, fairyDespawn, CutsceneSprite.State.inactive,
              new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_sheet"),
              new Point(128, 128), new Point(0, 0), new Point(4, 1), 200, Color.White, false),
-             new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_fader"), new Vector2(mFairyPos.X, mFairyPos.Y + 4), Color.White));
-            mFairy.mSound = SoundManager.SFXType.fairy;
+             new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_fader"), new Vector2(mFairyPos.X, mFairyPos.Y), Color.White));
+            mFairy.mSound = SoundManager.SFXType.flute;
             mFairy.mVolume = 1.0f;
 
             mPlayer = new CutsceneSprite(mPlayerPos, playerSpawn, 1000000, CutsceneSprite.State.inactive,
@@ -70,7 +70,7 @@ namespace Stonephonia.Screens
         private void ShowText()
         {
             mTextFader.FadeInAndOut(mText[0], 0.02f, 0.03f, textOne, 6);
-            mTextFader.FadeInAndOut(mText[1], 0.02f, 0.03f, textTwo, 8);
+            mTextFader.FadeInAndOut(mText[1], 0.02f, 0.03f, textTwo, 6);
         }
 
         public override void Update(GameTime gameTime)
@@ -78,7 +78,9 @@ namespace Stonephonia.Screens
             mRoomTimer.Update(gameTime);
             mSquareFader.Update(gameTime);
             mTextFader.Update(gameTime);
+            mFairy.mMask.mPosition.Y = mRoomTimer.mCurrentTime > fairyDespawn ? mFairyPos.Y : mFairyPos.Y + 4;
             mFairy.Update(gameTime, true);
+            
             mPlayer.Update(gameTime, true);
             ShowText();
 

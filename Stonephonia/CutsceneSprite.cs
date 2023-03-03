@@ -13,15 +13,15 @@ namespace Stonephonia
     {
         Timer mTimer = new Timer();
         public Sprite mSprite;
-        private Fader mMask;
+        public Fader mMask;
         private FaderManager mMaskManager;
         public SoundManager.SFXType mSound;
         public float mVolume;
         int mSoundPlayed = 0;
-        float mFade1 = 0.04f;
-        float mFade2 = 0.03f;
+        float mFade1 = 0.05f;
+        float mFade2 = 0.04f;
         int mStartTime, mStopTime;
-        int mDelay = 2;
+        int mDelay = 1;
         private Vector2 mPosition;
 
         public enum State

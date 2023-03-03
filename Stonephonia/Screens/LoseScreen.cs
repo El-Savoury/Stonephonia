@@ -17,23 +17,28 @@ namespace Stonephonia.Screens
         Vector2 mPlayerDeathPos = new Vector2(ScreenManager.pusher.mPosition.X - 15, ScreenManager.pusher.mPosition.Y);
         Vector2 mPlayerPos = new Vector2(20, 452);
         Texture2D mDeathTexture;
-        Fader mText;
+        Fader[] mText;
         FaderManager mTextFader;
         ScreenTransition mScreenTransition;
         Rock[] mRocks;
-        float mBlackSquareAlpha = 1.0f;
+        Random mRandom;
+        int mRandomIndex;
 
-        int fairySpawn = 3;
-        int fairyDespawn = 23;
-        int deathDespawn = 14;
-        int textSpawn = 7;
-        int textOnScreen = 5;
-        int playerSpawn = 18;
+        float mBlackSquareAlpha = 1.0f;
+        int fairySpawn = 2;
+        int fairyDespawn = 18;
+        int deathDespawn = 10;
+        int textOne = 5;
+        int textTwo = 10;
+        int textOnScreen = 3;
+        int playerSpawn = 14;
         int playerStopTime = 1000000;
-        int changeScreen = 27;
+        int changeScreen = 20;
 
         public LoseScreen()
         {
+            mRandom = new Random();
+            mRandomIndex = mRandom.Next(1, 4); // Get random index for line 2 text
         }
 
         public override void LoadAssets()
@@ -52,12 +57,15 @@ namespace Stonephonia.Screens
                 new Point(128, 128), new Point(0, 0), new Point(4, 1), 200, Color.White, false),
                 new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_fader"), new Vector2(mFairyPos.X, mFairyPos.Y + 4), Color.White));
             mFairy.mSound = SoundManager.SFXType.fairy;
-            mFairy.mVolume = 1.0f;
+            mFairy.mVolume = 0.5f;
 
             mPlayerDeath = new CutsceneSprite(mPlayerDeathPos, 0, deathDespawn, CutsceneSprite.State.activated,
                 new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_death"),
                 new Point(100, 84), new Point(3, ScreenManager.pusher.mDirection ? 0 : 1), new Point(4, 2), 1000, Color.White, true),
                 new Fader(mDeathTexture, new Vector2(mPlayerDeathPos.X - 7, mPlayerDeathPos.Y), Color.White));
+            mPlayerDeath.mSound = SoundManager.SFXType.bass;
+            mPlayerDeath.mVolume = 0.5f;
+
 
             mPlayer = new CutsceneSprite(mPlayerPos, playerSpawn, playerStopTime, CutsceneSprite.State.inactive,
                 new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_stage_one"),
@@ -66,12 +74,25 @@ namespace Stonephonia.Screens
             mPlayer.mSound = SoundManager.SFXType.pad;
             mPlayer.mVolume = 0.5f;
 
-            mText = new Fader(ScreenManager.font, "\"Try again\"", new Vector2(0, 600), Colours.lightBlue, 0.0f);
-            mTextFader = new FaderManager(new Fader[1] { mText });
+            mText = new Fader[]
+            {
+                new Fader(ScreenManager.font, "\"Try again\"", new Vector2(0, 600), Colours.lightBlue, 0.0f),
+                new Fader(ScreenManager.font, "\"Let their songs guide you\"", new Vector2(0, 600), Colours.lightBlue, 0.0f),
+                new Fader(ScreenManager.font, "\"Listen to the voice of the forest\"", new Vector2(0, 600), Colours.lightBlue, 0.0f),
+                new Fader(ScreenManager.font, "\"Feel the flow of time\"", new Vector2(0, 600), Colours.lightBlue, 0.0f)
+            };
+
+            mTextFader = new FaderManager(mText);
         }
 
         public override void UnloadAssests()
         {
+        }
+
+        private void ShowText()
+        {
+            mTextFader.FadeInAndOut(mText[0], 0.02f, 0.03f, textOne, textOnScreen);
+            mTextFader.FadeInAndOut(mText[mRandomIndex], 0.02f, 0.03f, textTwo, textOnScreen);
         }
 
         private void GotoGameplayScreen(float timeLimit)
@@ -94,7 +115,7 @@ namespace Stonephonia.Screens
             mFairy.Update(gameTime, true);
             mPlayerDeath.Update(gameTime, false);
             mPlayer.Update(gameTime, true);
-            mTextFader.FadeInAndOut(mText, 0.02f, 0.03f, textSpawn, textOnScreen);
+            ShowText();
             mTextFader.Update(gameTime);
 
             foreach (Rock rock in mRocks)

@@ -14,7 +14,7 @@ namespace Stonephonia
         private float mPushVelocity = 0.0f;
         public bool mDirection = true;
         private float mStopSpeed;
-        public int mAgeTime = 5;
+        public int mAgeTime = 2;
         private Texture2D[] mPlayerTextures;
         private Sprite mDeathSprite, mSweatSprite;
         public Reflection mReflection;
@@ -86,7 +86,6 @@ namespace Stonephonia
                         {
                             mSprite.mCurrentFrame.Y = 6;
                             mSweatSprite.mCurrentFrame.Y = 0;
-                            //mSweatPosition.X = ScreenManager.pusher.mPosition.X - 26 ;
                             mSweatSprite.SetVisible(true);
                         }
                     }
@@ -97,7 +96,6 @@ namespace Stonephonia
                         {
                             mSprite.mCurrentFrame.Y = 7;
                             mSweatSprite.mCurrentFrame.Y = 1;
-                            //mSweatPosition.X = ScreenManager.pusher.mPosition.X - 36;
                             mSweatSprite.SetVisible(true);
                         }
                     }

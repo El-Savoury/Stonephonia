@@ -18,7 +18,7 @@ namespace Stonephonia.Screens
         public static Rock[] mRocks;
         float mTextureAlpha = 1.0f;
         bool mInputDetected = false;
-        float mRoomEndTime = 5;
+        float mRoomEndTime = ScreenManager.pusher.mAgeTime;
         int mCounter;
 
         int mPlayerRockLayer = 0;
@@ -93,7 +93,7 @@ namespace Stonephonia.Screens
                     ScreenManager.ChangeScreen(this, new SplashScreen());
                     ScreenManager.pusher.Reset();
                 }
-                if (WinConditionMet())
+                else if (WinConditionMet())
                 {
                     mPlayerRockLayer = 3;
                     pusher.mCurrentState = Pusher.State.dead;
@@ -164,8 +164,8 @@ namespace Stonephonia.Screens
         {
             for (int i = rockIndex + 1; i < mRocks.Length; i++)
             {
-                float rockLeft = mRocks[i].mPosition.X;
-                float rockRight = mRocks[i].mPosition.X + mRocks[i].mSprite.mFrameSize.X;
+                float rockLeft = mRocks[i].mCollisionRect.Left;
+                float rockRight = mRocks[i].mCollisionRect.Right;
 
                 if (x > rockLeft && x < rockRight) { return true; }
             }
