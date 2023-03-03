@@ -47,8 +47,8 @@ namespace Stonephonia
                 mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_4"),
                 new Point(128, 104), new Point(0, 0), new Point(2, 2), 200, Color.White),
 
-                mReflection = new Reflection(new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/tiny_rock_reflection"),
-             new Point(100, 40), new Point(0, 0), new Point(4, 1), 150, Color.White), Vector2.Zero),
+                mReflection = new Reflection(new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_4_reflection"),
+             new Point(136, 84), new Point(3, 0), new Point(4, 1), 150, Color.White), new Vector2(500, ScreenManager.pusher.mPosition.Y + 112)),
 
                 mInterval = 200,
                 //mCounter = 181,
@@ -59,8 +59,8 @@ namespace Stonephonia
                 mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_zero_sheet"),
                    new Point(96, 84), new Point(0, 0), new Point(2, 2), 200, Color.White),
 
-                mReflection = new Reflection(new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_tall_reflection"),
-                  new Point(100, 40), new Point(0, 0), new Point(4, 1), 150, Color.White), Vector2.Zero),
+                mReflection = new Reflection(new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_test_reflection"),
+                  new Point(100, 64), new Point(0, 0), new Point(4, 1), 150, Color.White), new Vector2(300, ScreenManager.pusher.mPosition.Y + 112)),
 
                 mInterval = 200,
                 //mCounter = 0,
@@ -72,7 +72,7 @@ namespace Stonephonia
                 new Point(92, 112), new Point(0, 0), new Point(2, 2), 200, Color.White),
 
                 mReflection = new Reflection(new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_tall_reflection"),
-               new Point(120, 120), new Point(2, 0), new Point(4, 1), 150, Color.White), new Vector2(0, ScreenManager.pusher.mPosition.Y + 112)),
+               new Point(120, 120), new Point(2, 0), new Point(4, 1), 150, Color.White), new Vector2(400, ScreenManager.pusher.mPosition.Y + 112)),
 
                 mInterval = 200,
                 // mCounter = 181,
@@ -192,7 +192,7 @@ namespace Stonephonia
                 }
             }
         }
-
+        
         private void LoopSound()
         {
             if (mPlaying && mVolume < 1) { FadeVolume(true, 0.02f); }

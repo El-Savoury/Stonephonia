@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Audio;
 using Stonephonia.Managers;
 
 namespace Stonephonia.Screens
@@ -19,7 +18,7 @@ namespace Stonephonia.Screens
         public static Rock[] mRocks;
         float mTextureAlpha = 1.0f;
         bool mInputDetected = false;
-        int mRoomEndTime = 15;
+        float mRoomEndTime = 30;
         int mCounter;
 
         int mPlayerRockLayer = 0;
@@ -27,7 +26,6 @@ namespace Stonephonia.Screens
         public GameplayScreen()
         {
             //OnActivate();
-
         }
 
         public override void LoadAssets()
@@ -71,7 +69,7 @@ namespace Stonephonia.Screens
 
         private void OnActivate()
         {
-            SoundManager.PlayMusic(SoundManager.MusicType.AmbientTrack, 0.5f);
+
         }
 
         private bool WinConditionMet()
@@ -97,12 +95,14 @@ namespace Stonephonia.Screens
                 }
                 else if (WinConditionMet())
                 {
+                    mPlayerRockLayer = 3;
                     pusher.mCurrentState = Pusher.State.dead;
                     pusher.mMaxSpeed = 0;
                     ScreenTransition(new WinScreen(), timeLimit, pusher);
                 }
                 else if (!WinConditionMet())
                 {
+                    mPlayerRockLayer = 3;
                     pusher.KillPlayer(gameTime);
                     ScreenTransition(new LoseScreen(), timeLimit + 3, pusher);
                 }
@@ -111,7 +111,6 @@ namespace Stonephonia.Screens
                 {
                     prompt.mFader.mAlpha -= 0.05f;
                 }
-
             }
         }
 
@@ -128,12 +127,12 @@ namespace Stonephonia.Screens
                 mInputDetected = true;
                 mCounter = 0;
             }
-           
+
         }
 
         private void UpdateBackground(Texture2D[] treeTextures)
         {
-            if (mRoomTimer.mCurrentTime >= 14.99 && Array.IndexOf(treeTextures, mTreeTexture) < mTreeTextures.Length - 1)
+            if (mRoomTimer.mCurrentTime >= mRoomEndTime - 0.01f && Array.IndexOf(treeTextures, mTreeTexture) < mTreeTextures.Length - 1)
             {
                 mTreeTexture = treeTextures[Array.IndexOf(treeTextures, mTreeTexture) + 1];
                 mBackgroundTextures[0] = mTreeTexture;
@@ -174,6 +173,43 @@ namespace Stonephonia.Screens
             return false;
         }
 
+        private void SetDepth(GameTime gameTime, Pusher pusher, Rock[] rocks)
+        {
+            if (pusher.HoldingRock()) { mPlayerRockLayer = pusher.ReturnRockIndex(rocks); }
+            else { TryPopPlayerLayerUp(pusher, rocks); }
+        }
+
+        private bool CheckRockIntersectsPlayer(Pusher pusher, Rock rock)
+        {
+            float rockLeft = rock.mCollisionRect.Left;
+            float rockRight = rock.mCollisionRect.Right;
+            float pusherLeft = pusher.mPosition.X;
+            float pusherRight = pusher.mPosition.X + pusher.mSprite.mFrameSize.X;
+
+            if ((rockLeft < pusherRight && pusherRight < rockRight) ||
+                (rockLeft < pusherLeft && pusherLeft < rockRight) ||
+                (pusherLeft < rockRight && rockRight < pusherRight) ||
+                (pusherLeft < rockLeft && rockLeft < pusherRight))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void TryPopPlayerLayerUp(Pusher pusher, Rock[] rocks)
+        {
+            // Start from the heighest rock and go down the layers.
+            for (int i = rocks.Length - 1; i > mPlayerRockLayer; i--)
+            {
+                if (!CheckRockIntersectsPlayer(pusher, rocks[i]))
+                {
+                    // We can pop the player layer up
+                    mPlayerRockLayer = i;
+                    break; // Found highest layer for player.
+                }
+            }
+        }
+
         public override void Update(GameTime gameTime)
         {
             mRoomTimer.Update(gameTime);
@@ -185,10 +221,10 @@ namespace Stonephonia.Screens
                 rock.Update(gameTime, ScreenManager.pusher);
             }
 
-            ScreenManager.pusher.Update(gameTime, mRocks, mRoomTimer, this, 0, 0);
+            ScreenManager.pusher.Update(gameTime, mRocks, mRoomTimer, this);
             mLeafManager.Update(gameTime, ScreenManager.pusher);
             mTextPromptManager.Update(gameTime);
-
+            SetDepth(gameTime, ScreenManager.pusher, mRocks);
             UpdateBackground(mTreeTextures);
             ChangeScreen(gameTime, mRoomEndTime, ScreenManager.pusher);
 
@@ -202,14 +238,24 @@ namespace Stonephonia.Screens
                 spriteBatch.Draw(background, new Rectangle(0, 0, 800, 800), Color.White);
             }
 
-            foreach (Rock rock in mRocks)
+            //Draw rocks and player
+
+            for (int i = 0; i < mRocks.Length; i++)
             {
-                rock.Draw(spriteBatch);
-                rock.DrawReflection(spriteBatch);
+                mRocks[i].Draw(spriteBatch);
+                mRocks[i].DrawReflection(spriteBatch);
+
+            
+
+                if (i == mPlayerRockLayer)
+                {
+                    mScreenTransition.Draw(spriteBatch);
+                    ScreenManager.pusher.Draw(spriteBatch);
+                }
             }
 
-            mScreenTransition.Draw(spriteBatch);
-            ScreenManager.pusher.Draw(spriteBatch);
+           ;
+
             mLeafManager.Draw(spriteBatch);
 
             foreach (Texture2D foreground in mForegroundTextures)
@@ -221,7 +267,7 @@ namespace Stonephonia.Screens
 
             mTextPromptManager.Draw(spriteBatch);
 
-            spriteBatch.DrawString(ScreenManager.font, $"mRoomTimer: {mRoomTimer.mCurrentTime}", new Vector2(0, 15), Color.White);
+            //spriteBatch.DrawString(ScreenManager.font, $"mRoomTimer: {mRoomTimer.mCurrentTime}", new Vector2(0, 15), Color.White);
             //spriteBatch.DrawString(ScreenManager.font, $"input: {mInputDetected}", new Vector2(300, 300), Color.White);
         }
 

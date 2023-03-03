@@ -14,7 +14,7 @@ namespace Stonephonia
         private float mPushVelocity = 0.0f;
         public bool mDirection = true;
         private float mStopSpeed;
-        public int mAgeTime = 15;
+        public int mAgeTime = 30;
         private Texture2D[] mPlayerTextures;
         private Sprite mDeathSprite, mSweatSprite;
         public Reflection mReflection;
@@ -185,12 +185,28 @@ namespace Stonephonia
             KeepEntityOnScreen();
         }
 
-        private void TargetClosestRock(Rock[] rock, GameplayScreen gameplayScreen, float x, int rockIndex)
+        private void TargetClosestRock(Rock[] rock, GameplayScreen gameplayScreen)
         {
-            if (mCurrentState != State.push && !gameplayScreen.CheckRockOcclusion(x, rockIndex))
+            if (mCurrentState != State.push)
             {
                 for (int i = 0; i < rock.Length; i++)
                 {
+                    if (mVelocity > 0)
+                    {
+                        if (gameplayScreen.CheckRockOcclusion(rock[i].mPosition.X, i))
+                        {
+                            continue;
+                        }
+                    }
+                    else if (mVelocity < 0)
+                    {
+                        if (gameplayScreen.CheckRockOcclusion(rock[i].mCollisionRect.Right, i))
+                        {
+                            continue;
+                        }
+                    }
+
+
                     if (!Collision(0, rock[i]) && Collision(mVelocity, rock[i]))
                     {
                         mCurrentRock = rock[i];
@@ -350,11 +366,25 @@ namespace Stonephonia
             mDirection = true;
         }
 
-        public void Update(GameTime gameTime, Rock[] rock, Timer timer, GameplayScreen gameplayScreen, float x, int index)
+        public bool HoldingRock()
+        {
+            if (mCurrentRock != null && mCurrentState == State.push)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public int ReturnRockIndex(Rock[] rocks)
+        {
+            return Array.IndexOf(rocks, mCurrentRock);
+        }
+
+        public void Update(GameTime gameTime, Rock[] rock, Timer timer, GameplayScreen gameplayScreen)
         {
             mTimer.Update(gameTime);
             CalculateMovement();
-            TargetClosestRock(rock, gameplayScreen, x, index);
+            TargetClosestRock(rock, gameplayScreen);
             CollideWithRock();
             GetRockSpeed();
             StopRock(70, 120, 730, 680);

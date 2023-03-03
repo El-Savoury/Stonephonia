@@ -43,6 +43,8 @@ namespace Stonephonia.Screens
              new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_sheet"),
              new Point(128, 128), new Point(0, 0), new Point(4, 1), 200, Color.White, false),
              new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_fader"), new Vector2(mFairyPos.X, mFairyPos.Y + 4), Color.White));
+            mFairy.mSound = SoundManager.SFXType.fairy;
+            mFairy.mVolume = 1.0f;
 
             mPlayerRock = new CutsceneSprite(mPlayerPos, playerRockSpawn, playerRockDespawn, CutsceneSprite.State.inactive,
              new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_rock"),
@@ -84,7 +86,7 @@ namespace Stonephonia.Screens
             mTextFader.Update(gameTime);
             mFairy.Update(gameTime, true);
             mPlayerRock.Update(gameTime, true);
-            ScreenManager.pusher.Update(gameTime, mRocks, mRoomTimer, null, 0, 0);
+            ScreenManager.pusher.Update(gameTime, mRocks, mRoomTimer, null);
             SetSpriteDirection();
             HidePlayer();
             FadeWhiteSquare();

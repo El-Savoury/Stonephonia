@@ -84,7 +84,7 @@ namespace Stonephonia
             {
                 if (up) { mMusicVolume += amount; }
                 else { mMusicVolume -= amount; }
-                mMusicVolume = Math.Clamp(mMusicVolume, 0.0f, 0.8f);
+                mMusicVolume = Math.Clamp(mMusicVolume, 0.0f, 0.7f);
                 mAmbientTrack.Volume = mMusicVolume;
             }
         }

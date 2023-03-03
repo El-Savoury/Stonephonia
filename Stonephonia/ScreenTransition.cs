@@ -66,6 +66,7 @@ namespace Stonephonia
         {
             spriteBatch.Draw(ScreenManager.pixel, mBlackSquare, Color.Black * mBlackSquareAlpha);
             spriteBatch.Draw(ScreenManager.pixel, mWhiteSquare, Colours.lightBlue * mWhiteSquareAlpha);
+
         }
 
     }

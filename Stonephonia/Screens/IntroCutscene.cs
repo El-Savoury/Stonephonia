@@ -61,7 +61,7 @@ namespace Stonephonia.Screens
             new Point(60, 84), new Point(0, 0), new Point(2, 1), 200, Color.White, false),
             new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_fader"), mPlayerPos, Color.White));
             mPlayer.mSound = SoundManager.SFXType.pad;
-            mPlayer.mVolume = 0.5f;
+            mPlayer.mVolume = 0.1f;
         }
 
         public override void UnloadAssests()
