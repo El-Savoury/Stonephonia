@@ -18,7 +18,7 @@ namespace Stonephonia.Screens
         public static Rock[] mRocks;
         float mTextureAlpha = 1.0f;
         bool mInputDetected = false;
-        float mRoomEndTime = 30;
+        float mRoomEndTime = 5;
         int mCounter;
 
         int mPlayerRockLayer = 0;
@@ -93,7 +93,7 @@ namespace Stonephonia.Screens
                     ScreenManager.ChangeScreen(this, new SplashScreen());
                     ScreenManager.pusher.Reset();
                 }
-                else if (WinConditionMet())
+                if (WinConditionMet())
                 {
                     mPlayerRockLayer = 3;
                     pusher.mCurrentState = Pusher.State.dead;
