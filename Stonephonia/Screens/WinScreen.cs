@@ -16,6 +16,7 @@ namespace Stonephonia.Screens
         CutsceneSprite mFairy, mPlayerRock;
         Vector2 mFairyPos = new Vector2(600, 300);
         Vector2 mPlayerPos = ScreenManager.pusher.mPosition;
+        Sprite mPlayerRockReflection;
 
         float mBlackSquareAlpha = 1.0f;
         int fairySpawn = 2;
@@ -46,14 +47,17 @@ namespace Stonephonia.Screens
              new Point(128, 128), new Point(0, 0), new Point(4, 1), 200, Color.White, false),
              new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_fader"), new Vector2(mFairyPos.X, mFairyPos.Y + 4), Color.White));
             mFairy.mSound = SoundManager.SFXType.fairy;
-            mFairy.mVolume = 0.3f;
+            mFairy.mVolume = 0.2f;
 
             mPlayerRock = new CutsceneSprite(mPlayerPos, playerRockSpawn, playerRockDespawn, CutsceneSprite.State.inactive,
              new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_rock"),
              new Point(60, 84), new Point(0, 0), new Point(1, 2), 200, Color.White, false),
              new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_rock_fader"), mPlayerPos, Color.White));
             mPlayerRock.mSound = SoundManager.SFXType.rhodes;
-            mPlayerRock.mVolume = 0.3f;
+            mPlayerRock.mVolume = 0.2f;
+
+            mPlayerRockReflection = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_rock_reflection"),
+                new Point(104, 96), new Point(0, 0), new Point(4, 1), 150, Color.White, true);
         }
 
         public override void UnloadAssests()
@@ -103,11 +107,15 @@ namespace Stonephonia.Screens
             mPlayerRock.Update(gameTime, true);
             ScreenManager.pusher.Update(gameTime, mRocks, mRoomTimer, null);
 
-            if (mRoomTimer.mCurrentTime > whiteSquareFade) 
-            { 
+            if (mRoomTimer.mCurrentTime > whiteSquareFade)
+            {
                 SoundManager.FadeAmbientTrack(true, 0.002f);
-                ScreenManager.pusher.mReflection.mSprite.mTexture = ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_rock_reflection");
-                ScreenManager.pusher.mReflection.Update(gameTime, ScreenManager.pusher.mPosition.X);
+                mPlayerRockReflection.Update(gameTime, true);
+            }
+
+            foreach (Rock rock in mRocks)
+            {
+                rock.UpdateReflection(gameTime);
             }
 
             SetSpriteDirection();
@@ -115,24 +123,20 @@ namespace Stonephonia.Screens
             FadeWhiteSquare();
             ShowText();
 
-            foreach (Rock rock in mRocks)
-            {
-                rock.UpdateReflection(gameTime);
-            }
-
             ChangeScreen();
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(mDefaultbg, Vector2.Zero, Color.White);
+            mPlayerRockReflection.Draw(spriteBatch, new Vector2(ScreenManager.pusher.mPosition.X - 20, 564));
 
             foreach (Rock rock in mRocks)
             {
                 rock.Draw(spriteBatch);
                 rock.DrawReflection(spriteBatch);
             }
-            ScreenManager.pusher.mReflection.Draw(spriteBatch);
+
             spriteBatch.Draw(ScreenManager.blackSquare, Vector2.Zero, Color.White * mBlackSquareAlpha);
             mTextFader.DrawString(spriteBatch);
             mFairy.Draw(spriteBatch);

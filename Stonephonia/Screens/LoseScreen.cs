@@ -57,14 +57,14 @@ namespace Stonephonia.Screens
                 new Point(128, 128), new Point(0, 0), new Point(4, 1), 200, Color.White, false),
                 new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_fader"), new Vector2(mFairyPos.X, mFairyPos.Y + 4), Color.White));
             mFairy.mSound = SoundManager.SFXType.fairy;
-            mFairy.mVolume = 0.5f;
+            mFairy.mVolume = 0.2f;
 
             mPlayerDeath = new CutsceneSprite(mPlayerDeathPos, 0, deathDespawn, CutsceneSprite.State.activated,
                 new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_death"),
                 new Point(100, 84), new Point(3, ScreenManager.pusher.mDirection ? 0 : 1), new Point(4, 2), 1000, Color.White, true),
                 new Fader(mDeathTexture, new Vector2(mPlayerDeathPos.X - 7, mPlayerDeathPos.Y), Color.White));
             mPlayerDeath.mSound = SoundManager.SFXType.bass;
-            mPlayerDeath.mVolume = 0.5f;
+            mPlayerDeath.mVolume = 0.2f;
 
 
             mPlayer = new CutsceneSprite(mPlayerPos, playerSpawn, playerStopTime, CutsceneSprite.State.inactive,
@@ -72,7 +72,7 @@ namespace Stonephonia.Screens
                 new Point(60, 84), new Point(0, 0), new Point(2, 1), 200, Color.White, false),
                 new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_fader"), mPlayerPos, Color.White));
             mPlayer.mSound = SoundManager.SFXType.pad;
-            mPlayer.mVolume = 0.5f;
+            mPlayer.mVolume = 0.2f;
 
             mText = new Fader[]
             {

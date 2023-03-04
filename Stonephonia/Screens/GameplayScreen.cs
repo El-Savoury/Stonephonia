@@ -93,7 +93,7 @@ namespace Stonephonia.Screens
                     ScreenManager.ChangeScreen(this, new SplashScreen());
                     ScreenManager.pusher.Reset();
                 }
-                else if (!WinConditionMet())
+                else if (WinConditionMet())
                 {
                     mPlayerRockLayer = 3;
                     pusher.mCurrentState = Pusher.State.dead;
@@ -114,10 +114,10 @@ namespace Stonephonia.Screens
             }
         }
 
-        private void CheckInput()
+        private void CheckInput(int timeInFrames)
         {
             mCounter++;
-            if (mCounter > 600)
+            if (mCounter > timeInFrames)
             {
                 mInputDetected = false;
             }
@@ -214,7 +214,7 @@ namespace Stonephonia.Screens
         {
             mRoomTimer.Update(gameTime);
             InputManager.Update(gameTime);
-            CheckInput();
+            CheckInput(1050);
 
             foreach (Rock rock in mRocks)
             {

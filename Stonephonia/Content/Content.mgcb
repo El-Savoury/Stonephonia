@@ -260,6 +260,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/death_left.png
 
+#begin Sprites/death_reflection.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/death_reflection.png
+
 #begin Sprites/death_right.png
 /importer:TextureImporter
 /processor:TextureProcessor

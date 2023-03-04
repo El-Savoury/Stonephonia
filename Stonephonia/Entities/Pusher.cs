@@ -42,7 +42,7 @@ namespace Stonephonia
 
             mReflection = new Reflection(new Sprite(content.Load<Texture2D>("Sprites/player_reflection"),
                new Point(80, 80), new Point(0, 0), new Point(4, 1), 150, Color.White),
-               new Vector2(ScreenManager.pusher.mPosition.X - 12, ScreenManager.pusher.mPosition.Y + 112));
+               new Vector2(mPosition.X - 12, mPosition.Y + 112));
         }
 
         public enum State
@@ -115,14 +115,33 @@ namespace Stonephonia
             mSprite.Update(gameTime, true);
         }
 
+        private void SetDeathReflection()
+        {
+            if (mDeathSprite.mCurrentFrame.X > 2)
+            {
+                mReflection.mSprite.mTexture = ScreenManager.contentMgr.Load<Texture2D>("Sprites/death_reflection");
+                mReflection.mSprite.mFrameSize = new Point(104, 56);
+                mReflection.mPosition.X = mPosition.X - 24;
+            }
+        }
+
         public void KillPlayer(GameTime gameTime)
         {
             ChangeState(State.dead);
             mSprite.SetVisible(false);
             mDeathSprite.SetVisible(true);
             mDeathSprite.Update(gameTime, false);
-            if (mDirection) { mDeathSprite.mCurrentFrame.Y = 0; }
-            else { mDeathSprite.mCurrentFrame.Y = 1; }
+            SetDeathReflection();
+            if (mDirection)
+            {
+                mDeathSprite.mCurrentFrame.Y = 0;
+                mReflection.mSprite.mCurrentFrame.Y = 0;
+            }
+            else
+            {
+                mDeathSprite.mCurrentFrame.Y = 1;
+                mReflection.mSprite.mCurrentFrame.Y = 1;
+            }
             mMaxSpeed = 0;
         }
 
@@ -179,7 +198,6 @@ namespace Stonephonia
             {
                 ChangeState(State.walk);
             }
-
             KeepEntityOnScreen();
         }
 
