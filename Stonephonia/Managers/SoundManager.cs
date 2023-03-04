@@ -50,7 +50,7 @@ namespace Stonephonia
             mSFX.Add(SFXType.bell, content.Load<SoundEffect>("Sounds/Bells_0"));
             mSFX.Add(SFXType.flute, content.Load<SoundEffect>("Sounds/Flute_0"));
             mSFX.Add(SFXType.pad, content.Load<SoundEffect>("Sounds/Pad_0"));
-            mSFX.Add(SFXType.rhodes, content.Load<SoundEffect>("Sounds/Rhodes_0"));
+            mSFX.Add(SFXType.rhodes, content.Load<SoundEffect>("Sounds/Rhodes_3"));
             mSFX.Add(SFXType.bass, content.Load<SoundEffect>("Sounds/rocksounds/musicBass"));
             mSFX.Add(SFXType.plinks, content.Load<SoundEffect>("Sounds/rocksounds/musicPlinks"));
             mSFX.Add(SFXType.square, content.Load<SoundEffect>("Sounds/rocksounds/musicSquare"));
@@ -74,6 +74,7 @@ namespace Stonephonia
         {
             if (mAmbientTrack != null)
             {
+                mAmbientTrack.Volume = 0.0f;
                 mAmbientTrack.Stop();
             }
         }

@@ -93,7 +93,7 @@ namespace Stonephonia.Screens
                     ScreenManager.ChangeScreen(this, new SplashScreen());
                     ScreenManager.pusher.Reset();
                 }
-                else if (WinConditionMet())
+                else if (!WinConditionMet())
                 {
                     mPlayerRockLayer = 3;
                     pusher.mCurrentState = Pusher.State.dead;

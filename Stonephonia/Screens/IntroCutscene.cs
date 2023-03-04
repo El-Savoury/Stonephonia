@@ -53,15 +53,15 @@ namespace Stonephonia.Screens
              new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_sheet"),
              new Point(128, 128), new Point(0, 0), new Point(4, 1), 200, Color.White, false),
              new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/fairy_fader"), new Vector2(mFairyPos.X, mFairyPos.Y), Color.White));
-            mFairy.mSound = SoundManager.SFXType.flute;
-            mFairy.mVolume = 1.0f;
+            mFairy.mSound = SoundManager.SFXType.fairy;
+            mFairy.mVolume = 0.3f;
 
             mPlayer = new CutsceneSprite(mPlayerPos, playerSpawn, 1000000, CutsceneSprite.State.inactive,
             new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_stage_one"),
             new Point(60, 84), new Point(0, 0), new Point(2, 1), 200, Color.White, false),
             new Fader(ScreenManager.contentMgr.Load<Texture2D>("Sprites/player_fader"), mPlayerPos, Color.White));
             mPlayer.mSound = SoundManager.SFXType.pad;
-            mPlayer.mVolume = 0.1f;
+            mPlayer.mVolume = 0.3f;
         }
 
         public override void UnloadAssests()

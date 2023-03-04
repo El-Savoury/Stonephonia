@@ -92,7 +92,7 @@ namespace Stonephonia.Screens
         private void ShowText()
         {
             mTextFader.FadeInAndOut(mText[0], 0.02f, 0.03f, textOne, textOnScreen);
-            mTextFader.FadeInAndOut(mText[mRandomIndex], 0.02f, 0.03f, textTwo, textOnScreen);
+            mTextFader.FadeInAndOut(mText[mRandomIndex], 0.02f, 0.03f, textTwo, 5);
         }
 
         private void GotoGameplayScreen(float timeLimit)

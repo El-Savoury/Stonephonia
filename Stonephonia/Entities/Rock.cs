@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
+using Stonephonia.Screens;
 
 namespace Stonephonia
 {
@@ -100,14 +100,16 @@ namespace Stonephonia
             {
                 case State.inactive:
                     ResetRock();
+                    mPlaying = false;
                     break;
 
                 case State.active:
-                    //mCounter++;
-                    //Sing();
+                    mPlaying = true;
+                    Sing();
                     break;
 
                 case State.pushed:
+                    mPlaying = true;
                     Sing();
                     break;
 
@@ -135,6 +137,43 @@ namespace Stonephonia
             }
         }
 
+        private bool CollideWithRock(Rock[] rocks)
+        {
+            foreach (Rock rock in rocks)
+            {
+                if (rock != this)
+                {
+                    float left = mCollisionRect.Left;
+                    float right = mCollisionRect.Right;
+                    float rockLeft = rock.mPosition.X;
+                    float rockRight = rock.mPosition.X + rock.mSprite.mFrameSize.X;
+
+                    if (rockLeft < right && rockRight > right ||
+                        rockRight > left && rockLeft < left ||
+                        rockLeft >= left && rockRight <= right)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        //private void ActivateCollidingRocks(Rock[] rocks)
+        //{
+        //    if (mCurrentState == State.active)
+        //    {
+        //        foreach (Rock rock in rocks)
+        //        {
+        //            if (CollideWithRock(rock))
+        //            {
+        //                rock.mCurrentState = State.active;
+        //            }
+        //        }
+        //    }
+        //}
+
+
         private void ActivateNearPlayer(Pusher pusher)
         {
             Rock self = this;
@@ -143,17 +182,15 @@ namespace Stonephonia
             if (pusher.mCurrentState == Pusher.State.push && self == pusher.mCurrentRock)
             {
                 mCurrentState = State.pushed;
-                TogglePlaying();
             }
-            //else if (mIsColliding)
-            //{
-            //    //mCurrentState = State.active;
-            //}
-            //else if (!mIsColliding/* && mSprite.mAnimationComplete*/)
-            //{
-            //    mCurrentState = State.inactive;
-            //}
-            else { mCurrentState = State.inactive; }
+            else if (mIsColliding)
+            {
+                mCurrentState = State.active;
+            }
+            else if (!mIsColliding)
+            {
+                mCurrentState = State.inactive;
+            }
         }
 
         private void Sing()
@@ -182,7 +219,7 @@ namespace Stonephonia
 
         private void TogglePlaying()
         {
-            if (mCurrentState == State.pushed && mPreviousState == State.inactive)
+            if (mCurrentState == State.active && mPreviousState == State.inactive)
             {
                 if (!mPlaying) { mPlaying = true; }
                 else if (mPlaying)
@@ -192,11 +229,11 @@ namespace Stonephonia
                 }
             }
         }
-        
+
         private void LoopSound()
         {
-            if (mPlaying && mVolume < 1) { FadeVolume(true, 0.02f); }
-            else if (!mPlaying && mVolume > 0) { FadeVolume(false, 0.02f); }
+            if (mPlaying && mVolume < 1) { FadeVolume(true, 0.04f); }
+            else if (!mPlaying && mVolume > 0) { FadeVolume(false, 0.03f); }
 
             if (mTimer.mCurrentTime > 7.0588)
             {
@@ -215,8 +252,8 @@ namespace Stonephonia
 
         private void ResetRock()
         {
-            if (!mPlaying) { mSprite.ResetAnimation(new Point(0, 0)); }
-            //if (mSprite.mAnimationComplete) { mSprite.ResetAnimation(new Point(0, 0)); }
+            // if (!mPlaying) { mSprite.ResetAnimation(new Point(0, 0)); }
+            mSprite.ResetAnimation(new Point(0, 0));
         }
 
         public void Update(GameTime gameTime, Pusher pusher)
