@@ -14,7 +14,7 @@ namespace Stonephonia
         private float mPushVelocity = 0.0f;
         public bool mDirection = true;
         private float mStopSpeed;
-        public int mAgeTime = 2;
+        public int mAgeTime = 30;
         private Texture2D[] mPlayerTextures;
         private Sprite mDeathSprite, mSweatSprite;
         public Reflection mReflection;

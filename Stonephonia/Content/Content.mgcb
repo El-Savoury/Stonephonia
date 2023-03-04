@@ -200,6 +200,30 @@
 /processorParam:Quality=Best
 /build:Sounds/rocksounds/musicVamp.mp3
 
+#begin Sounds/rocksounds/singBass.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/rocksounds/singBass.mp3
+
+#begin Sounds/rocksounds/singHigh.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/rocksounds/singHigh.mp3
+
+#begin Sounds/rocksounds/singLow.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/rocksounds/singLow.mp3
+
+#begin Sounds/rocksounds/singMid.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/rocksounds/singMid.mp3
+
 #begin Sprites/background_bushes.png
 /importer:TextureImporter
 /processor:TextureProcessor

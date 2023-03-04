@@ -20,6 +20,10 @@ namespace Stonephonia
 
         public enum SFXType
         {
+            singBass,
+            singHigh,
+            singLow,
+            singMid,
             bell,
             flute,
             pad,
@@ -47,6 +51,10 @@ namespace Stonephonia
             MediaPlayer.IsRepeating = true;
 
             mSFX = new Dictionary<SFXType, SoundEffect> { };
+            mSFX.Add(SFXType.singBass, content.Load<SoundEffect>("Sounds/rocksounds/singBass"));
+            mSFX.Add(SFXType.singHigh, content.Load<SoundEffect>("Sounds/rocksounds/singHigh"));
+            mSFX.Add(SFXType.singLow, content.Load<SoundEffect>("Sounds/rocksounds/singLow"));
+            mSFX.Add(SFXType.singMid, content.Load<SoundEffect>("Sounds/rocksounds/singMid"));
             mSFX.Add(SFXType.bell, content.Load<SoundEffect>("Sounds/Bells_0"));
             mSFX.Add(SFXType.flute, content.Load<SoundEffect>("Sounds/Flute_0"));
             mSFX.Add(SFXType.pad, content.Load<SoundEffect>("Sounds/Pad_0"));
@@ -85,8 +93,8 @@ namespace Stonephonia
             {
                 if (up) { mMusicVolume += amount; }
                 else { mMusicVolume -= amount; }
-                mMusicVolume = Math.Clamp(mMusicVolume, 0.0f, 0.7f);
                 mAmbientTrack.Volume = mMusicVolume;
+                mMusicVolume = Math.Clamp(mMusicVolume, 0.0f, 0.3f);
             }
         }
 

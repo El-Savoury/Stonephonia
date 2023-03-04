@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Stonephonia.Effects;
 using Stonephonia.Managers;
 
@@ -30,6 +29,7 @@ namespace Stonephonia.Screens
         public IntroCutscene()
         {
             SoundManager.StartAmbientTrack();
+            SoundManager.mMusicVolume = 0.0f;
         }
 
         public override void LoadAssets()
@@ -80,7 +80,7 @@ namespace Stonephonia.Screens
             mTextFader.Update(gameTime);
             mFairy.mMask.mPosition.Y = mRoomTimer.mCurrentTime > fairyDespawn ? mFairyPos.Y : mFairyPos.Y + 4;
             mFairy.Update(gameTime, true);
-            
+
             mPlayer.Update(gameTime, true);
             ShowText();
 

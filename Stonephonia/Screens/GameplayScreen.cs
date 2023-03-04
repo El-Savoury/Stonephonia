@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Stonephonia.Managers;
 
 namespace Stonephonia.Screens
@@ -20,12 +21,10 @@ namespace Stonephonia.Screens
         bool mInputDetected = false;
         float mRoomEndTime = ScreenManager.pusher.mAgeTime;
         int mCounter;
-
         int mPlayerRockLayer = 0;
 
         public GameplayScreen()
         {
-            //OnActivate();
         }
 
         public override void LoadAssets()
@@ -67,16 +66,49 @@ namespace Stonephonia.Screens
         {
         }
 
-        private void OnActivate()
+        public bool CanActivateWinSound(Rock rock)
         {
+            for (int i = 0; i < mRocks.Length; i++)
+            {
+                if (mRocks[i] == rock)
+                {
 
+                    bool shouldPlaySound = false;
+
+                    if (i > 0)
+                    {
+                        Rock previousRock = mRocks[i - 1];
+
+                        // right side
+                        if (previousRock.mPosition.X < rock.mPosition.X && rock.CollideWithRock(previousRock))
+                        {
+                            shouldPlaySound = true;
+                        }
+                    }
+                    if (i < mRocks.Length - 1 && !shouldPlaySound)
+                    {
+                        Rock nextRock = mRocks[i + 1];
+
+                        // left side
+                        if (rock.mPosition.X < nextRock.mPosition.X && rock.CollideWithRock(nextRock))
+                        {
+                            shouldPlaySound = true;
+                        }
+                    }
+                    if (shouldPlaySound)
+                    {
+                       return true;
+                    }
+                }
+            }
+            return false;
         }
 
         private bool WinConditionMet()
         {
-            if (mRocks[3].mPosition.X < mRocks[2].mPosition.X &&
-                mRocks[2].mPosition.X < mRocks[1].mPosition.X &&
-                mRocks[1].mPosition.X < mRocks[0].mPosition.X)
+            if (mRocks[0].mPosition.X < mRocks[1].mPosition.X &&
+                mRocks[1].mPosition.X < mRocks[2].mPosition.X &&
+                mRocks[2].mPosition.X < mRocks[3].mPosition.X)
             {
                 return true;
             }
@@ -122,12 +154,11 @@ namespace Stonephonia.Screens
                 mInputDetected = false;
             }
 
-            if (InputManager.AnyKeyInputDetected() || InputManager.AnyPadInputDetected())
+            if (InputManager.AnyPadInputDetected(Buttons.A) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.DPadRight) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.DPadLeft))
             {
                 mInputDetected = true;
                 mCounter = 0;
             }
-
         }
 
         private void UpdateBackground(Texture2D[] treeTextures)
@@ -218,7 +249,7 @@ namespace Stonephonia.Screens
 
             foreach (Rock rock in mRocks)
             {
-                rock.Update(gameTime, ScreenManager.pusher);
+                rock.Update(gameTime, ScreenManager.pusher, this);
             }
 
             ScreenManager.pusher.Update(gameTime, mRocks, mRoomTimer, this);
@@ -245,7 +276,7 @@ namespace Stonephonia.Screens
                 mRocks[i].Draw(spriteBatch);
                 mRocks[i].DrawReflection(spriteBatch);
 
-            
+
 
                 if (i == mPlayerRockLayer)
                 {
@@ -268,7 +299,7 @@ namespace Stonephonia.Screens
             mTextPromptManager.Draw(spriteBatch);
 
             //spriteBatch.DrawString(ScreenManager.font, $"mRoomTimer: {mRoomTimer.mCurrentTime}", new Vector2(0, 15), Color.White);
-            //spriteBatch.DrawString(ScreenManager.font, $"input: {mInputDetected}", new Vector2(300, 300), Color.White);
+            // spriteBatch.DrawString(ScreenManager.font, $"input: {mInputDetected}", new Vector2(300, 300), Color.White);
         }
 
     }

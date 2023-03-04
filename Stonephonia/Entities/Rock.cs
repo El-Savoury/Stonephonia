@@ -12,11 +12,12 @@ namespace Stonephonia
         //private int mCounter = 150;
         private int mInterval;
         private Reflection mReflection;
-        private SoundManager.SFXType mSound;
+        private SoundManager.SFXType mSound, mWinSound;
         private SoundEffectInstance mInstance;
         private float mVolume = 0.0f;
         private bool mPlaying = false;
         private Timer mTimer = new Timer();
+        private bool mPrevCanPlayWinSound = false;
 
         private enum State
         {
@@ -42,31 +43,21 @@ namespace Stonephonia
         public static Rock[] Load()
         {
             Rock[] rock = new Rock[4];
-            rock[0] = new Rock(new Vector2(500, 432), 16, 1, 0.005f)
-            {
-                mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_4"),
-                new Point(128, 104), new Point(0, 0), new Point(2, 2), 200, Color.White),
-
-                mReflection = new Reflection(new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_4_reflection"),
-             new Point(136, 84), new Point(3, 0), new Point(4, 1), 150, Color.White), new Vector2(500, ScreenManager.pusher.mPosition.Y + 112)),
-
-                mInterval = 200,
-                //mCounter = 181,
-                mSound = SoundManager.SFXType.bass
-            };
-            rock[1] = new Rock(new Vector2(300, 452), 20, 3, 0.02f)
+            rock[0] = new Rock(new Vector2(300, 452), 20, 3, 0.02f)
             {
                 mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_zero_sheet"),
-                   new Point(96, 84), new Point(0, 0), new Point(2, 2), 200, Color.White),
+                new Point(96, 84), new Point(0, 0), new Point(2, 2), 200, Color.White),
 
                 mReflection = new Reflection(new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_test_reflection"),
-                  new Point(96, 64), new Point(0, 0), new Point(4, 1), 150, Color.White), new Vector2(300, ScreenManager.pusher.mPosition.Y + 112)),
+               new Point(96, 64), new Point(0, 0), new Point(4, 1), 150, Color.White), new Vector2(300, ScreenManager.pusher.mPosition.Y + 112)),
 
                 mInterval = 200,
                 //mCounter = 0,
-                mSound = SoundManager.SFXType.vamp
+                mSound = SoundManager.SFXType.singMid,
+                mWinSound = SoundManager.SFXType.ageSquare,
+
             };
-            rock[2] = new Rock(new Vector2(400, 424), 20, 2, 0.008f)
+            rock[1] = new Rock(new Vector2(400, 424), 20, 2, 0.008f)
             {
                 mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_tall_sheet"),
                 new Point(92, 112), new Point(0, 0), new Point(2, 2), 200, Color.White),
@@ -76,21 +67,36 @@ namespace Stonephonia
 
                 mInterval = 200,
                 // mCounter = 181,
-                mSound = SoundManager.SFXType.square
+                mSound = SoundManager.SFXType.singLow,
+                mWinSound = SoundManager.SFXType.ageVamp,
+
             };
-            rock[3] = new Rock(new Vector2(150, 452), 32, 4, 0.03f)
+            rock[2] = new Rock(new Vector2(150, 452), 32, 4, 0.03f)
             {
                 mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_sheet"),
-             new Point(96, 84), new Point(0, 0), new Point(2, 2), 200, Color.White),
+              new Point(96, 84), new Point(0, 0), new Point(2, 2), 200, Color.White),
 
                 mReflection = new Reflection(new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/tiny_rock_reflection"),
-            new Point(100, 40), new Point(3, 0), new Point(4, 1), 150, Color.White), new Vector2(150, ScreenManager.pusher.mPosition.Y + 112)),
+             new Point(100, 40), new Point(3, 0), new Point(4, 1), 150, Color.White), new Vector2(150, ScreenManager.pusher.mPosition.Y + 112)),
 
                 mInterval = 200,
                 //mCounter = 181,
-                mSound = SoundManager.SFXType.plinks
+                mSound = SoundManager.SFXType.singHigh,
+                mWinSound = SoundManager.SFXType.agePlinks
             };
+            rock[3] = new Rock(new Vector2(500, 432), 16, 1, 0.005f)
+            {
+                mSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_4"),
+                new Point(128, 104), new Point(0, 0), new Point(2, 2), 200, Color.White),
 
+                mReflection = new Reflection(new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_4_reflection"),
+             new Point(136, 84), new Point(3, 0), new Point(4, 1), 150, Color.White), new Vector2(500, ScreenManager.pusher.mPosition.Y + 112)),
+
+                mInterval = 200,
+                //mCounter = 181,
+                mSound = SoundManager.SFXType.singBass,
+                mWinSound = SoundManager.SFXType.flute
+            };
             return rock;
         }
 
@@ -137,42 +143,35 @@ namespace Stonephonia
             }
         }
 
-        private bool CollideWithRock(Rock[] rocks)
+        public bool CollideWithRock(Rock rock)
         {
-            foreach (Rock rock in rocks)
+            if (rock != this)
             {
-                if (rock != this)
-                {
-                    float left = mCollisionRect.Left;
-                    float right = mCollisionRect.Right;
-                    float rockLeft = rock.mPosition.X;
-                    float rockRight = rock.mPosition.X + rock.mSprite.mFrameSize.X;
+                float left = mCollisionRect.Left;
+                float right = mCollisionRect.Right;
+                float rockLeft = rock.mCollisionRect.Left;
+                float rockRight = rock.mCollisionRect.Right;
 
-                    if (rockLeft < right && rockRight > right ||
-                        rockRight > left && rockLeft < left ||
-                        rockLeft >= left && rockRight <= right)
-                    {
-                        return true;
-                    }
+                if (rockLeft < right && rockRight > right ||
+                    rockRight > left && rockLeft < left ||
+                    rockLeft >= left && rockRight <= right)
+                {
+                    return true;
                 }
             }
             return false;
         }
 
-        //private void ActivateCollidingRocks(Rock[] rocks)
-        //{
-        //    if (mCurrentState == State.active)
-        //    {
-        //        foreach (Rock rock in rocks)
-        //        {
-        //            if (CollideWithRock(rock))
-        //            {
-        //                rock.mCurrentState = State.active;
-        //            }
-        //        }
-        //    }
-        //}
+        private void PlayWinSound(GameplayScreen gameplayScreen)
+        {
+            bool canPlayWinSound = gameplayScreen.CanActivateWinSound(this);
 
+            if (((mCurrentState == State.active && mPreviousState == State.inactive) || mPrevCanPlayWinSound == false) && canPlayWinSound)
+            {
+                SoundManager.PlaySFX(mWinSound, 1.0f);
+            }
+            mPrevCanPlayWinSound = canPlayWinSound;
+        }
 
         private void ActivateNearPlayer(Pusher pusher)
         {
@@ -232,22 +231,24 @@ namespace Stonephonia
 
         private void LoopSound()
         {
-            if (mPlaying && mVolume < 1) { FadeVolume(true, 0.04f); }
+            if (mPlaying && mVolume < 1) { FadeVolume(true, 0.05f); }
             else if (!mPlaying && mVolume > 0) { FadeVolume(false, 0.03f); }
 
-            if (mTimer.mCurrentTime > 7.0588)
+            if (mTimer.mCurrentTime > 1f)
             {
                 mInstance = SoundManager.mSFX[mSound].CreateInstance();
                 mInstance.Play();
                 mTimer.Reset();
             }
+
+            mVolume = Math.Clamp(mVolume, 0.0f, 0.4f);
         }
 
         private void FadeVolume(bool playing, float fadeAmount)
         {
             if (playing) { mVolume += fadeAmount; }
             else { mVolume -= fadeAmount; }
-            mVolume = Math.Clamp(mVolume, 0.0f, 1.0f);
+            mVolume = Math.Clamp(mVolume, 0.0f, 0.6f);
         }
 
         private void ResetRock()
@@ -256,7 +257,7 @@ namespace Stonephonia
             mSprite.ResetAnimation(new Point(0, 0));
         }
 
-        public void Update(GameTime gameTime, Pusher pusher)
+        public void Update(GameTime gameTime, Pusher pusher, GameplayScreen gameplayScreen)
         {
             mTimer.Update(gameTime);
             LoopSound();
@@ -266,7 +267,9 @@ namespace Stonephonia
             {
                 ActivateNearPlayer(pusher);
                 ChangeState();
+                PlayWinSound(gameplayScreen);
             }
+
             mSprite.Update(gameTime, true);
             mPreviousState = mCurrentState;
             mInstance.Volume = mVolume;
