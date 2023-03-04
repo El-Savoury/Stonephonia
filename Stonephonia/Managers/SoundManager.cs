@@ -36,6 +36,10 @@ namespace Stonephonia
             agePlinks,
             ageSquare,
             ageVamp,
+            plinksShort,
+            bassShort,
+            vampShort,
+            squareShort,
             fairy,
             ambient
         }
@@ -67,6 +71,10 @@ namespace Stonephonia
             mSFX.Add(SFXType.agePlinks, content.Load<SoundEffect>("Sounds/agesounds/agePlinks"));
             mSFX.Add(SFXType.ageSquare, content.Load<SoundEffect>("Sounds/agesounds/ageSquare"));
             mSFX.Add(SFXType.ageVamp, content.Load<SoundEffect>("Sounds/agesounds/ageVamp"));
+            mSFX.Add(SFXType.plinksShort, content.Load<SoundEffect>("Sounds/agesounds/agePlinksShort"));
+            mSFX.Add(SFXType.vampShort, content.Load<SoundEffect>("Sounds/agesounds/ageVampShort"));
+            mSFX.Add(SFXType.squareShort, content.Load<SoundEffect>("Sounds/agesounds/ageSquareShort"));
+            mSFX.Add(SFXType.bassShort, content.Load<SoundEffect>("Sounds/agesounds/ageBassShort"));
             mSFX.Add(SFXType.fairy, content.Load<SoundEffect>("Sounds/fadeSounds/fairy"));
             mSFX.Add(SFXType.ambient, content.Load<SoundEffect>("Sounds/Jungle_loop"));
         }

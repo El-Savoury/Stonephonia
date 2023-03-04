@@ -97,7 +97,7 @@ namespace Stonephonia.Screens
                     }
                     if (shouldPlaySound)
                     {
-                       return true;
+                        return true;
                     }
                 }
             }
@@ -269,14 +269,17 @@ namespace Stonephonia.Screens
                 spriteBatch.Draw(background, new Rectangle(0, 0, 800, 800), Color.White);
             }
 
-            //Draw rocks and player
+            foreach (Rock rock in mRocks)
+            {
+                rock.DrawDing(spriteBatch);
+            }
 
+            //Draw rocks and player
             for (int i = 0; i < mRocks.Length; i++)
             {
+
                 mRocks[i].Draw(spriteBatch);
                 mRocks[i].DrawReflection(spriteBatch);
-
-
 
                 if (i == mPlayerRockLayer)
                 {
@@ -285,7 +288,7 @@ namespace Stonephonia.Screens
                 }
             }
 
-           ;
+
 
             mLeafManager.Draw(spriteBatch);
 

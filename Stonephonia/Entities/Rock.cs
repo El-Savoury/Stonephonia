@@ -18,6 +18,9 @@ namespace Stonephonia
         private bool mPlaying = false;
         private Timer mTimer = new Timer();
         private bool mPrevCanPlayWinSound = false;
+        private Sprite mDingSprite;
+        private int mDingOffsetX;
+        private int mDingOffsetY;
 
         private enum State
         {
@@ -54,8 +57,9 @@ namespace Stonephonia
                 mInterval = 200,
                 //mCounter = 0,
                 mSound = SoundManager.SFXType.singMid,
-                mWinSound = SoundManager.SFXType.ageSquare,
-
+                mWinSound = SoundManager.SFXType.squareShort,
+                mDingSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/rock_test_ding"), new Point(124, 84), new Point(0, 0), new Point(5, 1), 150, Color.White, false),
+                mDingOffsetX = 20
             };
             rock[1] = new Rock(new Vector2(400, 424), 20, 2, 0.008f)
             {
@@ -68,8 +72,10 @@ namespace Stonephonia
                 mInterval = 200,
                 // mCounter = 181,
                 mSound = SoundManager.SFXType.singLow,
-                mWinSound = SoundManager.SFXType.ageVamp,
-
+                mWinSound = SoundManager.SFXType.vampShort,
+                mDingSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/tall_ding"), new Point(108, 120), new Point(0, 0), new Point(5, 1), 150, Color.White, false),
+                mDingOffsetX = 8,
+                mDingOffsetY = -8
             };
             rock[2] = new Rock(new Vector2(150, 452), 32, 4, 0.03f)
             {
@@ -82,7 +88,10 @@ namespace Stonephonia
                 mInterval = 200,
                 //mCounter = 181,
                 mSound = SoundManager.SFXType.singHigh,
-                mWinSound = SoundManager.SFXType.agePlinks
+                mWinSound = SoundManager.SFXType.plinksShort,
+                mDingSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/tiny_ding"), new Point(108, 76), new Point(0, 0), new Point(5, 1), 150, Color.White, false),
+                mDingOffsetX = 8,
+                mDingOffsetY = 8
             };
             rock[3] = new Rock(new Vector2(500, 432), 16, 1, 0.005f)
             {
@@ -95,7 +104,10 @@ namespace Stonephonia
                 mInterval = 200,
                 //mCounter = 181,
                 mSound = SoundManager.SFXType.singBass,
-                mWinSound = SoundManager.SFXType.flute
+                mWinSound = SoundManager.SFXType.bassShort,
+                mDingSprite = new Sprite(ScreenManager.contentMgr.Load<Texture2D>("Sprites/big_rock_ding"), new Point(152, 120), new Point(0, 0), new Point(5, 1), 150, Color.White, false),
+                mDingOffsetX = 12,
+                mDingOffsetY = -16
             };
             return rock;
         }
@@ -168,9 +180,17 @@ namespace Stonephonia
 
             if (((mCurrentState == State.active && mPreviousState == State.inactive) || mPrevCanPlayWinSound == false) && canPlayWinSound)
             {
-                SoundManager.PlaySFX(mWinSound, 1.0f);
+                SoundManager.PlaySFX(mWinSound, 0.3f);
+                Ding();
             }
             mPrevCanPlayWinSound = canPlayWinSound;
+        }
+
+        private void Ding()
+        {
+            mDingSprite.ResetAnimation(new Point(0, 0));
+            mDingSprite.SetVisible(true);
+            //mSprite.SetVisible(false);
         }
 
         private void ActivateNearPlayer(Pusher pusher)
@@ -195,38 +215,6 @@ namespace Stonephonia
         private void Sing()
         {
             if (mPlaying) { mSprite.mCurrentFrame.Y = 1; }
-
-
-
-            //if (mSprite.mAnimationComplete)
-            //{
-            //    mSprite.ResetAnimation(new Point(0, 0));
-            //}
-
-            //FadeVoulme(true, 0.03f);
-        }
-
-        //private void playSound()
-        //{
-        //    if (mCounter > 10) //mInterval)
-        //    {
-        //        SoundManager.PlaySFX(mSound, mVolume);
-        //        mCounter = 0;
-        //        mSprite.ResetAnimation(new Point(0, 1));
-        //    }
-        //}
-
-        private void TogglePlaying()
-        {
-            if (mCurrentState == State.active && mPreviousState == State.inactive)
-            {
-                if (!mPlaying) { mPlaying = true; }
-                else if (mPlaying)
-                {
-                    mPlaying = false;
-                    ResetRock();
-                }
-            }
         }
 
         private void LoopSound()
@@ -241,7 +229,7 @@ namespace Stonephonia
                 mTimer.Reset();
             }
 
-            mVolume = Math.Clamp(mVolume, 0.0f, 0.4f);
+            mVolume = Math.Clamp(mVolume, 0.0f, 0.2f);
         }
 
         private void FadeVolume(bool playing, float fadeAmount)
@@ -255,6 +243,7 @@ namespace Stonephonia
         {
             // if (!mPlaying) { mSprite.ResetAnimation(new Point(0, 0)); }
             mSprite.ResetAnimation(new Point(0, 0));
+
         }
 
         public void Update(GameTime gameTime, Pusher pusher, GameplayScreen gameplayScreen)
@@ -262,6 +251,12 @@ namespace Stonephonia
             mTimer.Update(gameTime);
             LoopSound();
             UpdateReflection(gameTime);
+            mDingSprite.Update(gameTime, false);
+
+            if (mDingSprite.mAnimationComplete)
+            {
+                mSprite.SetVisible(true);
+            }
 
             if (pusher.mCurrentState != Pusher.State.dead)
             {
@@ -280,6 +275,11 @@ namespace Stonephonia
         public void UpdateReflection(GameTime gameTime)
         {
             mReflection.Update(gameTime, mPosition.X);
+        }
+
+        public void DrawDing(SpriteBatch spriteBatch)
+        {
+            mDingSprite.Draw(spriteBatch, new Vector2(mPosition.X - mDingOffsetX, mPosition.Y + mDingOffsetY));
         }
 
         public void DrawReflection(SpriteBatch spriteBatch)

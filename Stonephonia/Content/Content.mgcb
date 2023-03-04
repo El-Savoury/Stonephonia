@@ -26,11 +26,23 @@
 /processorParam:Quality=Best
 /build:Sounds/agesounds/ageBass.mp3
 
+#begin Sounds/agesounds/ageBassShort.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/agesounds/ageBassShort.mp3
+
 #begin Sounds/agesounds/agePlinks.mp3
 /importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sounds/agesounds/agePlinks.mp3
+
+#begin Sounds/agesounds/agePlinksShort.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/agesounds/agePlinksShort.mp3
 
 #begin Sounds/agesounds/ageSquare.mp3
 /importer:Mp3Importer
@@ -38,11 +50,23 @@
 /processorParam:Quality=Best
 /build:Sounds/agesounds/ageSquare.mp3
 
+#begin Sounds/agesounds/ageSquareShort.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/agesounds/ageSquareShort.mp3
+
 #begin Sounds/agesounds/ageVamp.mp3
 /importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sounds/agesounds/ageVamp.mp3
+
+#begin Sounds/agesounds/ageVampShort.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/agesounds/ageVampShort.mp3
 
 #begin Sounds/Bells_0.wav
 /importer:WavImporter
@@ -247,6 +271,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/background_trees.png
+
+#begin Sprites/big_rock_ding.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/big_rock_ding.png
 
 #begin Sprites/black_square.png
 /importer:TextureImporter
@@ -596,6 +632,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/rock_tall_sheet.png
 
+#begin Sprites/rock_test_ding.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/rock_test_ding.png
+
 #begin Sprites/rock_test_reflection.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -631,6 +679,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/sweat.png
+
+#begin Sprites/tall_ding.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/tall_ding.png
+
+#begin Sprites/tiny_ding.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/tiny_ding.png
 
 #begin Sprites/tiny_rock_reflection.png
 /importer:TextureImporter
