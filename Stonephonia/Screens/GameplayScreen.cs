@@ -154,7 +154,7 @@ namespace Stonephonia.Screens
                 mInputDetected = false;
             }
 
-            if (InputManager.AnyPadInputDetected(Buttons.A) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.DPadRight) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.DPadLeft))
+            if (InputManager.AnyKeyInputDetected() || InputManager.AnyPadInputDetected(Buttons.A) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.DPadRight) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.DPadLeft))
             {
                 mInputDetected = true;
                 mCounter = 0;

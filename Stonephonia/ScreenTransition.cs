@@ -36,7 +36,8 @@ namespace Stonephonia
             else
             {
                 mWhiteSquareAlpha -= fadeOut;
-                if (mWhiteSquareAlpha <= 0.0f) { ScreenManager.ChangeScreen(currentScreen, nextScreen); }
+                if (mWhiteSquareAlpha <= 0.0f) 
+                { ScreenManager.ChangeScreen(currentScreen, nextScreen); }
             }
         }
 

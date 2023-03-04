@@ -142,6 +142,12 @@ namespace Stonephonia
                 mDeathSprite.mCurrentFrame.Y = 1;
                 mReflection.mSprite.mCurrentFrame.Y = 1;
             }
+
+            if ( mDeathSprite.mCurrentFrame.X < 1)
+            {
+                SoundManager.PlaySFX(SoundManager.SFXType.ageBass, 0.1f);
+            }
+
             mMaxSpeed = 0;
         }
 

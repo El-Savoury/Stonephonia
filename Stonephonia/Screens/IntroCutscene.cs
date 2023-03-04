@@ -28,8 +28,8 @@ namespace Stonephonia.Screens
 
         public IntroCutscene()
         {
-            SoundManager.StartAmbientTrack();
             SoundManager.mMusicVolume = 0.0f;
+            SoundManager.StartAmbientTrack();
         }
 
         public override void LoadAssets()

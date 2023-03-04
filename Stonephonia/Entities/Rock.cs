@@ -190,7 +190,6 @@ namespace Stonephonia
         {
             mDingSprite.ResetAnimation(new Point(0, 0));
             mDingSprite.SetVisible(true);
-            //mSprite.SetVisible(false);
         }
 
         private void ActivateNearPlayer(Pusher pusher)
@@ -243,7 +242,6 @@ namespace Stonephonia
         {
             // if (!mPlaying) { mSprite.ResetAnimation(new Point(0, 0)); }
             mSprite.ResetAnimation(new Point(0, 0));
-
         }
 
         public void Update(GameTime gameTime, Pusher pusher, GameplayScreen gameplayScreen)
@@ -252,11 +250,6 @@ namespace Stonephonia
             LoopSound();
             UpdateReflection(gameTime);
             mDingSprite.Update(gameTime, false);
-
-            if (mDingSprite.mAnimationComplete)
-            {
-                mSprite.SetVisible(true);
-            }
 
             if (pusher.mCurrentState != Pusher.State.dead)
             {

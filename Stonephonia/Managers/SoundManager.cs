@@ -83,6 +83,7 @@ namespace Stonephonia
         {
             mAmbientTrack = mSFX[mJungle].CreateInstance();
             mAmbientTrack.Volume = mMusicVolume;
+            mAmbientTrack.IsLooped = true;
             mAmbientTrack.Play();
         }
 
@@ -101,9 +102,16 @@ namespace Stonephonia
             {
                 if (up) { mMusicVolume += amount; }
                 else { mMusicVolume -= amount; }
-                mAmbientTrack.Volume = mMusicVolume;
                 mMusicVolume = Math.Clamp(mMusicVolume, 0.0f, 0.3f);
+                mAmbientTrack.Volume = mMusicVolume;
+                
             }
+        }
+
+        public static void ResetAmbient()
+        {
+            mAmbientTrack.Stop();
+            mAmbientTrack.Play();
         }
 
         public static void PlayMusic(MusicType musicType, float volume)
